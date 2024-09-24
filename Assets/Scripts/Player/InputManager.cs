@@ -5,17 +5,21 @@ using UnityEngine;
 public class InputManager : MonoBehaviour
 {
     PlayerControls playerControls; 
+    PlayerLocomotion playerLocomotion;
 
     AnimatorManager animatorManager;
     public Vector2 movementInput;
 
-    private float moveAmount;
+    public float moveAmount;
+
+    public bool shift_input;
 
 
     public float verticalInput;
     public float horizontalInput;
 
     private void Awake() {
+        playerLocomotion = GetComponent<PlayerLocomotion>();
         animatorManager = GetComponent<AnimatorManager>();
     }
 
@@ -23,7 +27,13 @@ public class InputManager : MonoBehaviour
         if (playerControls == null) {
             playerControls = new PlayerControls(); 
             playerControls.PlayerMovement.Movement.performed += i => movementInput = i.ReadValue<Vector2>();
+
+            // action on shift key
+            playerControls.PlayerActions.Shift.performed += i => shift_input = true;
+            playerControls.PlayerActions.Shift.canceled += i => shift_input = false;
         }
+
+
         playerControls.Enable();
     }
 
@@ -33,13 +43,22 @@ public class InputManager : MonoBehaviour
 
     public void HandleAllInputs() {
         HandleMovementInput();
+        HandleSpringInput();
     }
 
     private void HandleMovementInput() {
         verticalInput = movementInput.y;
         horizontalInput = movementInput.x;
-        
+
         moveAmount = Mathf.Clamp01(Mathf.Abs(horizontalInput) + Mathf.Abs(verticalInput));
-        animatorManager.UpdateAnimatorValues(0, moveAmount);
+        animatorManager.UpdateAnimatorValues(0, moveAmount, playerLocomotion.isSprinting);
+    }
+
+    private void HandleSpringInput() {
+        if (shift_input && moveAmount > 0.5f) {
+            playerLocomotion.isSprinting = true;
+        } else {
+            playerLocomotion.isSprinting = false;
+        }
     }
 }

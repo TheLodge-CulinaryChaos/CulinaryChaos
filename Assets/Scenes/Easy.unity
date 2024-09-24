@@ -3588,6 +3588,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   movementInput: {x: 0, y: 0}
+  moveAmount: 0
+  shift_input: 0
   verticalInput: 0
   horizontalInput: 0
 --- !u!114 &731829083
@@ -3602,7 +3604,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cdda76085cc3047ffb9760a38b504c26, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  movementSpeed: 7
+  isSprinting: 0
+  walkingSpeed: 1.5
+  runningSpeed: 5
+  sprintingSpeed: 7
   rotationSpeed: 15
 --- !u!114 &731829084
 MonoBehaviour:

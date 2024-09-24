@@ -112,7 +112,7 @@ BlendTree:
     m_Mirror: 0
   - serializedVersion: 2
     m_Motion: {fileID: 7400000, guid: fa6448942750a40168c9d84438bbcf90, type: 2}
-    m_Threshold: 0.020408167
+    m_Threshold: 0.017492715
     m_Position: {x: 0, y: 0.5}
     m_TimeScale: 1
     m_CycleOffset: 0
@@ -120,7 +120,7 @@ BlendTree:
     m_Mirror: 0
   - serializedVersion: 2
     m_Motion: {fileID: 7400000, guid: 2094d9469ed5a4cb79a69f8478d60626, type: 2}
-    m_Threshold: 0.040816333
+    m_Threshold: 0.03498543
     m_Position: {x: 0, y: 1}
     m_TimeScale: 1
     m_CycleOffset: 0
@@ -128,7 +128,7 @@ BlendTree:
     m_Mirror: 0
   - serializedVersion: 2
     m_Motion: {fileID: 7400000, guid: 06c51d598ee514c6c92cd3fef9ce2ee3, type: 2}
-    m_Threshold: 0.061224498
+    m_Threshold: 0.052478142
     m_Position: {x: -0.5, y: 0}
     m_TimeScale: 1
     m_CycleOffset: 0
@@ -136,7 +136,7 @@ BlendTree:
     m_Mirror: 0
   - serializedVersion: 2
     m_Motion: {fileID: 7400000, guid: e8aec5e374c34471c826cfa5643ca7f3, type: 2}
-    m_Threshold: 0.08163267
+    m_Threshold: 0.06997086
     m_Position: {x: 0.5, y: 0}
     m_TimeScale: 1
     m_CycleOffset: 0
@@ -144,7 +144,7 @@ BlendTree:
     m_Mirror: 0
   - serializedVersion: 2
     m_Motion: {fileID: 7400000, guid: adad6ad6ce545430e9bcee5aaec25179, type: 2}
-    m_Threshold: 0.10204083
+    m_Threshold: 0.08746357
     m_Position: {x: -1, y: 0}
     m_TimeScale: 1
     m_CycleOffset: 0
@@ -152,11 +152,19 @@ BlendTree:
     m_Mirror: 0
   - serializedVersion: 2
     m_Motion: {fileID: 7400000, guid: 9f795bf82c3c94153bd293277da0f7a6, type: 2}
-    m_Threshold: 0.122448996
+    m_Threshold: 0.104956284
     m_Position: {x: 1, y: 0}
     m_TimeScale: 1
     m_CycleOffset: 0
     m_DirectBlendParameter: Velocity X
+    m_Mirror: 0
+  - serializedVersion: 2
+    m_Motion: {fileID: 7400000, guid: 74897e6b5439f410e93a495e6833b07d, type: 2}
+    m_Threshold: 0.122448996
+    m_Position: {x: 0, y: 2}
+    m_TimeScale: 1
+    m_CycleOffset: 0
+    m_DirectBlendParameter: Vertical
     m_Mirror: 0
   m_BlendParameter: Horizontal
   m_BlendParameterY: Vertical
