@@ -15,21 +15,36 @@ public class AnimatorManager : MonoBehaviour
         vertical = Animator.StringToHash("Vertical");
     }
 
+    public void PlayTargetAnimation(string targetAnimation, bool isInteracting)
+    {
+        animator.SetBool("isInteracting", isInteracting);
+        animator.CrossFade(targetAnimation, 0.2f);
+    }
+
     public void UpdateAnimatorValues(float horizontalMovement, float verticalMovement, bool isSprinting)
     {
         float snappedHorizontal;
         float snappedVertical;
 
         #region snappedHorizontal
-        if (horizontalMovement > 0 && horizontalMovement < 0.55f) {
+        if (horizontalMovement > 0 && horizontalMovement < 0.55f)
+        {
             snappedHorizontal = 0.5f;
-        } else if (horizontalMovement > 0.55f) {
+        }
+        else if (horizontalMovement > 0.55f)
+        {
             snappedHorizontal = 1;
-        } else if (horizontalMovement < 0 && horizontalMovement > -0.55f) {
+        }
+        else if (horizontalMovement < 0 && horizontalMovement > -0.55f)
+        {
             snappedHorizontal = -0.5f;
-        } else if (horizontalMovement < -0.55f) {
+        }
+        else if (horizontalMovement < -0.55f)
+        {
             snappedHorizontal = -1;
-        } else {
+        }
+        else
+        {
             snappedHorizontal = 0;
         }
         #endregion
@@ -57,13 +72,14 @@ public class AnimatorManager : MonoBehaviour
         }
         #endregion
 
-        if (isSprinting) {
+        if (isSprinting)
+        {
             snappedHorizontal = horizontalMovement;
             snappedVertical = 2;
         }
 
 
         animator.SetFloat(horizontal, snappedHorizontal, 0.1f, Time.deltaTime);
-        animator.SetFloat(vertical, snappedVertical , 0.1f, Time.deltaTime);
+        animator.SetFloat(vertical, snappedVertical, 0.1f, Time.deltaTime);
     }
 }
