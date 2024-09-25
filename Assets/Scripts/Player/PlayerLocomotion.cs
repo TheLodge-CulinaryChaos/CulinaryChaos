@@ -23,12 +23,17 @@ public class PlayerLocomotion : MonoBehaviour
     [Header("Movement Flags")]
     public bool isSprinting;
     public bool isGrounded;
+    public bool isJumping;
 
     [Header("Movement Speeds")]
     private float walkingSpeed = 1.5f;
     private float runningSpeed = 2.5f;
     private float sprintingSpeed = 4f;
     private float rotationSpeed = 7f;
+
+    [Header("Jumping Speeds")]
+    public float jumpHeight = 10;
+    public float gravityIntensity = 9.8f;
 
     public void Awake()
     {
@@ -65,15 +70,26 @@ public class PlayerLocomotion : MonoBehaviour
 
     private void HandleMovement()
     {
+
+        if (isJumping)
+        {
+            return;
+        }
+
         moveDirection = cameraObject.forward * inputManager.verticalInput;
         moveDirection += cameraObject.right * inputManager.horizontalInput;
         moveDirection.Normalize();
         moveDirection.y = 0;
 
+        
 
         if (isSprinting)
         {
             moveDirection *= sprintingSpeed;
+        }
+        else if (!isGrounded)
+        {
+            moveDirection *= runningSpeed * 1.5f;
         }
         else
         {
@@ -96,6 +112,9 @@ public class PlayerLocomotion : MonoBehaviour
 
     private void HandleRotation()
     {
+        if (isJumping) {
+            return;
+        }
         Vector3 targetDirection = Vector3.zero;
         targetDirection = cameraObject.forward * inputManager.verticalInput;
         targetDirection += cameraObject.right * inputManager.horizontalInput;
@@ -119,9 +138,8 @@ public class PlayerLocomotion : MonoBehaviour
         
         rayCastOrigin.y += rayCastHeightOffset;
 
-        if (!isGrounded) {
+        if (!isGrounded && !isJumping) {
             if (!playerManager.isInteracting) {
-                Debug.Log("Falling");
                 animatorManager.PlayTargetAnimation("Falling", true);
 
                 playerRigidbody.AddForce(transform.forward * leapingVelocity, ForceMode.Impulse);
@@ -142,6 +160,24 @@ public class PlayerLocomotion : MonoBehaviour
         }
         else {
             isGrounded = false;
+        }
+    }
+
+    public void HandleCutting() {
+        animatorManager.PlayTargetAnimation("Cutting", true);
+    }
+
+    
+
+    public void HandleJumping() {
+        if (isGrounded) {
+            animatorManager.animator.SetBool("isJumping", true);
+            animatorManager.PlayTargetAnimation("Jumping", false);
+
+            float jumpingVelocity = Mathf.Sqrt(-2 * gravityIntensity * jumpHeight);
+            Vector3 playerVelocity = moveDirection;
+            playerVelocity.y = jumpingVelocity;
+            playerRigidbody.velocity = playerVelocity;
         }
     }
 

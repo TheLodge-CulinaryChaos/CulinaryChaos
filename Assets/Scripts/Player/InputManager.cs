@@ -8,22 +8,20 @@ public class InputManager : MonoBehaviour
     PlayerLocomotion playerLocomotion;
 
     AnimatorManager animatorManager;
-    Animator animator;
     public Vector2 movementInput;
 
     public float moveAmount;
 
+    [Header("Keyboard Input Flags")]
     public bool shift_input;
     public bool cutting_input;
-
-
+    public bool jump_input;
     public float verticalInput;
     public float horizontalInput;
 
     private void Awake() {
         playerLocomotion = GetComponent<PlayerLocomotion>();
         animatorManager = GetComponent<AnimatorManager>();
-        animator = GetComponent<Animator>();
     }
 
     private void OnEnable() {
@@ -37,9 +35,10 @@ public class InputManager : MonoBehaviour
 
             // action on c key
             playerControls.PlayerActions.Cutting.performed += i => cutting_input = true;
-            playerControls.PlayerActions.Cutting.canceled += i => cutting_input = false;
-        }
 
+            // action on space key
+            playerControls.PlayerActions.Jump.performed += i => jump_input = true;
+        }
 
         playerControls.Enable();
     }
@@ -51,6 +50,9 @@ public class InputManager : MonoBehaviour
     public void HandleAllInputs() {
         HandleMovementInput();
         HandleSpringInput();
+
+        HandleJumpInput();
+
         HandleCuttingInput();
     }
 
@@ -73,7 +75,16 @@ public class InputManager : MonoBehaviour
     // need more work && conditions
     private void HandleCuttingInput() {
         if (cutting_input) {
-            animatorManager.PlayTargetAnimation("Cutting", true);
+            cutting_input = false;
+            playerLocomotion.HandleCutting();
+        }
+    }
+
+
+    private void HandleJumpInput() {
+        if (jump_input) {
+            jump_input = false;
+            playerLocomotion.HandleJumping();
         }
     }
 }
