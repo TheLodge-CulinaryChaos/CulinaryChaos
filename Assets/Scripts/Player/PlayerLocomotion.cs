@@ -123,10 +123,11 @@ public class PlayerLocomotion : MonoBehaviour
             if (!playerManager.isInteracting) {
                 Debug.Log("Falling");
                 animatorManager.PlayTargetAnimation("Falling", true);
+
+                playerRigidbody.AddForce(transform.forward * leapingVelocity, ForceMode.Impulse);
             }
             inAirTimer += Time.deltaTime;
 
-            playerRigidbody.AddForce(transform.forward * leapingVelocity);
             playerRigidbody.AddForce(-Vector3.up * inAirTimer * fallingVelocity);
         }
 

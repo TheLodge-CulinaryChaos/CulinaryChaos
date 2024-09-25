@@ -162,6 +162,15 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Cutting"",
+                    ""type"": ""Button"",
+                    ""id"": ""381b0067-b4be-4c80-8942-6a01a0530e20"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -186,6 +195,17 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""action"": ""Shift"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""23307761-e2ef-4294-bfff-592ca0bf4ccc"",
+                    ""path"": ""<Keyboard>/c"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Cutting"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -198,6 +218,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         // PlayerActions
         m_PlayerActions = asset.FindActionMap("PlayerActions", throwIfNotFound: true);
         m_PlayerActions_Shift = m_PlayerActions.FindAction("Shift", throwIfNotFound: true);
+        m_PlayerActions_Cutting = m_PlayerActions.FindAction("Cutting", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -306,11 +327,13 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
     private readonly InputActionMap m_PlayerActions;
     private List<IPlayerActionsActions> m_PlayerActionsActionsCallbackInterfaces = new List<IPlayerActionsActions>();
     private readonly InputAction m_PlayerActions_Shift;
+    private readonly InputAction m_PlayerActions_Cutting;
     public struct PlayerActionsActions
     {
         private @PlayerControls m_Wrapper;
         public PlayerActionsActions(@PlayerControls wrapper) { m_Wrapper = wrapper; }
         public InputAction @Shift => m_Wrapper.m_PlayerActions_Shift;
+        public InputAction @Cutting => m_Wrapper.m_PlayerActions_Cutting;
         public InputActionMap Get() { return m_Wrapper.m_PlayerActions; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -323,6 +346,9 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             @Shift.started += instance.OnShift;
             @Shift.performed += instance.OnShift;
             @Shift.canceled += instance.OnShift;
+            @Cutting.started += instance.OnCutting;
+            @Cutting.performed += instance.OnCutting;
+            @Cutting.canceled += instance.OnCutting;
         }
 
         private void UnregisterCallbacks(IPlayerActionsActions instance)
@@ -330,6 +356,9 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             @Shift.started -= instance.OnShift;
             @Shift.performed -= instance.OnShift;
             @Shift.canceled -= instance.OnShift;
+            @Cutting.started -= instance.OnCutting;
+            @Cutting.performed -= instance.OnCutting;
+            @Cutting.canceled -= instance.OnCutting;
         }
 
         public void RemoveCallbacks(IPlayerActionsActions instance)
@@ -354,5 +383,6 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
     public interface IPlayerActionsActions
     {
         void OnShift(InputAction.CallbackContext context);
+        void OnCutting(InputAction.CallbackContext context);
     }
 }

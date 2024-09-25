@@ -8,11 +8,13 @@ public class InputManager : MonoBehaviour
     PlayerLocomotion playerLocomotion;
 
     AnimatorManager animatorManager;
+    Animator animator;
     public Vector2 movementInput;
 
     public float moveAmount;
 
     public bool shift_input;
+    public bool cutting_input;
 
 
     public float verticalInput;
@@ -21,6 +23,7 @@ public class InputManager : MonoBehaviour
     private void Awake() {
         playerLocomotion = GetComponent<PlayerLocomotion>();
         animatorManager = GetComponent<AnimatorManager>();
+        animator = GetComponent<Animator>();
     }
 
     private void OnEnable() {
@@ -31,6 +34,10 @@ public class InputManager : MonoBehaviour
             // action on shift key
             playerControls.PlayerActions.Shift.performed += i => shift_input = true;
             playerControls.PlayerActions.Shift.canceled += i => shift_input = false;
+
+            // action on c key
+            playerControls.PlayerActions.Cutting.performed += i => cutting_input = true;
+            playerControls.PlayerActions.Cutting.canceled += i => cutting_input = false;
         }
 
 
@@ -44,6 +51,7 @@ public class InputManager : MonoBehaviour
     public void HandleAllInputs() {
         HandleMovementInput();
         HandleSpringInput();
+        HandleCuttingInput();
     }
 
     private void HandleMovementInput() {
@@ -59,6 +67,13 @@ public class InputManager : MonoBehaviour
             playerLocomotion.isSprinting = true;
         } else {
             playerLocomotion.isSprinting = false;
+        }
+    }
+
+    // need more work && conditions
+    private void HandleCuttingInput() {
+        if (cutting_input) {
+            animatorManager.PlayTargetAnimation("Cutting", true);
         }
     }
 }
