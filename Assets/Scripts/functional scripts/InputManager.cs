@@ -4,11 +4,16 @@ using UnityEngine;
 
 public class InputManager : MonoBehaviour
 {
-    PlayerControls playerControls; 
+    PlayerControls playerControls;
     PlayerLocomotion playerLocomotion;
 
     AnimatorManager animatorManager;
+
     public Vector2 movementInput;
+    public Vector2 cameraInput;
+
+    public float cameraInputX;
+    public float cameraInputY;
 
     public float moveAmount;
 
@@ -19,15 +24,20 @@ public class InputManager : MonoBehaviour
     public float verticalInput;
     public float horizontalInput;
 
-    private void Awake() {
+    private void Awake()
+    {
         playerLocomotion = GetComponent<PlayerLocomotion>();
         animatorManager = GetComponent<AnimatorManager>();
     }
 
-    private void OnEnable() {
-        if (playerControls == null) {
-            playerControls = new PlayerControls(); 
+    private void OnEnable()
+    {
+        if (playerControls == null)
+        {
+            playerControls = new PlayerControls();
+
             playerControls.PlayerMovement.Movement.performed += i => movementInput = i.ReadValue<Vector2>();
+            playerControls.PlayerMovement.Camera.performed += i => cameraInput = i.ReadValue<Vector2>();
 
             // action on shift key
             playerControls.PlayerActions.Shift.performed += i => shift_input = true;
@@ -43,11 +53,13 @@ public class InputManager : MonoBehaviour
         playerControls.Enable();
     }
 
-    private void OnDisable() {
+    private void OnDisable()
+    {
         playerControls.Disable();
     }
 
-    public void HandleAllInputs() {
+    public void HandleAllInputs()
+    {
         HandleMovementInput();
         HandleSpringInput();
 
@@ -56,33 +68,45 @@ public class InputManager : MonoBehaviour
         HandleCuttingInput();
     }
 
-    private void HandleMovementInput() {
+    private void HandleMovementInput()
+    {
         verticalInput = movementInput.y;
         horizontalInput = movementInput.x;
+
+        cameraInputX = cameraInput.x;
+        cameraInputY = cameraInput.y;
 
         moveAmount = Mathf.Clamp01(Mathf.Abs(horizontalInput) + Mathf.Abs(verticalInput));
         animatorManager.UpdateAnimatorValues(0, moveAmount, playerLocomotion.isSprinting);
     }
 
-    private void HandleSpringInput() {
-        if (shift_input && moveAmount > 0.5f) {
+    private void HandleSpringInput()
+    {
+        if (shift_input && moveAmount > 0.5f)
+        {
             playerLocomotion.isSprinting = true;
-        } else {
+        }
+        else
+        {
             playerLocomotion.isSprinting = false;
         }
     }
 
     // need more work && conditions
-    private void HandleCuttingInput() {
-        if (cutting_input) {
+    private void HandleCuttingInput()
+    {
+        if (cutting_input)
+        {
             cutting_input = false;
             playerLocomotion.HandleCutting();
         }
     }
 
 
-    private void HandleJumpInput() {
-        if (jump_input) {
+    private void HandleJumpInput()
+    {
+        if (jump_input)
+        {
             jump_input = false;
             playerLocomotion.HandleJumping();
         }
