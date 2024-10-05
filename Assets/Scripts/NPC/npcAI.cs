@@ -16,7 +16,6 @@ public class npcAI : MonoBehaviour
         navMeshAgent = GetComponent<NavMeshAgent>();
         animator = GetComponent<Animator>();
 
-
         // Call setNextWaypoint to initialize the first waypoint
         setNextWaypoint();
     }
@@ -61,8 +60,9 @@ public class npcAI : MonoBehaviour
         else
         {
             // Stop the NavMeshAgent when the last waypoint is reached
-            navMeshAgent.isStopped = true;
-            navMeshAgent.autoBraking = true;
+            // navMeshAgent.isStopped = true;
+            // navMeshAgent.autoBraking = true;
+            // animator.SetBool("isSitting", true);
 
             // Optionally, you can add any additional behavior here, such as playing an animation or disabling the agent.
             Debug.Log("Reached the last waypoint, stopping the NPC.");
