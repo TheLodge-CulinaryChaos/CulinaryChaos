@@ -9,12 +9,16 @@ public class npcAI : MonoBehaviour
 
     public GameObject[] waypoints;
     private int currWaypoint = -1;
+    private bool isSitting = false;
 
     void Start()
     {
         // Grab references to the components
         navMeshAgent = GetComponent<NavMeshAgent>();
         animator = GetComponent<Animator>();
+        navMeshAgent.stoppingDistance = 0.5f; // Increase stopping distance to prevent overshooting
+        navMeshAgent.autoBraking = true;
+
 
         // Call setNextWaypoint to initialize the first waypoint
         setNextWaypoint();
@@ -22,17 +26,30 @@ public class npcAI : MonoBehaviour
 
     void Update()
     {
-        // Check if the agent has reached the current waypoint
         if (!navMeshAgent.pathPending && navMeshAgent.remainingDistance <= navMeshAgent.stoppingDistance)
         {
-            setNextWaypoint();
+            if (currWaypoint == waypoints.Length - 1)
+            {
+
+
+                StopMovement();
+
+                GameObject chairObject = waypoints[currWaypoint].transform.parent.gameObject;
+                transform.position = chairObject.transform.position;
+                // rotate X 90 degrees
+                transform.rotation = Quaternion.Euler(0, 180, 0);
+            }
+            else
+            {
+                setNextWaypoint();
+            }
         }
 
         // Update animator's "vely" parameter based on agent's velocity and speed
-        if (animator != null)
+        if (animator != null && !isSitting)
         {
+            navMeshAgent.isStopped = false;
             float normalizedSpeed = navMeshAgent.velocity.magnitude / navMeshAgent.speed;
-
             animator.SetFloat("vely", normalizedSpeed);
 
         }
@@ -59,13 +76,18 @@ public class npcAI : MonoBehaviour
         }
         else
         {
-            // Stop the NavMeshAgent when the last waypoint is reached
-            // navMeshAgent.isStopped = true;
-            // navMeshAgent.autoBraking = true;
-            // animator.SetBool("isSitting", true);
-
-            // Optionally, you can add any additional behavior here, such as playing an animation or disabling the agent.
-            Debug.Log("Reached the last waypoint, stopping the NPC.");
+            isSitting = true; //
+            StopMovement();
         }
     }
+
+    private void StopMovement()
+    {
+        navMeshAgent.isStopped = true;
+        navMeshAgent.ResetPath(); // Clear the path
+        navMeshAgent.velocity = Vector3.zero; // Clear any remaining velocity
+        animator.SetFloat("vely", 0); // Set the walking speed to 0 to stop walking animation
+        animator.SetBool("isSitting", true); // Trigger the sitting animation
+    }
 }
+
