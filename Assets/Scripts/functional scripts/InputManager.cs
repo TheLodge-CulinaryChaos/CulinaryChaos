@@ -21,6 +21,7 @@ public class InputManager : MonoBehaviour
     public bool shift_input;
     public bool cutting_input;
     public bool jump_input;
+    public bool pickup_input;
     public float verticalInput;
     public float horizontalInput;
 
@@ -48,6 +49,9 @@ public class InputManager : MonoBehaviour
 
             // action on space key
             playerControls.PlayerActions.Jump.performed += i => jump_input = true;
+
+            // action on Q key
+            playerControls.PlayerActions.Pickup.performed += i => pickup_input = true;
         }
 
         playerControls.Enable();
@@ -66,6 +70,7 @@ public class InputManager : MonoBehaviour
         HandleJumpInput();
 
         HandleCuttingInput();
+        HandlePickupInput();
     }
 
     private void HandleMovementInput()
@@ -99,6 +104,15 @@ public class InputManager : MonoBehaviour
         {
             cutting_input = false;
             playerLocomotion.HandleCutting();
+        }
+    }
+
+    private void HandlePickupInput()
+    {
+        if (pickup_input)
+        {
+            pickup_input = false;
+            playerLocomotion.HandlePickup();
         }
     }
 

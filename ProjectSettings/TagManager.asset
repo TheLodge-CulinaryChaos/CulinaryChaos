@@ -9,6 +9,7 @@ TagManager:
   - Ground
   - Table
   - MainPlayer
+  - Ingredient
   layers:
   - Default
   - TransparentFX
