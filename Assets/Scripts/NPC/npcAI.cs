@@ -12,6 +12,8 @@ public class npcAI : MonoBehaviour
     private int currWaypoint = -1;
     private bool isSitting = false;
 
+    public OrderSystem orderSystem;
+
     void Start()
     {
         // Grab references to the components
@@ -45,7 +47,10 @@ public class npcAI : MonoBehaviour
                     isSitting = true;
                     Debug.Log("NPC has sat down");
                     // choosing randomly from the available recipes
-                    Orders.PlaceOrder(Orders.recipes[Random.Range(0, Orders.recipes.Count)]);
+                    Recipe order = orderSystem.recipes[Random.Range(0, orderSystem.recipes.Count)];
+                    Debug.Log(order);
+                    orderSystem.PlaceOrder(order);
+                    orderSystem.CreateOrderUI(order);
                 }
             }
             else
