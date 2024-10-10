@@ -2,10 +2,13 @@ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 
-public class Order : MonoBehaviour
-// one order contains a list of ingredients
+public class Orders : MonoBehaviour
+// one recipe contains a list of ingredients
 // and a reward
 {
+    public static List<Recipe> orders; // this list will keep track of the current orders
+    public static List<Recipe> recipes; // this list is the available recipes in the game
+
     public class Recipe
     {
         public string recipeName;
@@ -26,6 +29,11 @@ public class Order : MonoBehaviour
             ingredients = new List<Ingredient>();
             reward = 0;
         }
+
+        public override string ToString()
+        {
+            return "Recipe: " + recipeName + " " + reward;
+        }
     }
 
 
@@ -34,9 +42,28 @@ public class Order : MonoBehaviour
     public Recipe cornRecipe = new Recipe("corn cheese", new List<Ingredient> { new Corn() }, 200);
     public Recipe lettuceRecipe = new Recipe("salad", new List<Ingredient> { new Lettuce() }, 300);
 
-
     void Start()
     {
-        Debug.Log("Recipe: " + tomatoRecipe.recipeName + ", Reward: " + tomatoRecipe.reward);
+        // instantiation
+        recipes = new List<Recipe>{
+            tomatoRecipe, cornRecipe, lettuceRecipe
+        };
+        orders = new List<Recipe>();
+    }
+
+    public static void PlaceOrder(Recipe recipe)
+    {
+        orders.Add(recipe);
+        PrintOrders();
+    }
+
+    static void PrintOrders()
+    {
+        int i = 0;
+        while (i < orders.Count)
+        {
+            Debug.Log(orders[i]);
+            i++;
+        }
     }
 }

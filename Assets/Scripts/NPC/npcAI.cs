@@ -4,6 +4,7 @@ using UnityEngine.AI;
 [RequireComponent(typeof(NavMeshAgent))]
 public class npcAI : MonoBehaviour
 {
+    // TODO: figure out how to associate order with npc
     private NavMeshAgent navMeshAgent;
     private Animator animator;
 
@@ -30,14 +31,22 @@ public class npcAI : MonoBehaviour
         {
             if (currWaypoint == waypoints.Length - 1)
             {
-
-
+                // NPC has reached last waypoint and sat down
                 StopMovement();
 
                 GameObject chairObject = waypoints[currWaypoint].transform.parent.gameObject;
                 transform.position = chairObject.transform.position;
                 // rotate X 90 degrees
                 transform.rotation = Quaternion.Euler(0, 180, 0);
+
+                // now it can place an order
+                if (!isSitting)
+                {
+                    isSitting = true;
+                    Debug.Log("NPC has sat down");
+                    // choosing randomly from the available recipes
+                    Orders.PlaceOrder(Orders.recipes[Random.Range(0, Orders.recipes.Count)]);
+                }
             }
             else
             {
@@ -80,6 +89,7 @@ public class npcAI : MonoBehaviour
             StopMovement();
         }
     }
+
 
     private void StopMovement()
     {
