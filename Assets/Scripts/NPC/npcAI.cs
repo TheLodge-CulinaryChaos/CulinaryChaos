@@ -19,6 +19,7 @@ public class npcAI : MonoBehaviour
         navMeshAgent.stoppingDistance = 0.5f; // Increase stopping distance to prevent overshooting
         navMeshAgent.autoBraking = true;
 
+        OpenDoor();
 
         // Call setNextWaypoint to initialize the first waypoint
         setNextWaypoint();
@@ -28,6 +29,7 @@ public class npcAI : MonoBehaviour
     {
         if (!navMeshAgent.pathPending && navMeshAgent.remainingDistance <= navMeshAgent.stoppingDistance)
         {
+            CloseDoor();
             if (currWaypoint == waypoints.Length - 1)
             {
 
@@ -88,6 +90,18 @@ public class npcAI : MonoBehaviour
         navMeshAgent.velocity = Vector3.zero; // Clear any remaining velocity
         animator.SetFloat("vely", 0); // Set the walking speed to 0 to stop walking animation
         animator.SetBool("isSitting", true); // Trigger the sitting animation
+    }
+
+    private void OpenDoor()
+    {
+        GameObject door = GameObject.FindGameObjectWithTag("Door");
+        door.GetComponent<Animator>().SetTrigger("DoorOpen");
+    }
+
+    private void CloseDoor()
+    {
+        GameObject door = GameObject.FindGameObjectWithTag("Door");
+        door.GetComponent<Animator>().SetBool("isOpen", true);
     }
 }
 
