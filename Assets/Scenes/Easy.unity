@@ -6451,9 +6451,9 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: 5238e367893684ccd855a6b590768e19, type: 3}
+  m_audioClip: {fileID: 8300000, guid: f6275c6f4c4c2497da64d42a8cd5dd59, type: 3}
   m_PlayOnAwake: 0
-  m_Volume: 1
+  m_Volume: 0.538
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -6537,6 +6537,19 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &731829097
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 731829074}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3bfa6bcd8a8454dba86dc88e656c6b98, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  landingSound: {fileID: 8300000, guid: f6275c6f4c4c2497da64d42a8cd5dd59, type: 3}
 --- !u!1001 &738411210
 PrefabInstance:
   m_ObjectHideFlags: 0
