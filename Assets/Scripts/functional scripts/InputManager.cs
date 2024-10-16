@@ -8,6 +8,7 @@ public class InputManager : MonoBehaviour
     PlayerLocomotion playerLocomotion;
 
     AnimatorManager animatorManager;
+    public CanvasGroup canvasGroup;
 
     public Vector2 movementInput;
     public Vector2 cameraInput;
@@ -16,6 +17,7 @@ public class InputManager : MonoBehaviour
     public float cameraInputY;
 
     public float moveAmount;
+    public bool pause_input;
 
     [Header("Keyboard Input Flags")]
     public bool shift_input;
@@ -29,6 +31,7 @@ public class InputManager : MonoBehaviour
     {
         playerLocomotion = GetComponent<PlayerLocomotion>();
         animatorManager = GetComponent<AnimatorManager>();
+
     }
 
     private void OnEnable()
@@ -39,6 +42,9 @@ public class InputManager : MonoBehaviour
 
             playerControls.PlayerMovement.Movement.performed += i => movementInput = i.ReadValue<Vector2>();
             playerControls.PlayerMovement.Camera.performed += i => cameraInput = i.ReadValue<Vector2>();
+
+            // pause on p key
+            playerControls.PlayerMovement.Pause.performed += i => pause_input = true;
 
             // action on shift key
             playerControls.PlayerActions.Shift.performed += i => shift_input = true;
@@ -71,6 +77,8 @@ public class InputManager : MonoBehaviour
 
         HandleCuttingInput();
         HandlePickupInput();
+
+        HandlePauseInput();
     }
 
     private void HandleMovementInput()
@@ -123,6 +131,27 @@ public class InputManager : MonoBehaviour
         {
             jump_input = false;
             playerLocomotion.HandleJumping();
+        }
+    }
+    private void HandlePauseInput()
+    {
+        if (pause_input) { // swap to get button up later
+        Debug.Log("Pause Input");
+            if (Input.GetKeyUp(KeyCode.P)) {
+                Debug.Log("hello");
+                if (canvasGroup.interactable) {
+                    canvasGroup.interactable = false;
+                    canvasGroup.blocksRaycasts = false;
+                    canvasGroup.alpha = 0f;
+                    Time.timeScale = 1f;
+                } else {
+                    canvasGroup.interactable = true;
+                    canvasGroup.blocksRaycasts = true;
+                    canvasGroup.alpha = 1f;
+                    Time.timeScale = 0f;
+                }
+                pause_input = false;
+            }
         }
     }
 }
