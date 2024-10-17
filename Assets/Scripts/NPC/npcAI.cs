@@ -36,10 +36,20 @@ public class npcAI : MonoBehaviour
 
                 StopMovement();
 
+
                 GameObject chairObject = waypoints[currWaypoint].transform.parent.gameObject;
                 transform.position = chairObject.transform.position;
-                // rotate X 90 degrees
-                transform.rotation = Quaternion.Euler(0, 180, 0);
+
+                if (chairObject.transform.rotation.y == 0)
+                {
+                    // rotate X 90 degrees
+                    transform.rotation = Quaternion.Euler(0, 0, 0);
+                }
+                else
+                {
+                    // rotate X 90 degrees
+                    transform.rotation = Quaternion.Euler(0, 180, 0);
+                }
             }
             else
             {
