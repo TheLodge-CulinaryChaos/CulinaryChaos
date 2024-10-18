@@ -4414,7 +4414,6 @@ GameObject:
   - component: {fileID: 504300468}
   - component: {fileID: 504300472}
   - component: {fileID: 504300471}
-  - component: {fileID: 504300473}
   m_Layer: 5
   m_Name: Pause Canvas
   m_TagString: Untagged
@@ -4529,31 +4528,6 @@ CanvasGroup:
   m_Interactable: 0
   m_BlocksRaycasts: 0
   m_IgnoreParentGroups: 0
---- !u!114 &504300473
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 504300466}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dee1eaf5558934caa818535eac4db9d1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  canvasGroup: {fileID: 0}
-  movementInput: {x: 0, y: 0}
-  cameraInput: {x: 0, y: 0}
-  cameraInputX: 0
-  cameraInputY: 0
-  moveAmount: 0
-  pause_input: 0
-  shift_input: 0
-  cutting_input: 0
-  jump_input: 0
-  pickup_input: 0
-  verticalInput: 0
-  horizontalInput: 0
 --- !u!1001 &523333512
 PrefabInstance:
   m_ObjectHideFlags: 0

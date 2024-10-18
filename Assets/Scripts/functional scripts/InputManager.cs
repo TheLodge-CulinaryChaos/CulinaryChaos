@@ -73,8 +73,10 @@ public class InputManager : MonoBehaviour
 
         HandlePauseInput();
 
-        if (Time.timeScale == 0)
-            return; 
+        if (Time.timeScale <= 0)
+        {
+            return;
+        }
 
         HandleMovementInput();
         HandleSpringInput();
