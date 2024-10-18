@@ -70,6 +70,12 @@ public class InputManager : MonoBehaviour
 
     public void HandleAllInputs()
     {
+
+        HandlePauseInput();
+
+        if (Time.timeScale == 0)
+            return; 
+
         HandleMovementInput();
         HandleSpringInput();
 
@@ -77,8 +83,6 @@ public class InputManager : MonoBehaviour
 
         HandleCuttingInput();
         HandlePickupInput();
-
-        HandlePauseInput();
     }
 
     private void HandleMovementInput()
@@ -140,7 +144,6 @@ public class InputManager : MonoBehaviour
     {
         if (pause_input)
         {
-            pause_input = false;
             if (canvasGroup.interactable)
             {
                 canvasGroup.interactable = false;
@@ -155,6 +158,7 @@ public class InputManager : MonoBehaviour
                 canvasGroup.alpha = 1f;
                 Time.timeScale = 0f;
             }
+            pause_input = false;
         }
     }
 }
