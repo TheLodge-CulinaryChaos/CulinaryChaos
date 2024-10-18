@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.AI;
+using System.Collections;
 
 [RequireComponent(typeof(NavMeshAgent))]
 public class npcAI : MonoBehaviour
@@ -7,9 +8,13 @@ public class npcAI : MonoBehaviour
     private NavMeshAgent navMeshAgent;
     private Animator animator;
 
-    public GameObject[] waypoints;
-    private int currWaypoint = -1;
+    public GameObject[] waypoints; // Waypoints for moving to the chair
+    public GameObject[] exitWaypoints; // Exit waypoints to walk to after sitting
+    private int currWaypoint = -1; // For seating waypoints
+    private int exitWaypointIndex = 0; // For exit waypoints
     private bool isSitting = false;
+
+    private Vector3 lastWaypointPosition; // Track the last waypoint position
 
     void Start()
     {
@@ -29,27 +34,31 @@ public class npcAI : MonoBehaviour
     {
         if (!navMeshAgent.pathPending && navMeshAgent.remainingDistance <= navMeshAgent.stoppingDistance)
         {
-            CloseDoor();
             if (currWaypoint == waypoints.Length - 1)
             {
+                // Save the last waypoint position before sitting down
+                lastWaypointPosition = waypoints[currWaypoint].transform.position;
 
-
+                CloseDoor(); // Close the door when reaching the last waypoint
                 StopMovement();
-
 
                 GameObject chairObject = waypoints[currWaypoint].transform.parent.gameObject;
                 transform.position = chairObject.transform.position;
 
-                if (chairObject.transform.rotation.y == 0)
+                // Correct the rotation logic
+                if (Mathf.Abs(chairObject.transform.rotation.y) < 0.01f)
                 {
-                    // rotate X 90 degrees
+                    // Rotate to 0 degrees if close to 0
                     transform.rotation = Quaternion.Euler(0, 0, 0);
                 }
                 else
                 {
-                    // rotate X 90 degrees
+                    // Rotate to 180 degrees otherwise
                     transform.rotation = Quaternion.Euler(0, 180, 0);
                 }
+
+                // Start sitting for one minute
+                StartCoroutine(SitAndReturnToWaypoint());
             }
             else
             {
@@ -60,20 +69,17 @@ public class npcAI : MonoBehaviour
         // Update animator's "vely" parameter based on agent's velocity and speed
         if (animator != null && !isSitting)
         {
-            navMeshAgent.isStopped = false;
             float normalizedSpeed = navMeshAgent.velocity.magnitude / navMeshAgent.speed;
             animator.SetFloat("vely", normalizedSpeed);
-
         }
     }
-
 
     private void setNextWaypoint()
     {
         // Handle empty waypoints array
         if (waypoints.Length == 0)
         {
-            Debug.LogError("No waypoints set for AI_Minion!");
+            Debug.LogError("No waypoints set!");
             return;
         }
 
@@ -88,9 +94,28 @@ public class npcAI : MonoBehaviour
         }
         else
         {
-            isSitting = true; //
+            isSitting = true; // Set isSitting to true here
             StopMovement();
         }
+    }
+
+    private void setExitWaypoint()
+    {
+        // Handle empty exit waypoints array
+        if (exitWaypoints.Length == 0)
+        {
+            Debug.LogError("No exit waypoints");
+            return;
+        }
+        // Check if we've reached the last exit waypoint
+        if (exitWaypointIndex < exitWaypoints.Length)
+        {
+            // Update NavMeshAgent destination to the exit waypoint
+            navMeshAgent.SetDestination(exitWaypoints[exitWaypointIndex].transform.position);
+            exitWaypointIndex++; // Increment exit waypoint index for the next exit waypoint
+        }
+        navMeshAgent.isStopped = true; // Resume movement
+    
     }
 
     private void StopMovement()
@@ -102,16 +127,39 @@ public class npcAI : MonoBehaviour
         animator.SetBool("isSitting", true); // Trigger the sitting animation
     }
 
+    private IEnumerator SitAndReturnToWaypoint()
+    {
+        // Wait for 60 seconds (1 minute)
+        yield return new WaitForSeconds(10f);
+
+        // Stand up from sitting
+        isSitting = false; // Allow movement again
+        animator.SetBool("isSitting", false); // Reset sitting animation
+
+        navMeshAgent.isStopped = false; // Resume movement
+         if (animator != null && !isSitting)
+        {
+            float normalizedSpeed = navMeshAgent.velocity.magnitude / navMeshAgent.speed;
+            animator.SetFloat("vely", normalizedSpeed);
+        }
+        setExitWaypoint();
+    }
+
     private void OpenDoor()
     {
         GameObject door = GameObject.FindGameObjectWithTag("Door");
-        door.GetComponent<Animator>().SetTrigger("DoorOpen");
+        if (door != null)
+        {
+            door.GetComponent<Animator>().SetTrigger("DoorOpen");
+        }
     }
 
     private void CloseDoor()
     {
         GameObject door = GameObject.FindGameObjectWithTag("Door");
-        door.GetComponent<Animator>().SetBool("isOpen", true);
+        if (door != null)
+        {
+            door.GetComponent<Animator>().SetBool("isOpen", true); // Ensure the door closes
+        }
     }
 }
-
