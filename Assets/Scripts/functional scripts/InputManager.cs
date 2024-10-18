@@ -78,7 +78,7 @@ public class InputManager : MonoBehaviour
         HandleCuttingInput();
         HandlePickupInput();
 
-        HandlePauseInput();
+        // HandlePauseInput();
     }
 
     private void HandleMovementInput()
@@ -135,22 +135,22 @@ public class InputManager : MonoBehaviour
     }
     private void HandlePauseInput()
     {
-        if (pause_input) { // swap to get button up later
-        Debug.Log("Pause Input");
-            if (Input.GetKeyUp(KeyCode.P)) {
-                Debug.Log("hello");
-                if (canvasGroup.interactable) {
-                    canvasGroup.interactable = false;
-                    canvasGroup.blocksRaycasts = false;
-                    canvasGroup.alpha = 0f;
-                    Time.timeScale = 1f;
-                } else {
-                    canvasGroup.interactable = true;
-                    canvasGroup.blocksRaycasts = true;
-                    canvasGroup.alpha = 1f;
-                    Time.timeScale = 0f;
-                }
-                pause_input = false;
+        if (pause_input)
+        {
+            pause_input = false;
+            if (canvasGroup.interactable)
+            {
+                canvasGroup.interactable = false;
+                canvasGroup.blocksRaycasts = false;
+                canvasGroup.alpha = 0f;
+                Time.timeScale = 1f;
+            }
+            else
+            {
+                canvasGroup.interactable = true;
+                canvasGroup.blocksRaycasts = true;
+                canvasGroup.alpha = 1f;
+                Time.timeScale = 0f;
             }
         }
     }
