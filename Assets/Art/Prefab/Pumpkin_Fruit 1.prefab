@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 538447908406699784}
   - component: {fileID: 561290022662446238}
   - component: {fileID: 4406753606309854301}
-  - component: {fileID: 2692328556575126170}
+  - component: {fileID: 8733629316609098002}
   m_Layer: 0
   m_Name: Pumpkin_Fruit 1
   m_TagString: Ingredient
@@ -116,7 +116,7 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!114 &2692328556575126170
+--- !u!114 &8733629316609098002
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -125,7 +125,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 516445454323101854}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c8998f61895f04aadb895517a5cbaa70, type: 3}
+  m_Script: {fileID: 11500000, guid: d331a60018aea47e9a699a932c482daf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   cookingMaterial: {fileID: 2100000, guid: 1be7c42f909354360a8ba4bf5a083dc7, type: 2}
+  ingredientType: 2

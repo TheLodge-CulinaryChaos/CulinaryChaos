@@ -1,9 +1,10 @@
 using UnityEngine;
 using System.Collections;
+using CulinaryChaos.Objects;
 public class Tomato : Ingredient
 {
     public Tomato()
     {
-        name = "tomato";
+        type = IngredientEnum.Tomato;
     }
 }

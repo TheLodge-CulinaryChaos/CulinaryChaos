@@ -59,7 +59,6 @@ public class npcAI : MonoBehaviour
     {
         if (waypoints.Length == 0)
         {
-            Debug.LogError("No waypoints set!");
             return;
         }
 

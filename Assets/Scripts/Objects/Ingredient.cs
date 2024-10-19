@@ -1,12 +1,12 @@
 using UnityEngine;
 using System.Collections;
+using CulinaryChaos.Objects;
 
 public class Ingredient
 {
-    public string name;
+    public IngredientEnum type; 
 
     public void Chop()
     {
-        Debug.Log("The " + name + " ingredient has been chopped.");
     }
 }

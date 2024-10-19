@@ -1,15 +1,21 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Rendering.Universal;
 
 public class PickUpController : MonoBehaviour
 {
     public float pickUpRange = 2f;
+    public float transferIngredientRange = 5f;
+
     public Transform holdPosition;
     private GameObject pickUpObject = null;
     private bool isHolding = false;
     private AnimatorManager animatorManager;
     private Vector3 originalScale;
+
+    private CookingComponent cookingComponent;
 
     private void Awake()
     {
@@ -71,9 +77,13 @@ public class PickUpController : MonoBehaviour
 
     void DropObject()
     {
-
         // if there is nothing, do nothing
         if (pickUpObject == null) return;
+
+        Debug.Log("Dropping object");
+        if (TransferIngredientIntoCookingComponent()) {
+            return;
+        }
 
         pickUpObject.transform.SetParent(null);
         Rigidbody rb = pickUpObject.GetComponent<Rigidbody>();
@@ -88,6 +98,32 @@ public class PickUpController : MonoBehaviour
 
         pickUpObject = null;
         isHolding = false;
-
     }
+
+    Boolean TransferIngredientIntoCookingComponent()
+    {
+        if (pickUpObject == null) return false;
+
+        if (cookingComponent == null) return false;
+
+        if (cookingComponent.CanAcceptIngredient(pickUpObject))
+        {
+            cookingComponent.CookIngredient(pickUpObject);
+
+            pickUpObject.transform.SetParent(null);
+            Destroy(pickUpObject);
+            isHolding = false;
+            return true;
+        }
+        return false;
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("CookingComponent"))
+        {
+            cookingComponent = other.GetComponent<CookingComponent>();
+        }
+    }
+
 }

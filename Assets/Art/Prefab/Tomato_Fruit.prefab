@@ -125,7 +125,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 6924805334093804004}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c8998f61895f04aadb895517a5cbaa70, type: 3}
+  m_Script: {fileID: 11500000, guid: d331a60018aea47e9a699a932c482daf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   cookingMaterial: {fileID: 2100000, guid: 61e352e168283447b85cbf349f7f3c3a, type: 2}
