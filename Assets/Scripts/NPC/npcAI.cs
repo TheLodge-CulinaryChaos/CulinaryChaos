@@ -12,6 +12,9 @@ public class npcAI : MonoBehaviour
     private bool isSitting = false;
 
     private NPCManager npcManager; // Reference to the NPC Manager
+    public OrderSystem orderSystem;
+    private bool hasOrdered = false;
+
 
     void Start()
     {
@@ -55,6 +58,18 @@ public class npcAI : MonoBehaviour
         }
     }
 
+    private Recipe GenerateOrder()
+    {
+        if (hasOrdered) return null; // Prevent multiple orders
+        // choosing randomly from the available recipes
+        Recipe order = orderSystem.recipes[Random.Range(0, orderSystem.recipes.Count)];
+        orderSystem.PlaceOrder(order);
+        orderSystem.CreateOrderUI(order);
+
+        hasOrdered = true;
+        return order;
+    }
+
     private void setNextWaypoint()
     {
         if (waypoints.Length == 0)
@@ -85,28 +100,32 @@ public class npcAI : MonoBehaviour
     }
 
     private IEnumerator SitAndReturnToWaypoint()
-{
-    // Wait for 60 seconds (1 minute)
-    yield return new WaitForSeconds(15f);
-
-    // Stand up from sitting
-    isSitting = false; // Allow movement again
-    animator.SetBool("isSitting", false); // Reset sitting animation
-
-    navMeshAgent.isStopped = true;
-    navMeshAgent.velocity = Vector3.zero; // Clear any remaining velocity
-    animator.SetFloat("vely", 0); // Stop walking animation
-
-    // Find the NPCManager and trigger GenerateCustomer to respawn a new customer
-    NPCManager npcManager = FindObjectOfType<NPCManager>();
-    if (npcManager != null)
     {
-        npcManager.RemoveCustomer(gameObject);
-        npcManager.GenerateCustomer(); // Call the respawn method in the manager
-    }
 
-    gameObject.SetActive(false); // Deactivate the NPC
-}
+        // Generate an order for the NPC
+        Recipe order = GenerateOrder();
+
+        // Wait for 60 seconds (1 minute)
+        yield return new WaitForSeconds(15f);
+
+        // Stand up from sitting
+        isSitting = false; // Allow movement again
+        animator.SetBool("isSitting", false); // Reset sitting animation
+
+        navMeshAgent.isStopped = true;
+        navMeshAgent.velocity = Vector3.zero; // Clear any remaining velocity
+        animator.SetFloat("vely", 0); // Stop walking animation
+
+        // Find the NPCManager and trigger GenerateCustomer to respawn a new customer
+        NPCManager npcManager = FindObjectOfType<NPCManager>();
+        if (npcManager != null)
+        {
+            npcManager.RemoveCustomer(gameObject);
+            npcManager.GenerateCustomer(); // Call the respawn method in the manager
+        }
+
+        gameObject.SetActive(false); // Deactivate the NPC
+    }
 
     private void OpenDoor()
     {
@@ -138,5 +157,5 @@ public class npcAI : MonoBehaviour
         }
     }
 
-    
+
 }
