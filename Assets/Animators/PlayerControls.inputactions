@@ -15,9 +15,18 @@
                     "initialStateCheck": false
                 },
                 {
+                    "name": "Pause",
+                    "type": "Button",
+                    "id": "620bac00-3281-4afe-a681-9f8f91facd61",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
                     "name": "Camera",
                     "type": "PassThrough",
-                    "id": "6c98bc92-5f80-433d-a6ee-60aa90cbca2c",
+                    "id": "33e64769-01fa-445a-b105-ff2d9e064ebd",
                     "expectedControlType": "Vector2",
                     "processors": "",
                     "interactions": "",
@@ -137,7 +146,18 @@
                 },
                 {
                     "name": "",
-                    "id": "69d2ed65-45c7-441c-b796-103b01b29a76",
+                    "id": "ba1f3752-b227-42d9-b647-c7330a156646",
+                    "path": "<Keyboard>/p",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Pause",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "935e0191-edb0-402f-9ec1-33cb7232537e",
                     "path": "<Mouse>/delta",
                     "interactions": "",
                     "processors": "",
