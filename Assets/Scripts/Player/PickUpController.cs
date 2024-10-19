@@ -71,21 +71,23 @@ public class PickUpController : MonoBehaviour
 
     void DropObject()
     {
-        if (pickUpObject != null)
-        {
-            pickUpObject.transform.SetParent(null);
-            Rigidbody rb = pickUpObject.GetComponent<Rigidbody>();
-            if (rb != null)
-            {
-                rb.isKinematic = false;
-                rb.useGravity = true;
-                rb.AddForce(transform.forward * 2f, ForceMode.Impulse); // Add a little force to the object
-            }
-            pickUpObject.transform.position = transform.position + transform.forward * 1f + transform.up * 1f;
-            pickUpObject.transform.localScale = originalScale;
 
-            pickUpObject = null;
-            isHolding = false;
+        // if there is nothing, do nothing
+        if (pickUpObject == null) return;
+
+        pickUpObject.transform.SetParent(null);
+        Rigidbody rb = pickUpObject.GetComponent<Rigidbody>();
+        if (rb != null)
+        {
+            rb.isKinematic = false;
+            rb.useGravity = true;
+            rb.AddForce(transform.forward * 2f, ForceMode.Impulse); // Add a little force to the object
         }
+        pickUpObject.transform.position = transform.position + transform.forward * 1f + transform.up * 1f;
+        pickUpObject.transform.localScale = originalScale;
+
+        pickUpObject = null;
+        isHolding = false;
+
     }
 }
