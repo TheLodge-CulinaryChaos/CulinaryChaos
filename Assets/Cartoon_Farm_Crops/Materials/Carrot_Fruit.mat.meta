@@ -1,5 +1,9 @@
 fileFormatVersion: 2
+<<<<<<< Updated upstream:Assets/Cartoon_Farm_Crops/Materials/Carrot_Fruit.mat.meta
 guid: 83bd34c3b7d2643b49db1893a65adc3a
+=======
+guid: 05133780028d545c59448c1febfcd78e
+>>>>>>> Stashed changes:Assets/Animators/Door/DoorClose.anim.meta
 NativeFormatImporter:
   externalObjects: {}
   mainObjectFileID: 0
