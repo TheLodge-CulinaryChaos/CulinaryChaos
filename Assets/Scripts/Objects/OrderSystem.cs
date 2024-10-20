@@ -13,9 +13,9 @@ public class OrderSystem : MonoBehaviour
     public Transform ordersParent;
 
     // Creating instances of the Recipe class
-    public Recipe tomatoRecipe = new Recipe("tomato soup", new List<Ingredient> { new Tomato() }, 100);
-    public Recipe cornRecipe = new Recipe("corn cheese", new List<Ingredient> { new Corn() }, 200);
-    public Recipe lettuceRecipe = new Recipe("salad", new List<Ingredient> { new Lettuce() }, 300);
+    public Recipe tomatoRecipe = new Recipe($"Tomato Soup", new List<Ingredient> { new Tomato() }, 100);
+    public Recipe cornRecipe = new Recipe("Pumpkin Soup", new List<Ingredient> { new Pumpkin() }, 200);
+    public Recipe lettuceRecipe = new Recipe("Mushroom Soup", new List<Ingredient> { new Mushroom() }, 300);
 
     void Awake()
     {
