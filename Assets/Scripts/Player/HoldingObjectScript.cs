@@ -15,20 +15,20 @@ public class HoldingObjectScript : MonoBehaviour
         cookedObject.SetActive(false);
     }
 
+    internal void DisposeOfBowl() {
+        holdingObject.SetActive(false);
+        cookedObject.SetActive(false);
+    }
+
+    internal Boolean IsHoldingPlate() {
+        return holdingObject.activeSelf;
+    }
+
+
     // Start is called before the first frame update
 
     void Awake() {
         holdingObject.SetActive(false);
         cookedObject.SetActive(false);
-    }
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 }

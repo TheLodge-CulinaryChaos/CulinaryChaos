@@ -19,6 +19,7 @@ public class PickUpController : MonoBehaviour
 
     public GameObject HoldingObject;
     private Boolean canGrabBowl;
+    private Boolean canDisposeOfBowl;
 
     private void Awake()
     {
@@ -31,7 +32,11 @@ public class PickUpController : MonoBehaviour
         {
             GrabABowl();
         }
-        if (isHolding)
+        else if (canDisposeOfBowl)
+        {
+            DisposeOfBowl();
+        }
+        else if (isHolding)
         {
             DropObject();
         }
@@ -46,9 +51,22 @@ public class PickUpController : MonoBehaviour
         if (HoldingObject == null) return;
         HoldingObjectScript holdingObjectScript = HoldingObject.GetComponent<HoldingObjectScript>();
         if (holdingObjectScript == null) return;
-        Debug.Log("Have a holding script");
+
         holdingObjectScript.GrabABowl();
         animatorManager.animator.SetBool("isHoldingPlate", true);
+    }
+
+    private void DisposeOfBowl()
+    {
+        if (HoldingObject == null) return;
+        HoldingObjectScript holdingObjectScript = HoldingObject.GetComponent<HoldingObjectScript>();
+        if (holdingObjectScript == null) return;
+
+        if (holdingObjectScript.IsHoldingPlate())
+        {
+            holdingObjectScript.DisposeOfBowl();
+            animatorManager.animator.SetBool("isHoldingPlate", false);
+        }
     }
 
     public void TryPickUpObject()
@@ -144,6 +162,10 @@ public class PickUpController : MonoBehaviour
         {
             canGrabBowl = true;
         }
+        if (other.CompareTag("TheSink"))
+        {
+            canDisposeOfBowl = true;
+        }
     }
 
     private void OnTriggerExit(Collider other)
@@ -155,6 +177,10 @@ public class PickUpController : MonoBehaviour
         if (other.CompareTag("Bowls"))
         {
             canGrabBowl = false;
+        }
+        if (other.CompareTag("TheSink"))
+        {
+            canDisposeOfBowl = false;
         }
     }
 
