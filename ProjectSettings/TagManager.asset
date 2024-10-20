@@ -12,6 +12,8 @@ TagManager:
   - Ingredient
   - Door
   - CookingComponent
+  - Bowls
+  - Plates
   layers:
   - Default
   - TransparentFX
