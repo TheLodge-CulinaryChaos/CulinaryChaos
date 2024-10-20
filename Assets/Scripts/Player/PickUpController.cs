@@ -80,7 +80,6 @@ public class PickUpController : MonoBehaviour
         // if there is nothing, do nothing
         if (pickUpObject == null) return;
 
-        Debug.Log("Dropping object");
         if (TransferIngredientIntoCookingComponent()) {
             return;
         }
@@ -113,9 +112,8 @@ public class PickUpController : MonoBehaviour
             pickUpObject.transform.SetParent(null);
             Destroy(pickUpObject);
             isHolding = false;
-            return true;
         }
-        return false;
+        return true;
     }
 
     private void OnTriggerEnter(Collider other)
@@ -123,6 +121,14 @@ public class PickUpController : MonoBehaviour
         if (other.CompareTag("CookingComponent"))
         {
             cookingComponent = other.GetComponent<CookingComponent>();
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.CompareTag("CookingComponent"))
+        {
+            cookingComponent = null;
         }
     }
 

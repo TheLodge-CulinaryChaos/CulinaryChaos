@@ -129,3 +129,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cookingMaterial: {fileID: 2100000, guid: 61e352e168283447b85cbf349f7f3c3a, type: 2}
+  ingredientType: 0
