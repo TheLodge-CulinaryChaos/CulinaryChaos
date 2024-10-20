@@ -10,12 +10,17 @@ public class CookingComponent : MonoBehaviour
 
     public GameObject cookingFood;
     public GameObject pot;
+    
+    public IngredientProps ingredientProps;
+    
 
     // textmeshpro timer
     public TMP_Text timer;
 
 
     private float countdownTime = 5f;
+    private Boolean isCooking = false;
+    private Boolean isFoodReady = false;    
 
     void Awake()
     {
@@ -46,12 +51,22 @@ public class CookingComponent : MonoBehaviour
         var ingredientComponent = GetIngredientProperties(pickUpObject);
         if (ingredientComponent == null) return;
 
+        // set this to use later when pick up the food
+        ingredientProps = ingredientComponent;
+
         var cookingMaterial = ingredientComponent.cookingMaterial;
         cookingFood.GetComponent<Renderer>().material = cookingMaterial;
 
         cookingFood.SetActive(true);
         pot.SetActive(true);
 
+    }
+
+    internal void RemoveFoodFromPot() {
+        cookingFood.SetActive(false);
+        isCooking = false;
+        isFoodReady = false;
+        countdownTime = 5f;
     }
 
     private IngredientProps GetIngredientProperties(GameObject pickUpObject)
@@ -71,21 +86,23 @@ public class CookingComponent : MonoBehaviour
             if (displayTime < 1)
             {
                 timer.SetText("Ready");
+                isCooking = false;
+                isFoodReady = true;
             } else {
                 timer.SetText(displayTime.ToString());
+                isCooking = true;
+                isFoodReady = false;
             }
 
             yield return new WaitForSeconds(1f);
         }
     }
 
-    // Start is called before the first frame update
-    void Start()
+    public Boolean isFoodReadyToServe()
     {
-
+        return isFoodReady;
     }
 
-    // Update is called once per frame
     void Update()
     {
         StartCoroutine(StartCookingTimer());

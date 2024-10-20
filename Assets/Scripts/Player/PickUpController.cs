@@ -18,8 +18,9 @@ public class PickUpController : MonoBehaviour
     private CookingComponent cookingComponent;
 
     public GameObject HoldingObject;
-    private Boolean canGrabBowl;
-    private Boolean canDisposeOfBowl;
+    private bool canGrabBowl;
+    private bool canDisposeOfBowl;
+    private bool canAttemptToTransferFood;
 
     private void Awake()
     {
@@ -39,9 +40,13 @@ public class PickUpController : MonoBehaviour
         else if (isHolding)
         {
             DropObject();
+        } else if (canAttemptToTransferFood)
+        {
+            TransferCookedFoodIntoHoldingObject();
         }
         else
         {
+            // include the pickup anim
             animatorManager.PlayTargetAnimation("Pick Fruit", false);
         }
     }
@@ -69,6 +74,7 @@ public class PickUpController : MonoBehaviour
         }
     }
 
+    // used in task under animation window
     public void TryPickUpObject()
     {
         Collider[] colliders = Physics.OverlapSphere(transform.position, pickUpRange);
@@ -85,29 +91,30 @@ public class PickUpController : MonoBehaviour
 
     void PickUpObject()
     {
-        if (pickUpObject != null)
+        if (pickUpObject == null) return;
+
+
+        Rigidbody rb = pickUpObject.GetComponent<Rigidbody>();
+
+        Collider objectCollider = pickUpObject.GetComponent<Collider>();
+        Collider playerCollider = GetComponent<Collider>();
+        if (objectCollider != null && playerCollider != null)
         {
-            Rigidbody rb = pickUpObject.GetComponent<Rigidbody>();
-
-            Collider objectCollider = pickUpObject.GetComponent<Collider>();
-            Collider playerCollider = GetComponent<Collider>();
-            if (objectCollider != null && playerCollider != null)
-            {
-                Physics.IgnoreCollision(objectCollider, playerCollider, true);
-            }
-
-            rb.isKinematic = true;
-            rb.useGravity = false;
-
-            pickUpObject.transform.SetParent(holdPosition, true);
-            pickUpObject.transform.localPosition = Vector3.zero;
-            pickUpObject.transform.localRotation = Quaternion.Euler(Vector3.zero);
-
-            originalScale = pickUpObject.transform.lossyScale;
-            pickUpObject.transform.localScale = Vector3.one;
-
-            isHolding = true;
+            Physics.IgnoreCollision(objectCollider, playerCollider, true);
         }
+
+        rb.isKinematic = true;
+        rb.useGravity = false;
+
+        pickUpObject.transform.SetParent(holdPosition, true);
+        pickUpObject.transform.localPosition = Vector3.zero;
+        pickUpObject.transform.localRotation = Quaternion.Euler(Vector3.zero);
+
+        originalScale = pickUpObject.transform.lossyScale;
+        pickUpObject.transform.localScale = Vector3.one;
+
+        isHolding = true;
+
     }
 
     void DropObject()
@@ -152,10 +159,27 @@ public class PickUpController : MonoBehaviour
         return true;
     }
 
+
+    Boolean TransferCookedFoodIntoHoldingObject()
+    {
+        if (HoldingObject == null) return false;
+        HoldingObjectScript holdingObjectScript = HoldingObject.GetComponent<HoldingObjectScript>();
+
+        if (cookingComponent == null) return false;
+
+        if (cookingComponent.isFoodReadyToServe() && !holdingObjectScript.IsFoodInPlate())
+        {
+            cookingComponent.RemoveFoodFromPot();
+            holdingObjectScript.PutFoodInPlate(cookingComponent.ingredientProps);
+        }
+        return true;
+    }
+
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("CookingComponent"))
         {
+            canAttemptToTransferFood = true;
             cookingComponent = other.GetComponent<CookingComponent>();
         }
         if (other.CompareTag("Bowls"))
@@ -172,6 +196,7 @@ public class PickUpController : MonoBehaviour
     {
         if (other.CompareTag("CookingComponent"))
         {
+            canAttemptToTransferFood = false;
             cookingComponent = null;
         }
         if (other.CompareTag("Bowls"))

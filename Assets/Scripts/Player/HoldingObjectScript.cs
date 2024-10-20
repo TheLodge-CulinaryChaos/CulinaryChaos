@@ -8,6 +8,7 @@ public class HoldingObjectScript : MonoBehaviour
 
     public GameObject holdingObject;
     public GameObject cookedObject;
+    public IngredientProps ingredientProps;
 
     internal void GrabABowl()
     {
@@ -22,6 +23,17 @@ public class HoldingObjectScript : MonoBehaviour
 
     internal Boolean IsHoldingPlate() {
         return holdingObject.activeSelf;
+    }
+
+    internal Boolean IsFoodInPlate() {
+        return cookedObject.activeSelf;
+    }
+
+    internal void PutFoodInPlate(IngredientProps ingredientProps) {
+        this.ingredientProps = ingredientProps;
+        holdingObject.SetActive(true);
+        cookedObject.SetActive(true);
+        cookedObject.GetComponent<Renderer>().material = ingredientProps.cookingMaterial;
     }
 
 
