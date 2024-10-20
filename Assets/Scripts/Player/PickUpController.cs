@@ -16,11 +16,13 @@ public class PickUpController : MonoBehaviour
     private Vector3 originalScale;
 
     private CookingComponent cookingComponent;
+    private DiningOrderScript diningOrderScript;
 
     public GameObject HoldingObject;
     private bool canGrabBowl;
     private bool canDisposeOfBowl;
     private bool canAttemptToTransferFood;
+    private bool canAttemptToServeFood;
 
     private void Awake()
     {
@@ -29,6 +31,7 @@ public class PickUpController : MonoBehaviour
 
     public void HandleAllStates()
     {
+        HoldingObjectScript holdingObjectScript = HoldingObject.GetComponent<HoldingObjectScript>();
         if (canGrabBowl)
         {
             GrabABowl();
@@ -40,9 +43,18 @@ public class PickUpController : MonoBehaviour
         else if (isHolding)
         {
             DropObject();
-        } else if (canAttemptToTransferFood)
+        }
+        else if (canAttemptToTransferFood)
         {
             TransferCookedFoodIntoHoldingObject();
+        }
+        else if (canAttemptToServeFood)
+        {
+            ServeFood();
+        }
+        else if (holdingObjectScript != null && holdingObjectScript.IsHoldingPlate())
+        {
+            return;
         }
         else
         {
@@ -69,6 +81,24 @@ public class PickUpController : MonoBehaviour
 
         if (holdingObjectScript.IsHoldingPlate())
         {
+            holdingObjectScript.DisposeOfBowl();
+            animatorManager.animator.SetBool("isHoldingPlate", false);
+        }
+    }
+
+    private void ServeFood()
+    {
+        if (HoldingObject == null) return;
+        HoldingObjectScript holdingObjectScript = HoldingObject.GetComponent<HoldingObjectScript>();
+        if (holdingObjectScript == null) return;
+
+        if (diningOrderScript == null) return;
+
+        if (holdingObjectScript.IsFoodInPlate()
+        && diningOrderScript.IsOrderAccepted(holdingObjectScript.ingredientProps))
+        {
+            cookingComponent.ResetTimer();
+            diningOrderScript.CompleteOrder(holdingObjectScript.ingredientProps);
             holdingObjectScript.DisposeOfBowl();
             animatorManager.animator.SetBool("isHoldingPlate", false);
         }
@@ -190,6 +220,11 @@ public class PickUpController : MonoBehaviour
         {
             canDisposeOfBowl = true;
         }
+        if (other.CompareTag("OrderObject"))
+        {
+            canAttemptToServeFood = true;
+            diningOrderScript = other.GetComponent<DiningOrderScript>();
+        }
     }
 
     private void OnTriggerExit(Collider other)
@@ -206,6 +241,11 @@ public class PickUpController : MonoBehaviour
         if (other.CompareTag("TheSink"))
         {
             canDisposeOfBowl = false;
+        }
+        if (other.CompareTag("OrderObject"))
+        {
+            canAttemptToServeFood = false;
+            diningOrderScript = null;
         }
     }
 

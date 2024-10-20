@@ -10,9 +10,10 @@ GameObject:
   m_Component:
   - component: {fileID: 7870990519868604754}
   - component: {fileID: 7448239321753223151}
+  - component: {fileID: 4163492798089110212}
   m_Layer: 0
   m_Name: OrderObject
-  m_TagString: Untagged
+  m_TagString: OrderObject
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -46,6 +47,20 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 2.53, y: 1.39, z: 1}
   m_Center: {x: 0, y: -0.41, z: -0.06}
+--- !u!114 &4163492798089110212
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1707967365750487653}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dc0fb7abae0f243d0a3b64e4e9c2623d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  holdingObject: {fileID: 8761964151659504850}
+  cookedFood: {fileID: 7583584745037341825}
 --- !u!1 &7583584745037341825
 GameObject:
   m_ObjectHideFlags: 0
@@ -220,5 +235,10 @@ PrefabInstance:
 --- !u!4 &8274079353435815528 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6078020275237373832, guid: 83ecca2cf3e6d4f95942e3eccfd7dda1, type: 3}
+  m_PrefabInstance: {fileID: 2777058960883726816}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &8761964151659504850 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6850722221335584050, guid: 83ecca2cf3e6d4f95942e3eccfd7dda1, type: 3}
   m_PrefabInstance: {fileID: 2777058960883726816}
   m_PrefabAsset: {fileID: 0}

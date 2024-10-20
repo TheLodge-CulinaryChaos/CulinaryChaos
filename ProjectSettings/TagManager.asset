@@ -15,6 +15,7 @@ TagManager:
   - Bowls
   - Plates
   - TheSink
+  - OrderObject
   layers:
   - Default
   - TransparentFX

@@ -19,8 +19,8 @@ public class CookingComponent : MonoBehaviour
 
 
     private float countdownTime = 5f;
-    private Boolean isCooking = false;
-    private Boolean isFoodReady = false;    
+    private bool isCooking = false;
+    private bool isFoodReady = false;    
 
     void Awake()
     {
@@ -66,6 +66,11 @@ public class CookingComponent : MonoBehaviour
         cookingFood.SetActive(false);
         isCooking = false;
         isFoodReady = false;
+        countdownTime = 5f;
+    }
+
+    internal void ResetTimer() {
+        timer.SetText("");
         countdownTime = 5f;
     }
 
