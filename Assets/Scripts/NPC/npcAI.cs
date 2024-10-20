@@ -106,7 +106,7 @@ public class npcAI : MonoBehaviour
         Recipe order = GenerateOrder();
 
         // Wait for 60 seconds (1 minute)
-        yield return new WaitForSeconds(15f);
+        yield return new WaitForSeconds(30f);
 
         // Stand up from sitting
         isSitting = false; // Allow movement again
