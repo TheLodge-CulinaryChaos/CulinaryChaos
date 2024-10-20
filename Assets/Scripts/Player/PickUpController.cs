@@ -1,15 +1,21 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Rendering.Universal;
 
 public class PickUpController : MonoBehaviour
 {
     public float pickUpRange = 2f;
+    public float transferIngredientRange = 5f;
+
     public Transform holdPosition;
     private GameObject pickUpObject = null;
     private bool isHolding = false;
     private AnimatorManager animatorManager;
     private Vector3 originalScale;
+
+    private CookingComponent cookingComponent;
 
     private void Awake()
     {
@@ -71,21 +77,59 @@ public class PickUpController : MonoBehaviour
 
     void DropObject()
     {
-        if (pickUpObject != null)
-        {
-            pickUpObject.transform.SetParent(null);
-            Rigidbody rb = pickUpObject.GetComponent<Rigidbody>();
-            if (rb != null)
-            {
-                rb.isKinematic = false;
-                rb.useGravity = true;
-                rb.AddForce(transform.forward * 2f, ForceMode.Impulse); // Add a little force to the object
-            }
-            pickUpObject.transform.position = transform.position + transform.forward * 1f + transform.up * 1f;
-            pickUpObject.transform.localScale = originalScale;
+        // if there is nothing, do nothing
+        if (pickUpObject == null) return;
 
-            pickUpObject = null;
+        if (TransferIngredientIntoCookingComponent()) {
+            return;
+        }
+
+        pickUpObject.transform.SetParent(null);
+        Rigidbody rb = pickUpObject.GetComponent<Rigidbody>();
+        if (rb != null)
+        {
+            rb.isKinematic = false;
+            rb.useGravity = true;
+            rb.AddForce(transform.forward * 2f, ForceMode.Impulse); // Add a little force to the object
+        }
+        pickUpObject.transform.position = transform.position + transform.forward * 1f + transform.up * 1f;
+        pickUpObject.transform.localScale = originalScale;
+
+        pickUpObject = null;
+        isHolding = false;
+    }
+
+    Boolean TransferIngredientIntoCookingComponent()
+    {
+        if (pickUpObject == null) return false;
+
+        if (cookingComponent == null) return false;
+
+        if (cookingComponent.CanAcceptIngredient(pickUpObject))
+        {
+            cookingComponent.CookIngredient(pickUpObject);
+
+            pickUpObject.transform.SetParent(null);
+            Destroy(pickUpObject);
             isHolding = false;
         }
+        return true;
     }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("CookingComponent"))
+        {
+            cookingComponent = other.GetComponent<CookingComponent>();
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.CompareTag("CookingComponent"))
+        {
+            cookingComponent = null;
+        }
+    }
+
 }

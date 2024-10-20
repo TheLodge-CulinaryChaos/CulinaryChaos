@@ -32,8 +32,6 @@ public class NPCManager : MonoBehaviour
         // Loop to spawn customers until maxCustomers is reached
         while (activeCustomers.Count < maxCustomers && inactiveCustomers.Count > 0)
         {
-            Debug.Log("active" + activeCustomers.Count);
-            Debug.Log("inactive" + inactiveCustomers.Count);
             // Randomly choose one of the inactive customer GameObjects to activate
             int randomIndex = Random.Range(0, inactiveCustomers.Count);
             GameObject customer = inactiveCustomers[randomIndex];
