@@ -24,11 +24,10 @@ public class DiningOrderScript : MonoBehaviour
         return tomatoRecipe.ingredients.Any(ingr => ingr.type.Equals(ingredientProps.ingredientType));
     }
 
-    internal void CompleteOrder(IngredientProps ingredientProps) {
-        if (IsOrderAccepted(ingredientProps)) {
-            holdingObject.SetActive(true);
-            cookedFood.SetActive(true);
-            cookedFood.GetComponent<Renderer>().material = ingredientProps.cookingMaterial;
-        }
+    internal void CompleteOrder(IngredientProps ingredientProps)
+    {
+        holdingObject.SetActive(true);
+        cookedFood.SetActive(true);
+        cookedFood.GetComponent<Renderer>().material = ingredientProps.cookingMaterial;
     }
 }
