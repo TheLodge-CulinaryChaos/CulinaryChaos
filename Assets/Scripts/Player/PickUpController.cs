@@ -17,6 +17,9 @@ public class PickUpController : MonoBehaviour
 
     private CookingComponent cookingComponent;
 
+    public GameObject HoldingObject;
+    private Boolean canGrabBowl;
+
     private void Awake()
     {
         animatorManager = GetComponent<AnimatorManager>();
@@ -24,6 +27,10 @@ public class PickUpController : MonoBehaviour
 
     public void HandleAllStates()
     {
+        if (canGrabBowl)
+        {
+            GrabABowl();
+        }
         if (isHolding)
         {
             DropObject();
@@ -32,6 +39,16 @@ public class PickUpController : MonoBehaviour
         {
             animatorManager.PlayTargetAnimation("Pick Fruit", false);
         }
+    }
+
+    private void GrabABowl()
+    {
+        if (HoldingObject == null) return;
+        HoldingObjectScript holdingObjectScript = HoldingObject.GetComponent<HoldingObjectScript>();
+        if (holdingObjectScript == null) return;
+        Debug.Log("Have a holding script");
+        holdingObjectScript.GrabABowl();
+        animatorManager.animator.SetBool("isHoldingPlate", true);
     }
 
     public void TryPickUpObject()
@@ -80,7 +97,8 @@ public class PickUpController : MonoBehaviour
         // if there is nothing, do nothing
         if (pickUpObject == null) return;
 
-        if (TransferIngredientIntoCookingComponent()) {
+        if (TransferIngredientIntoCookingComponent())
+        {
             return;
         }
 
@@ -122,6 +140,10 @@ public class PickUpController : MonoBehaviour
         {
             cookingComponent = other.GetComponent<CookingComponent>();
         }
+        if (other.CompareTag("Bowls"))
+        {
+            canGrabBowl = true;
+        }
     }
 
     private void OnTriggerExit(Collider other)
@@ -129,6 +151,10 @@ public class PickUpController : MonoBehaviour
         if (other.CompareTag("CookingComponent"))
         {
             cookingComponent = null;
+        }
+        if (other.CompareTag("Bowls"))
+        {
+            canGrabBowl = false;
         }
     }
 
