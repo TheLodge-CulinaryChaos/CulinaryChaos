@@ -6,7 +6,7 @@ using TMPro;
 public class Coins : MonoBehaviour {
     // inits
     public float balance;
-    public bool debug = false;
+    public bool debug = true;
     [SerializeField] TextMeshProUGUI currTMP;
     // Start is called before the first frame update
     void Start() {
@@ -17,16 +17,18 @@ public class Coins : MonoBehaviour {
     void Update() {
         string formattedBal = string.Format("{0:C}", balance);
         currTMP.text = formattedBal;
-        debugMoney();
+        if (debug && Input.GetKeyDown(KeyCode.U)) {
+            balance += .24f;
+        }
     }
 
+    // Allows you to add Money to the Scoreboard
     public void addMoney(float money) {
         balance += money;
     }
 
-    public void debugMoney() {
-        if (debug && Input.GetKeyUp(KeyCode.U)) {
-            balance += .24f;
-        }
+    // Getter to see current Balance
+    public float getBalance() {
+        return balance;
     }
 }
