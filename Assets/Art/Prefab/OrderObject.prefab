@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 7870990519868604754}
   - component: {fileID: 7448239321753223151}
   - component: {fileID: 4163492798089110212}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: OrderObject
   m_TagString: OrderObject
   m_Icon: {fileID: 0}
@@ -45,8 +45,8 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 2.53, y: 1.39, z: 1}
-  m_Center: {x: 0, y: -0.41, z: -0.06}
+  m_Size: {x: 0.5, y: 1.39, z: 0.5}
+  m_Center: {x: 0, y: -0.41, z: 0}
 --- !u!114 &4163492798089110212
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -172,15 +172,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6078020275237373832, guid: 83ecca2cf3e6d4f95942e3eccfd7dda1, type: 3}
       propertyPath: m_LocalScale.x
-      value: 1.9499995
+      value: 2.76
       objectReference: {fileID: 0}
     - target: {fileID: 6078020275237373832, guid: 83ecca2cf3e6d4f95942e3eccfd7dda1, type: 3}
       propertyPath: m_LocalScale.y
-      value: 1.6249998
+      value: 2.3000002
       objectReference: {fileID: 0}
     - target: {fileID: 6078020275237373832, guid: 83ecca2cf3e6d4f95942e3eccfd7dda1, type: 3}
       propertyPath: m_LocalScale.z
-      value: 1.9499999
+      value: 2.76
       objectReference: {fileID: 0}
     - target: {fileID: 6078020275237373832, guid: 83ecca2cf3e6d4f95942e3eccfd7dda1, type: 3}
       propertyPath: m_LocalPosition.x

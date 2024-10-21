@@ -30,15 +30,15 @@ public class CookingComponent : MonoBehaviour
 
     internal bool CanAcceptIngredient(GameObject pickUpObject)
     {
-        var ingredientComponent = GetIngredientProperties(pickUpObject);
-        if (ingredientComponent == null) return false;
+        ingredientProps = GetIngredientProperties(pickUpObject);
+        if (ingredientProps == null) return false;
 
         if (cookingFood.activeSelf)
         {
             return false;
         }
 
-        var ingredientType = ingredientComponent.ingredientType;
+        var ingredientType = ingredientProps.ingredientType;
 
         return ingredientType == IngredientEnum.Tomato ||
                 ingredientType == IngredientEnum.Pumpkin ||
@@ -48,13 +48,10 @@ public class CookingComponent : MonoBehaviour
 
     internal void CookIngredient(GameObject pickUpObject)
     {
-        var ingredientComponent = GetIngredientProperties(pickUpObject);
-        if (ingredientComponent == null) return;
+        ingredientProps = GetIngredientProperties(pickUpObject);
+        if (ingredientProps == null) return;
 
-        // set this to use later when pick up the food
-        ingredientProps = ingredientComponent;
-
-        var cookingMaterial = ingredientComponent.cookingMaterial;
+        var cookingMaterial = ingredientProps.cookingMaterial;
         cookingFood.GetComponent<Renderer>().material = cookingMaterial;
 
         cookingFood.SetActive(true);

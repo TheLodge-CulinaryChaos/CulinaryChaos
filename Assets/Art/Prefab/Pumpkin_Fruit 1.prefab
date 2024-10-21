@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 561290022662446238}
   - component: {fileID: 4406753606309854301}
   - component: {fileID: 8733629316609098002}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Pumpkin_Fruit 1
   m_TagString: Ingredient
   m_Icon: {fileID: 0}

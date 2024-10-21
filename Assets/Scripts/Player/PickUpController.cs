@@ -1,28 +1,40 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using CulinaryChaos.Objects;
+using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Rendering.Universal;
 
 public class PickUpController : MonoBehaviour
 {
-    public float pickUpRange = 2f;
-    public float transferIngredientRange = 5f;
 
+    private AnimatorManager animatorManager;
+
+    #region Pick up Object Variables
     public Transform holdPosition;
     private GameObject pickUpObject = null;
     private bool isHolding = false;
-    private AnimatorManager animatorManager;
     private Vector3 originalScale;
+    #endregion
 
+    #region Cooking Component, Dining Order
     private CookingComponent cookingComponent;
     private DiningOrderScript diningOrderScript;
+    #endregion
 
+    #region Holding Object like Bowl on the Player when pick up cooked food
     public GameObject HoldingObject;
-    private bool canGrabBowl;
-    private bool canDisposeOfBowl;
-    private bool canAttemptToTransferFood;
-    private bool canAttemptToServeFood;
+    #endregion
+
+    #region LayerMask of all objects the player can interact with for Cooking Process
+    public LayerMask cookingLayerMask;
+    public float maxDistanceCookingLM = 1f;
+    RaycastHit hit;
+    #endregion
+
+    public TMP_Text indicatorText;
 
     private void Awake()
     {
@@ -31,94 +43,63 @@ public class PickUpController : MonoBehaviour
 
     public void HandleAllStates()
     {
-        HoldingObjectScript holdingObjectScript = HoldingObject.GetComponent<HoldingObjectScript>();
-        if (canGrabBowl)
+        RaycastHit hit = PerformBoxCast();
+
+        if (hit.collider == null)
         {
-            GrabABowl();
-        }
-        else if (canDisposeOfBowl)
-        {
-            DisposeOfBowl();
-        }
-        else if (isHolding)
-        {
-            DropObject();
-        }
-        else if (canAttemptToTransferFood)
-        {
-            TransferCookedFoodIntoHoldingObject();
-        }
-        else if (canAttemptToServeFood)
-        {
-            ServeFood();
-        }
-        else if (holdingObjectScript != null && holdingObjectScript.IsHoldingPlate())
-        {
+            if (isHolding)
+            {
+                DropObject();
+            }
             return;
         }
-        else
-        {
-            // include the pickup anim
-            animatorManager.PlayTargetAnimation("Pick Fruit", false);
-        }
+        HandleBoxCastOnObjects(hit);
+
     }
 
-    private void GrabABowl()
+    #region Handle Box Cast on Objects
+    private void HandleBoxCastOnObjects(RaycastHit hit)
     {
-        if (HoldingObject == null) return;
-        HoldingObjectScript holdingObjectScript = HoldingObject.GetComponent<HoldingObjectScript>();
-        if (holdingObjectScript == null) return;
+        GameObject gameObject = hit.collider.gameObject;
 
-        holdingObjectScript.GrabABowl();
-        animatorManager.animator.SetBool("isHoldingPlate", true);
-    }
-
-    private void DisposeOfBowl()
-    {
-        if (HoldingObject == null) return;
-        HoldingObjectScript holdingObjectScript = HoldingObject.GetComponent<HoldingObjectScript>();
-        if (holdingObjectScript == null) return;
-
-        if (holdingObjectScript.IsHoldingPlate())
+        switch (gameObject.tag)
         {
-            holdingObjectScript.DisposeOfBowl();
-            animatorManager.animator.SetBool("isHoldingPlate", false);
-        }
-    }
-
-    private void ServeFood()
-    {
-        if (HoldingObject == null) return;
-        HoldingObjectScript holdingObjectScript = HoldingObject.GetComponent<HoldingObjectScript>();
-        if (holdingObjectScript == null) return;
-
-        if (diningOrderScript == null) return;
-
-        if (holdingObjectScript.IsFoodInPlate()
-        && diningOrderScript.IsOrderAccepted(holdingObjectScript.ingredientProps))
-        {
-            cookingComponent.ResetTimer();
-            diningOrderScript.CompleteOrder(holdingObjectScript.ingredientProps);
-            holdingObjectScript.DisposeOfBowl();
-            animatorManager.animator.SetBool("isHoldingPlate", false);
-        }
-    }
-
-    // used in task under animation window
-    public void TryPickUpObject()
-    {
-        Collider[] colliders = Physics.OverlapSphere(transform.position, pickUpRange);
-        foreach (Collider collider in colliders)
-        {
-            if (collider.CompareTag("Ingredient"))
-            {
-                pickUpObject = collider.gameObject;
+            case GameTags.COOKING_COMPONENT:
+                cookingComponent = gameObject.GetComponent<CookingComponent>();
+                HandleCookingComponent();
+                break;
+            case GameTags.BOWLS:
+                GrabABowl();
+                break;
+            case GameTags.THE_SINK:
+                DisposeOfBowl();
+                break;
+            case GameTags.ORDER_OBJECT:
+                diningOrderScript = gameObject.GetComponent<DiningOrderScript>();
+                ServeFood();
+                break;
+            case GameTags.INGREDIENT:
+                animatorManager.PlayTargetAnimation("Pick Fruit", false);
+                pickUpObject = gameObject;
                 PickUpObject();
                 break;
-            }
+            default:
+                DropObject();
+                break;
         }
     }
 
+    private RaycastHit PerformBoxCast()
+    {
+        Vector3 position = transform.position + new Vector3(0, 2, 0);
+        Physics.BoxCast(position, transform.lossyScale / 2, transform.forward, out hit,
+            transform.rotation, maxDistanceCookingLM, cookingLayerMask);
+        return hit;
+    }
+
+    #endregion
+
+    #region Handle Pick Up and Drop Ingredient
     void PickUpObject()
     {
         if (pickUpObject == null) return;
@@ -149,13 +130,7 @@ public class PickUpController : MonoBehaviour
 
     void DropObject()
     {
-        // if there is nothing, do nothing
         if (pickUpObject == null) return;
-
-        if (TransferIngredientIntoCookingComponent())
-        {
-            return;
-        }
 
         pickUpObject.transform.SetParent(null);
         Rigidbody rb = pickUpObject.GetComponent<Rigidbody>();
@@ -171,12 +146,49 @@ public class PickUpController : MonoBehaviour
         pickUpObject = null;
         isHolding = false;
     }
+    #endregion
 
-    Boolean TransferIngredientIntoCookingComponent()
+    #region Handle Pick up Bowl and Drop Bowl in sink
+    private void GrabABowl()
     {
-        if (pickUpObject == null) return false;
+        if (HoldingObject == null) return;
+        HoldingObjectScript holdingObjectScript = HoldingObject.GetComponent<HoldingObjectScript>();
+        if (holdingObjectScript == null) return;
 
-        if (cookingComponent == null) return false;
+        holdingObjectScript.GrabABowl();
+        animatorManager.animator.SetBool("isHoldingPlate", true);
+    }
+
+    private void DisposeOfBowl()
+    {
+        if (HoldingObject == null) return;
+        HoldingObjectScript holdingObjectScript = HoldingObject.GetComponent<HoldingObjectScript>();
+        if (holdingObjectScript == null) return;
+
+        if (holdingObjectScript.IsHoldingPlate())
+        {
+            holdingObjectScript.DisposeOfBowl();
+            animatorManager.animator.SetBool("isHoldingPlate", false);
+        }
+    }
+    #endregion
+
+    #region Handle Ingredient -> CookingComponent -> HoldingObject -> OrderObject
+
+    private void HandleCookingComponent()
+    {
+        if (HoldingObject != null && cookingComponent != null)
+        {
+            TransferCookedFoodIntoHoldingObject();
+        }
+        TransferIngredientIntoCookingComponent();
+    }
+
+    private void TransferIngredientIntoCookingComponent()
+    {
+        if (pickUpObject == null) return;
+
+        if (cookingComponent == null) return;
 
         if (cookingComponent.CanAcceptIngredient(pickUpObject))
         {
@@ -186,67 +198,64 @@ public class PickUpController : MonoBehaviour
             Destroy(pickUpObject);
             isHolding = false;
         }
-        return true;
     }
 
-
-    Boolean TransferCookedFoodIntoHoldingObject()
+    private void TransferCookedFoodIntoHoldingObject()
     {
-        if (HoldingObject == null) return false;
+        if (HoldingObject == null) return;
         HoldingObjectScript holdingObjectScript = HoldingObject.GetComponent<HoldingObjectScript>();
 
-        if (cookingComponent == null) return false;
+        if (cookingComponent == null) return;
 
         if (cookingComponent.isFoodReadyToServe() && !holdingObjectScript.IsFoodInPlate())
         {
             cookingComponent.RemoveFoodFromPot();
+            cookingComponent.ResetTimer();
             holdingObjectScript.PutFoodInPlate(cookingComponent.ingredientProps);
         }
-        return true;
     }
 
-    private void OnTriggerEnter(Collider other)
+    private void ServeFood()
     {
-        if (other.CompareTag("CookingComponent"))
+
+        if (HoldingObject == null) return;
+
+        HoldingObjectScript holdingObjectScript = HoldingObject.GetComponent<HoldingObjectScript>();
+        if (holdingObjectScript == null) return;
+
+        if (diningOrderScript == null) return;
+        if (holdingObjectScript.IsFoodInPlate()
+        && diningOrderScript.IsOrderAccepted(holdingObjectScript.ingredientProps))
         {
-            canAttemptToTransferFood = true;
-            cookingComponent = other.GetComponent<CookingComponent>();
-        }
-        if (other.CompareTag("Bowls"))
-        {
-            canGrabBowl = true;
-        }
-        if (other.CompareTag("TheSink"))
-        {
-            canDisposeOfBowl = true;
-        }
-        if (other.CompareTag("OrderObject"))
-        {
-            canAttemptToServeFood = true;
-            diningOrderScript = other.GetComponent<DiningOrderScript>();
+            diningOrderScript.CompleteOrder(holdingObjectScript.ingredientProps);
+            holdingObjectScript.DisposeOfBowl();
+            animatorManager.animator.SetBool("isHoldingPlate", false);
         }
     }
 
-    private void OnTriggerExit(Collider other)
+    #endregion
+
+    #region Debug BoxCast
+    void OnDrawGizmos()
     {
-        if (other.CompareTag("CookingComponent"))
+        Vector3 position = transform.position + new Vector3(0, 2, 0);
+        bool isHit = Physics.BoxCast(position, transform.lossyScale / 2, transform.forward, out hit,
+            transform.rotation, maxDistanceCookingLM, cookingLayerMask);
+        if (isHit)
         {
-            canAttemptToTransferFood = false;
-            cookingComponent = null;
+            Gizmos.color = Color.red;
+            Gizmos.DrawRay(position, transform.forward * hit.distance);
+            Gizmos.DrawWireCube(position + transform.forward * hit.distance, transform.lossyScale);
+            Debug.Log(hit.collider.gameObject);
         }
-        if (other.CompareTag("Bowls"))
+        else
         {
-            canGrabBowl = false;
-        }
-        if (other.CompareTag("TheSink"))
-        {
-            canDisposeOfBowl = false;
-        }
-        if (other.CompareTag("OrderObject"))
-        {
-            canAttemptToServeFood = false;
-            diningOrderScript = null;
+            Gizmos.color = Color.green;
+            Gizmos.DrawRay(position, transform.forward * maxDistanceCookingLM);
         }
     }
+    #endregion
 
 }
+
+

@@ -21,6 +21,7 @@ public class DiningOrderScript : MonoBehaviour
 
     internal bool IsOrderAccepted(IngredientProps ingredientProps)
     {
+        Debug.Log("Checking if order is accepted");
         return tomatoRecipe.ingredients.Any(ingr => ingr.type.Equals(ingredientProps.ingredientType));
     }
 
