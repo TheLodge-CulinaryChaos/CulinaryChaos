@@ -8,7 +8,7 @@ public class IngredientProps : MonoBehaviour
 
     public Material cookingMaterial;
     public IngredientEnum ingredientType;
-    
+
     // Start is called before the first frame update
     void Start()
     {

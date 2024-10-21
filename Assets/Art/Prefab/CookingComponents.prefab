@@ -283,7 +283,7 @@ GameObject:
   - component: {fileID: 5453959632156524793}
   - component: {fileID: 372570618112069114}
   - component: {fileID: 6166131559005891412}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: CookingComponents
   m_TagString: CookingComponent
   m_Icon: {fileID: 0}
@@ -323,6 +323,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cookingFood: {fileID: 2026409526735390633}
   pot: {fileID: 7352557191663949036}
+  ingredientProps: {fileID: 0}
   timer: {fileID: 4903016206536109106}
 --- !u!65 &6166131559005891412
 BoxCollider:
@@ -335,8 +336,8 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1, y: 4.09, z: 2.82}
-  m_Center: {x: 0, y: 0, z: 1}
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1001 &3500300505093655637
 PrefabInstance:
   m_ObjectHideFlags: 0

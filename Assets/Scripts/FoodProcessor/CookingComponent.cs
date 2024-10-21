@@ -10,12 +10,17 @@ public class CookingComponent : MonoBehaviour
 
     public GameObject cookingFood;
     public GameObject pot;
+    
+    public IngredientProps ingredientProps;
+    
 
     // textmeshpro timer
     public TMP_Text timer;
 
 
     private float countdownTime = 5f;
+    private bool isCooking = false;
+    private bool isFoodReady = false;    
 
     void Awake()
     {
@@ -25,15 +30,15 @@ public class CookingComponent : MonoBehaviour
 
     internal bool CanAcceptIngredient(GameObject pickUpObject)
     {
-        var ingredientComponent = GetIngredientProperties(pickUpObject);
-        if (ingredientComponent == null) return false;
+        ingredientProps = GetIngredientProperties(pickUpObject);
+        if (ingredientProps == null) return false;
 
         if (cookingFood.activeSelf)
         {
             return false;
         }
 
-        var ingredientType = ingredientComponent.ingredientType;
+        var ingredientType = ingredientProps.ingredientType;
 
         return ingredientType == IngredientEnum.Tomato ||
                 ingredientType == IngredientEnum.Pumpkin ||
@@ -43,15 +48,27 @@ public class CookingComponent : MonoBehaviour
 
     internal void CookIngredient(GameObject pickUpObject)
     {
-        var ingredientComponent = GetIngredientProperties(pickUpObject);
-        if (ingredientComponent == null) return;
+        ingredientProps = GetIngredientProperties(pickUpObject);
+        if (ingredientProps == null) return;
 
-        var cookingMaterial = ingredientComponent.cookingMaterial;
+        var cookingMaterial = ingredientProps.cookingMaterial;
         cookingFood.GetComponent<Renderer>().material = cookingMaterial;
 
         cookingFood.SetActive(true);
         pot.SetActive(true);
 
+    }
+
+    internal void RemoveFoodFromPot() {
+        cookingFood.SetActive(false);
+        isCooking = false;
+        isFoodReady = false;
+        countdownTime = 5f;
+    }
+
+    internal void ResetTimer() {
+        timer.SetText("");
+        countdownTime = 5f;
     }
 
     private IngredientProps GetIngredientProperties(GameObject pickUpObject)
@@ -71,21 +88,23 @@ public class CookingComponent : MonoBehaviour
             if (displayTime < 1)
             {
                 timer.SetText("Ready");
+                isCooking = false;
+                isFoodReady = true;
             } else {
                 timer.SetText(displayTime.ToString());
+                isCooking = true;
+                isFoodReady = false;
             }
 
             yield return new WaitForSeconds(1f);
         }
     }
 
-    // Start is called before the first frame update
-    void Start()
+    public Boolean isFoodReadyToServe()
     {
-
+        return isFoodReady;
     }
 
-    // Update is called once per frame
     void Update()
     {
         StartCoroutine(StartCookingTimer());
