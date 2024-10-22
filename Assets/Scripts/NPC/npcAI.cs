@@ -25,10 +25,6 @@ public class npcAI : MonoBehaviour
         animator = GetComponent<Animator>();
         navMeshAgent.stoppingDistance = 0.5f;
         navMeshAgent.autoBraking = true;
-
-
-
-        OpenDoor();
         setNextWaypoint(); // Initialize the first waypoint
     }
 
@@ -38,7 +34,6 @@ public class npcAI : MonoBehaviour
         {
             if (currWaypoint == waypoints.Length - 1)
             {
-                CloseDoor();
                 StopMovement();
 
                 GameObject chairObject = waypoints[currWaypoint].transform.parent.gameObject;
@@ -136,23 +131,7 @@ public class npcAI : MonoBehaviour
         // gameObject.SetActive(false); // Deactivate the NPC
     }
 
-    private void OpenDoor()
-    {
-        GameObject door = GameObject.FindGameObjectWithTag("Door");
-        if (door != null)
-        {
-            door.GetComponent<Animator>().SetTrigger("DoorOpen");
-        }
-    }
-
-    private void CloseDoor()
-    {
-        GameObject door = GameObject.FindGameObjectWithTag("Door");
-        if (door != null)
-        {
-            door.GetComponent<Animator>().SetBool("isOpen", true);
-        }
-    }
+    
 
     private void AlignToChair(GameObject chairObject)
     {

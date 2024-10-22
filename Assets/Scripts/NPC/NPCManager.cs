@@ -10,10 +10,13 @@ public class NPCManager : MonoBehaviour
     private List<GameObject> activeCustomers = new List<GameObject>(); // Track active customers
     private List<GameObject> inactiveCustomers = new List<GameObject>(); // Track inactive customers
 
+    public Animator doorAnimator;
+
     void Start()
     {
         // Initialize inactive customers only once at the start
         InitializeInactiveCustomers();
+        OpenDoor();
         StartCoroutine(SpawnCustomers());
     }
 
@@ -55,7 +58,8 @@ public class NPCManager : MonoBehaviour
             yield return new WaitForSeconds(spawnInterval); // Wait before next spawn
         }
 
-        inactiveCustomers.Clear(); // Remove from inactive list
+        inactiveCustomers.Clear();
+        CloseDoor();
     }
 
     // Method to remove a customer from the active list and deactivate them
@@ -75,5 +79,23 @@ public class NPCManager : MonoBehaviour
         inactiveCustomers.Clear();
 
         StartCoroutine(SpawnCustomers());
+    }
+
+    private void OpenDoor()
+    {
+        GameObject door = doorAnimator.gameObject;
+        if (door != null)
+        {
+            door.GetComponent<Animator>().SetTrigger("DoorOpen");
+        }
+    }
+
+    private void CloseDoor()
+    {
+        GameObject door = doorAnimator.gameObject;
+        if (door != null)
+        {
+            door.GetComponent<Animator>().SetBool("isOpen", true);
+        }
     }
 }
