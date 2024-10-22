@@ -9,7 +9,7 @@ public class DiningOrderScript : MonoBehaviour
     public GameObject cookedFood;
 
     // define order here
-    public Recipe tomatoRecipe = new Recipe($"Tomato Soup", new List<Ingredient> { new Tomato() }, 100);
+    public Recipe order;
 
     void Awake()
     {
@@ -19,10 +19,27 @@ public class DiningOrderScript : MonoBehaviour
         cookedFood.GetComponent<Renderer>().material = null;
     }
 
+    internal void SetOrder(Recipe recipe)
+    {
+        if (recipe == null)
+        {
+            return;
+        }
+        if (order == null)
+        {
+            order = recipe;
+        }
+    }
+
+    internal void ClearOrder()
+    {
+        order = null;
+        cookedFood.SetActive(false);
+    }
+
     internal bool IsOrderAccepted(IngredientProps ingredientProps)
     {
-        Debug.Log("Checking if order is accepted");
-        return tomatoRecipe.ingredients.Any(ingr => ingr.type.Equals(ingredientProps.ingredientType));
+        return order.ingredients.Any(ingr => ingr.type.Equals(ingredientProps.ingredientType));
     }
 
     internal void CompleteOrder(IngredientProps ingredientProps)

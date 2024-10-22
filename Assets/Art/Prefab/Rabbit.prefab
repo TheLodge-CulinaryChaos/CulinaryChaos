@@ -267,8 +267,8 @@ GameObject:
   - component: {fileID: 4488804489656968054}
   - component: {fileID: 4488804489656968053}
   - component: {fileID: 4488804489656968051}
-  - component: {fileID: 4488804489656968052}
   - component: {fileID: 4488804489656968055}
+  - component: {fileID: 5662483784388613884}
   m_Layer: 0
   m_Name: Rabbit
   m_TagString: Untagged
@@ -343,21 +343,6 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!114 &4488804489656968052
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3641730082375272311}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e033c18ebe1494102bb88b4e93dd0a84, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  waypoints:
-  - {fileID: 0}
-  orderSystem: {fileID: 0}
 --- !u!195 &4488804489656968055
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -380,6 +365,21 @@ NavMeshAgent:
   m_BaseOffset: 0
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
+--- !u!114 &5662483784388613884
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3641730082375272311}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cc194c46712b34d228955ce197cd09ec, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sitPoint: {fileID: 0}
+  waypoints: []
+  orderSystem: {fileID: 0}
 --- !u!1 &3676215476157513807
 GameObject:
   m_ObjectHideFlags: 0

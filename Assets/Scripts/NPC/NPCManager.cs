@@ -24,22 +24,31 @@ public class NPCManager : MonoBehaviour
     {
         for (int i = 0; i < availableSeats.Length; i++)
         {
-            Debug.Log("generate " + i);
             GameObject randomCustomer = generateRandomCustomer();
 
-            npcAI npcAi = randomCustomer.GetComponent<npcAI>();
+            NPC_AI npcAI = randomCustomer.GetComponent<NPC_AI>();
 
-            GameObject sitPoint = availableSeats[i].transform.Find("sitPoint").gameObject;
+            if (npcAI == null)
+            {
+                Debug.LogError("NPCAI component not found on customer prefab");
+                return;
+            }
 
-            npcAi.SetSitPoint(sitPoint);
+            GameObject chair = availableSeats[i];
+
+            Debug.Log("Chair: " + chair.name);
+
+            npcAI.SetSitPoint(chair);
 
             GameObject customer = Instantiate(randomCustomer, spawnPoint.position, Quaternion.identity);
             customer.SetActive(false); // Set them as inactive
             inactiveCustomers.Add(customer); // Add to the inactive list
+
         }
     }
 
-    private GameObject generateRandomCustomer() {
+    private GameObject generateRandomCustomer()
+    {
         return customerPrefabs[Random.Range(0, customerPrefabs.Length)];
     }
 
@@ -48,7 +57,6 @@ public class NPCManager : MonoBehaviour
         // Loop to spawn customers until maxCustomers is reached
         for (int i = 0; i < availableSeats.Length; i++)
         {
-            Debug.Log("spawn " + i);
             GameObject customer = inactiveCustomers[i];
 
             customer.transform.position = spawnPoint.position; // Reset position
@@ -63,15 +71,13 @@ public class NPCManager : MonoBehaviour
     }
 
     // Method to remove a customer from the active list and deactivate them
-    // public void RemoveCustomer(GameObject customer)
-    // {
-    //     if (activeCustomers.Contains(customer))
-    //     {
-    //         activeCustomers.Remove(customer); // Remove from active list
-    //         inactiveCustomers.Add(customer); // Add back to inactive list
-    //         customer.SetActive(false); // Deactivate the customer
-    //     }
-    // }
+    public void RemoveCustomer(GameObject customer)
+    {
+        if (activeCustomers.Contains(customer))
+        {
+            activeCustomers.Remove(customer);
+        }
+    }
 
     public void GenerateCustomer()
     {

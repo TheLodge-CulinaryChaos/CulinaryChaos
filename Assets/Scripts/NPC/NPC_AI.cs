@@ -1,12 +1,14 @@
 using UnityEngine;
 using UnityEngine.AI;
 using System.Collections;
+using Unity.VisualScripting;
 
 [RequireComponent(typeof(NavMeshAgent))]
-public class npcAI : MonoBehaviour
+public class NPC_AI : MonoBehaviour
 {
     private NavMeshAgent navMeshAgent;
     private Animator animator;
+    public GameObject sitPoint;
     public GameObject[] waypoints; // Waypoints for moving to the chair
     private int currWaypoint = -1; // For seating waypoints
     private bool isSitting = false;
@@ -57,7 +59,10 @@ public class npcAI : MonoBehaviour
 
     public void SetSitPoint(GameObject sitPoint)
     {
-        waypoints = new GameObject[] { sitPoint };
+        this.sitPoint = sitPoint;
+        GameObject waypoint = sitPoint.transform.Find("sitPoint").gameObject;
+        Debug.Log("Sitpoint: " + sitPoint.name + " Waypoint: " + waypoint.name);
+        waypoints = new GameObject[] { waypoint };
     }
 
     private Recipe GenerateOrder()
@@ -131,7 +136,7 @@ public class npcAI : MonoBehaviour
         // gameObject.SetActive(false); // Deactivate the NPC
     }
 
-    
+
 
     private void AlignToChair(GameObject chairObject)
     {
