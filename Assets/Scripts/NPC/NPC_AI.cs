@@ -123,26 +123,26 @@ public class NPC_AI : MonoBehaviour
         // do nothing
         yield return null;
 
-        // // Wait for 60 seconds (1 minute)
-        // yield return new WaitForSeconds(30f);
+        // Wait for 60 seconds (1 minute)
+        yield return new WaitForSeconds(30f);
 
-        // // Stand up from sitting
-        // isSitting = false; // Allow movement again
-        // animator.SetBool("isSitting", false); // Reset sitting animation
+        // Stand up from sitting
+        isSitting = false; // Allow movement again
+        animator.SetBool("isSitting", false); // Reset sitting animation
 
-        // navMeshAgent.isStopped = true;
-        // navMeshAgent.velocity = Vector3.zero; // Clear any remaining velocity
-        // animator.SetFloat("vely", 0); // Stop walking animation
+        navMeshAgent.isStopped = true;
+        navMeshAgent.velocity = Vector3.zero; // Clear any remaining velocity
+        animator.SetFloat("vely", 0); // Stop walking animation
 
-        // // Find the NPCManager and trigger GenerateCustomer to respawn a new customer
-        // NPCManager npcManager = FindObjectOfType<NPCManager>();
-        // if (npcManager != null)
-        // {
-        //     npcManager.RemoveCustomer(gameObject);
-        //     npcManager.GenerateCustomer(); // Call the respawn method in the manager
-        // }
+        // Find the NPCManager and trigger GenerateCustomer to respawn a new customer
+        NPCManager npcManager = FindObjectOfType<NPCManager>();
+        if (npcManager != null)
+        {
+            npcManager.RemoveCustomer(gameObject);
+            npcManager.GenerateCustomer(); // Call the respawn method in the manager
+        }
 
-        // gameObject.SetActive(false); // Deactivate the NPC
+        gameObject.SetActive(false); // Deactivate the NPC
     }
 
 
