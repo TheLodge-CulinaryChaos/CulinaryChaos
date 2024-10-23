@@ -32,12 +32,12 @@ public class OrderSystem : MonoBehaviour
         PrintOrders();
     }
 
-    public void CreateOrderUI(Recipe recipe)
+    public void CreateOrderUI(Recipe recipe, int tableNumber)
     {
 
         GameObject orderPanel = Instantiate(orderPanelPrefab, ordersParent);
         OrderUI orderUI = orderPanel.GetComponent<OrderUI>();
-        orderUI.UpdateOrderUI(recipe);
+        orderUI.UpdateOrderUI(recipe, tableNumber);
     }
 
     void PrintOrders()

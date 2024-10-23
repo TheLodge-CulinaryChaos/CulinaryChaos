@@ -61,17 +61,26 @@ public class NPC_AI : MonoBehaviour
     {
         this.sitPoint = sitPoint;
         GameObject waypoint = sitPoint.transform.Find("sitPoint").gameObject;
-        Debug.Log("Sitpoint: " + sitPoint.name + " Waypoint: " + waypoint.name);
         waypoints = new GameObject[] { waypoint };
     }
 
     private Recipe GenerateOrder()
     {
         if (hasOrdered) return null; // Prevent multiple orders
+
+
+        // set order in the order object
+        SitPointScript sitPointScript = sitPoint.GetComponent<SitPointScript>();
+
         // choosing randomly from the available recipes
         Recipe order = orderSystem.recipes[Random.Range(0, orderSystem.recipes.Count)];
         orderSystem.PlaceOrder(order);
-        orderSystem.CreateOrderUI(order);
+        orderSystem.CreateOrderUI(order, sitPointScript.tableNumber);
+
+        GameObject orderObject = sitPointScript.orderObject;
+        DiningOrderScript orderScript = orderObject.GetComponent<DiningOrderScript>();
+
+        orderScript.SetOrder(order);
 
         hasOrdered = true;
         return order;

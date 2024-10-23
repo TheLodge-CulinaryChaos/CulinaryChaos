@@ -5,6 +5,7 @@ using UnityEngine;
 public class SitPointScript : MonoBehaviour
 {
     public GameObject orderObject;
+    public int tableNumber;
     // Start is called before the first frame update
     void Start()
     {

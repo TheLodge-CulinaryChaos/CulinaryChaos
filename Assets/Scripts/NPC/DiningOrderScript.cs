@@ -9,7 +9,7 @@ public class DiningOrderScript : MonoBehaviour
     public GameObject cookedFood;
 
     // define order here
-    public Recipe order;
+    private Recipe order;
 
     void Awake()
     {
@@ -27,6 +27,7 @@ public class DiningOrderScript : MonoBehaviour
         }
         if (order == null)
         {
+            Debug.Log("Set order: " + recipe.recipeName);
             order = recipe;
         }
     }
