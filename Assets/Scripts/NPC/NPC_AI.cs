@@ -22,6 +22,8 @@ public class NPC_AI : MonoBehaviour
     private Coroutine waitingForOrder;
     private bool IsOrderCompleted = false;
 
+    private Coroutine eatingToDestroy;
+
 
     void Start()
     {
@@ -39,6 +41,7 @@ public class NPC_AI : MonoBehaviour
         if (IsOrderCompleted)
         {
             animator.SetBool("isEating", true);
+            eatingToDestroy = StartCoroutine(EatAndDestroy());
         }
 
         if (!navMeshAgent.pathPending && navMeshAgent.remainingDistance <= navMeshAgent.stoppingDistance)
@@ -132,6 +135,19 @@ public class NPC_AI : MonoBehaviour
         navMeshAgent.velocity = Vector3.zero;
         animator.SetFloat("vely", 0);
         animator.SetBool("isSitting", true);
+    }
+
+    private IEnumerator EatAndDestroy()
+    {
+        yield return new WaitForSeconds(3f);
+
+        SitPointScript sitPointScript = sitPoint.GetComponent<SitPointScript>();
+        GameObject orderObject = sitPointScript.orderObject;
+        DiningOrderScript orderScript = orderObject.GetComponent<DiningOrderScript>();
+
+        orderScript.ClearOrder();
+
+        Destroy(gameObject);
     }
 
     private IEnumerator SitAndReturnToWaypoint()

@@ -35,6 +35,7 @@ public class DiningOrderScript : MonoBehaviour
     internal void ClearOrder()
     {
         order = null;
+        holdingObject.SetActive(false);
         cookedFood.SetActive(false);
     }
 
