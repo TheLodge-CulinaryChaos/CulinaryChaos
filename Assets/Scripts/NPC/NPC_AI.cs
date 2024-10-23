@@ -148,6 +148,7 @@ public class NPC_AI : MonoBehaviour
         orderScript.ClearOrder();
 
         NPCManager npcManager = FindObjectOfType<NPCManager>();
+        
         npcManager.AddMoreCustomer(sitPoint);
 
         Destroy(gameObject);

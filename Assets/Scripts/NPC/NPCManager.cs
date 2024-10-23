@@ -23,20 +23,40 @@ public class NPCManager : MonoBehaviour
 
     public void AddMoreCustomer(GameObject sitPoint)
     {
+        OpenDoor();
+        
+        StartCoroutine(SpawnACustomer(sitPoint));
+    }
+
+    private System.Collections.IEnumerator SpawnACustomer(GameObject sitPoint)
+    {
+
         GameObject randomCustomer = generateRandomCustomer();
 
         NPC_AI npcAI = randomCustomer.GetComponent<NPC_AI>();
         if (npcAI == null)
         {
             Debug.LogError("NPCAI component not found on customer prefab");
-            return;
+            yield break;
         }
 
         npcAI.SetSitPoint(sitPoint);
 
         GameObject customer = Instantiate(randomCustomer, spawnPoint.position, Quaternion.identity);
-        customer.transform.position = spawnPoint.position; 
-        customer.SetActive(true); 
+        customer.transform.position = spawnPoint.position;
+        customer.SetActive(true);
+
+
+        yield return new WaitForSeconds(3);
+        
+        CloseDoor();
+    }
+
+    private System.Collections.IEnumerator WaitToCloseDoor()
+    {
+        yield return new WaitForSeconds(5);
+
+        CloseDoor();
     }
 
     private void InitializeInactiveCustomers()
@@ -106,16 +126,16 @@ public class NPCManager : MonoBehaviour
     //     StartCoroutine(SpawnCustomers());
     // }
 
-    private void OpenDoor()
+    internal void OpenDoor()
     {
         GameObject door = doorAnimator.gameObject;
         if (door != null)
         {
-            door.GetComponent<Animator>().SetTrigger("DoorOpen");
+            door.GetComponent<Animator>().Play("DoorOpen");
         }
     }
 
-    private void CloseDoor()
+    internal void CloseDoor()
     {
         GameObject door = doorAnimator.gameObject;
         if (door != null)
