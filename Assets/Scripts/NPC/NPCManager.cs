@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 
 public class NPCManager : MonoBehaviour
 {
@@ -18,6 +19,24 @@ public class NPCManager : MonoBehaviour
         InitializeInactiveCustomers();
         OpenDoor();
         StartCoroutine(SpawnCustomers());
+    }
+
+    public void AddMoreCustomer(GameObject sitPoint)
+    {
+        GameObject randomCustomer = generateRandomCustomer();
+
+        NPC_AI npcAI = randomCustomer.GetComponent<NPC_AI>();
+        if (npcAI == null)
+        {
+            Debug.LogError("NPCAI component not found on customer prefab");
+            return;
+        }
+
+        npcAI.SetSitPoint(sitPoint);
+
+        GameObject customer = Instantiate(randomCustomer, spawnPoint.position, Quaternion.identity);
+        customer.transform.position = spawnPoint.position; 
+        customer.SetActive(true); 
     }
 
     private void InitializeInactiveCustomers()
@@ -79,13 +98,13 @@ public class NPCManager : MonoBehaviour
         }
     }
 
-    public void GenerateCustomer()
-    {
-        activeCustomers.Clear();
-        inactiveCustomers.Clear();
+    // public void GenerateCustomer()
+    // {
+    //     activeCustomers.Clear();
+    //     inactiveCustomers.Clear();
 
-        StartCoroutine(SpawnCustomers());
-    }
+    //     StartCoroutine(SpawnCustomers());
+    // }
 
     private void OpenDoor()
     {

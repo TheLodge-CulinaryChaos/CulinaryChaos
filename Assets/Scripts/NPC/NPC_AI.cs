@@ -72,10 +72,12 @@ public class NPC_AI : MonoBehaviour
         GameObject orderObject = sitPointScript.orderObject;
         DiningOrderScript orderScript = orderObject.GetComponent<DiningOrderScript>();
 
-        if (orderScript.IsOrderComplete())
+        if (orderScript.IsOrderComplete() && !IsOrderCompleted)
         {
             StopCoroutine(waitingForOrder);
             IsOrderCompleted = true;
+            orderSystem.RemoveOrder(order);
+            order = null;
         }
 
     }
@@ -97,15 +99,13 @@ public class NPC_AI : MonoBehaviour
 
         // choosing randomly from the available recipes
         Recipe order = orderSystem.recipes[Random.Range(0, orderSystem.recipes.Count)];
-        orderSystem.PlaceOrder(order);
-        orderSystem.CreateOrderUI(order, sitPointScript.tableNumber);
+        orderSystem.PlaceOrder(order, sitPointScript.tableNumber);
+        // orderSystem.CreateOrderUI(order, sitPointScript.tableNumber);
 
         GameObject orderObject = sitPointScript.orderObject;
         DiningOrderScript orderScript = orderObject.GetComponent<DiningOrderScript>();
 
         orderScript.SetOrder(order);
-
-        hasOrdered = true;
         return order;
     }
 
@@ -147,6 +147,9 @@ public class NPC_AI : MonoBehaviour
 
         orderScript.ClearOrder();
 
+        NPCManager npcManager = FindObjectOfType<NPCManager>();
+        npcManager.AddMoreCustomer(sitPoint);
+
         Destroy(gameObject);
     }
 
@@ -154,7 +157,10 @@ public class NPC_AI : MonoBehaviour
     {
 
         // Generate an order for the NPC
-        order = GenerateOrder();
+        if (order == null)
+            order = GenerateOrder();
+
+        hasOrdered = true;
 
         // Wait for 60 seconds (1 minute)
         yield return new WaitForSeconds(30f);
