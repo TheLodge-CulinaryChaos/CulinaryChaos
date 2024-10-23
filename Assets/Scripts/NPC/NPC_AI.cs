@@ -19,6 +19,9 @@ public class NPC_AI : MonoBehaviour
 
     private Recipe order;
 
+    private Coroutine waitingForOrder;
+    private bool IsOrderCompleted = false;
+
 
     void Start()
     {
@@ -32,6 +35,12 @@ public class NPC_AI : MonoBehaviour
 
     void Update()
     {
+
+        if (IsOrderCompleted)
+        {
+            animator.SetBool("isEating", true);
+        }
+
         if (!navMeshAgent.pathPending && navMeshAgent.remainingDistance <= navMeshAgent.stoppingDistance)
         {
             if (currWaypoint == waypoints.Length - 1)
@@ -42,7 +51,7 @@ public class NPC_AI : MonoBehaviour
                 transform.position = chairObject.transform.position;
                 AlignToChair(chairObject);
 
-                StartCoroutine(SitAndReturnToWaypoint());
+                waitingForOrder = StartCoroutine(SitAndReturnToWaypoint());
             }
             else
             {
@@ -55,6 +64,17 @@ public class NPC_AI : MonoBehaviour
             float normalizedSpeed = navMeshAgent.velocity.magnitude / navMeshAgent.speed;
             animator.SetFloat("vely", normalizedSpeed);
         }
+
+        SitPointScript sitPointScript = sitPoint.GetComponent<SitPointScript>();
+        GameObject orderObject = sitPointScript.orderObject;
+        DiningOrderScript orderScript = orderObject.GetComponent<DiningOrderScript>();
+
+        if (orderScript.IsOrderComplete())
+        {
+            StopCoroutine(waitingForOrder);
+            IsOrderCompleted = true;
+        }
+
     }
 
     public void SetSitPoint(GameObject sitPoint)
@@ -120,29 +140,26 @@ public class NPC_AI : MonoBehaviour
         // Generate an order for the NPC
         order = GenerateOrder();
 
-        // do nothing
-        yield return null;
-
         // Wait for 60 seconds (1 minute)
         yield return new WaitForSeconds(30f);
 
         // Stand up from sitting
-        isSitting = false; // Allow movement again
-        animator.SetBool("isSitting", false); // Reset sitting animation
+        // isSitting = false; // Allow movement again
+        // animator.SetBool("isSitting", false); // Reset sitting animation
 
-        navMeshAgent.isStopped = true;
-        navMeshAgent.velocity = Vector3.zero; // Clear any remaining velocity
-        animator.SetFloat("vely", 0); // Stop walking animation
+        // navMeshAgent.isStopped = true;
+        // navMeshAgent.velocity = Vector3.zero; // Clear any remaining velocity
+        // animator.SetFloat("vely", 0); // Stop walking animation
 
         // Find the NPCManager and trigger GenerateCustomer to respawn a new customer
         NPCManager npcManager = FindObjectOfType<NPCManager>();
         if (npcManager != null)
         {
             npcManager.RemoveCustomer(gameObject);
-            npcManager.GenerateCustomer(); // Call the respawn method in the manager
+            // npcManager.GenerateCustomer(); // Call the respawn method in the manager
         }
 
-        gameObject.SetActive(false); // Deactivate the NPC
+        // gameObject.SetActive(false); // Deactivate the NPC
     }
 
 

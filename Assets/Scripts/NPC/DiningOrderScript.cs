@@ -49,4 +49,9 @@ public class DiningOrderScript : MonoBehaviour
         cookedFood.SetActive(true);
         cookedFood.GetComponent<Renderer>().material = ingredientProps.cookingMaterial;
     }
+
+    internal bool IsOrderComplete()
+    {
+        return holdingObject.activeSelf;
+    }
 }

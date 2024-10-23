@@ -1279,8 +1279,8 @@ MonoBehaviour:
   - {fileID: 1140013878}
   availableSeats:
   - {fileID: 260291408}
-  - {fileID: 1024622748}
   - {fileID: 1127102597}
+  - {fileID: 1024622748}
   - {fileID: 423972997}
   spawnPoint: {fileID: 158485757}
   spawnInterval: 4
@@ -18026,7 +18026,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3641730082375272311, guid: 5e5f147d4e322484283a85b1d832881f, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4161843494247554509, guid: 5e5f147d4e322484283a85b1d832881f, type: 3}
       propertyPath: m_RootOrder
