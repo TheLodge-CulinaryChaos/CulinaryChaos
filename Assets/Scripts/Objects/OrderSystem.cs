@@ -8,6 +8,7 @@ public class OrderSystem : MonoBehaviour
 {
     public List<Recipe> orders; // this list will keep track of the current orders
     public List<Recipe> recipes; // this list is the available recipes in the game
+    public List<GameObject> orderPanels; // list of each order panel (UI) in the game
 
     public GameObject orderPanelPrefab;
     public Transform ordersParent;
@@ -26,18 +27,32 @@ public class OrderSystem : MonoBehaviour
         orders = new List<Recipe>();
     }
 
-    public void PlaceOrder(Recipe recipe)
+    public void PlaceOrder(Recipe recipe, int tableNumber)
     {
         orders.Add(recipe);
-        PrintOrders();
-    }
+        // PrintOrders();
 
-    public void CreateOrderUI(Recipe recipe)
-    {
-
+        // Create a new order panel OBJECT
         GameObject orderPanel = Instantiate(orderPanelPrefab, ordersParent);
         OrderUI orderUI = orderPanel.GetComponent<OrderUI>();
-        orderUI.UpdateOrderUI(recipe);
+        GameObject orderPanelObj = orderUI.CreateOrderPanel(recipe, tableNumber);
+
+        orderPanels.Add(orderPanelObj);
+    }
+
+    public void RemoveOrder(Recipe recipe)
+    {
+        if (recipe == null)
+        {
+            Debug.Log("Recipe is null");
+            return;
+        }
+        
+        var panel = orderPanels.Find(p => p.GetComponent<OrderUI>().id == recipe.id);
+
+        orders.Remove(recipe);
+        orderPanels.Remove(panel);
+        Destroy(panel);
     }
 
     void PrintOrders()

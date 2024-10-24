@@ -20,6 +20,7 @@ public class PlayerLocomotion : MonoBehaviour
     public float fallingVelocity;
     public float rayCastHeightOffset = 0.5f;
     public LayerMask groundLayer;
+    public LayerMask cookingLayer;
 
     [Header("Movement Flags")]
     public bool isSprinting;
@@ -157,7 +158,8 @@ public class PlayerLocomotion : MonoBehaviour
             playerRigidbody.AddForce(-Vector3.up * inAirTimer * fallingVelocity);
         }
 
-        if (Physics.SphereCast(rayCastOrigin, 0.2f, Vector3.down, out hit, 0.5f, groundLayer))
+        if (Physics.SphereCast(rayCastOrigin, 0.2f, Vector3.down, out hit, 0.5f, groundLayer)
+            || Physics.SphereCast(rayCastOrigin, 0.2f, Vector3.down, out hit, 0.5f, cookingLayer))
         {
             if (!isGrounded && playerManager.isInteracting)
             {

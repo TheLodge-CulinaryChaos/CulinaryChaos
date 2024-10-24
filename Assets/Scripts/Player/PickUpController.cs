@@ -207,7 +207,7 @@ public class PickUpController : MonoBehaviour
 
         if (cookingComponent == null) return;
 
-        if (cookingComponent.isFoodReadyToServe() && !holdingObjectScript.IsFoodInPlate())
+        if (cookingComponent.isFoodReadyToServe() && !holdingObjectScript.IsFoodInPlate() && holdingObjectScript.IsHoldingPlate())
         {
             cookingComponent.RemoveFoodFromPot();
             cookingComponent.ResetTimer();
