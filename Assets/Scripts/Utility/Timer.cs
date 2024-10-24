@@ -9,12 +9,19 @@ public class Timer : MonoBehaviour {
     float current;
     public bool started = false;
     string formattedTime;
+    // Debug
+    public bool debug;
+    
 
     [SerializeField] TextMeshProUGUI currTMP;
 
     // Start is called before the first frame update
     void Start() {
         current = startTime;
+
+        if (debug) {
+            current = 5.0f;
+        }
         started = true;
     }
 
@@ -34,11 +41,16 @@ public class Timer : MonoBehaviour {
                 int currMin = Mathf.FloorToInt(current / 60);
                 int currSec = Mathf.FloorToInt(current % 60);
                 formattedTime = string.Format("{0:00}:{1:00}", currMin, currSec);
-
             }
 
             // Send to Unity
             currTMP.text = formattedTime;
         } 
+    }
+
+
+    // Getter to see current. Current is the remaining time in the round
+    public float getCurrent() {
+        return current;
     }
 }
