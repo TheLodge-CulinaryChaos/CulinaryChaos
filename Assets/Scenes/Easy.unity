@@ -479,6 +479,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Tree L3
       objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: 1a2e91ebc86d2c84ca817eb30abe86d4, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 1a2e91ebc86d2c84ca817eb30abe86d4, type: 3}
       propertyPath: m_RootOrder
       value: 17
@@ -497,7 +501,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 1a2e91ebc86d2c84ca817eb30abe86d4, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -13.099998
+      value: 5.55
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 1a2e91ebc86d2c84ca817eb30abe86d4, type: 3}
       propertyPath: m_LocalPosition.y
