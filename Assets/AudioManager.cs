@@ -4,31 +4,26 @@ using UnityEngine;
 
 public class AudioManager : MonoBehaviour
 {
-    public AudioSource audioSource;
+    private AudioSource audioSource;
     public AudioClip footstepSound;
     public AudioClip landingSound;
     public AudioClip pickupSound;
 
-    void Start()
+    void Awake()
     {
-        if (audioSource == null)
-        {
-            audioSource = GetComponent<AudioSource>();  // Automatically assigns the AudioSource if it's on the same GameObject
-        }
-
-
+        audioSource = GetComponent<AudioSource>();
     }
 
     public void PlayFootstepSound()
     {
-            if (audioSource != null && footstepSound != null)
+        if (audioSource != null && footstepSound != null)
+        {
+            audioSource.clip = footstepSound;
+            if (!audioSource.isPlaying)  // Ensure it doesn't overlap
             {
-                audioSource.clip = footstepSound;
-                if (!audioSource.isPlaying)  // Ensure it doesn't overlap
-                {
-                    audioSource.Play();  // Plays the footstep sound continuously (useful for looping walking sounds)
-                }
+                audioSource.Play();  // Plays the footstep sound continuously (useful for looping walking sounds)
             }
+        }
     }
 
     public void PlayLandingSound()
@@ -48,7 +43,7 @@ public class AudioManager : MonoBehaviour
         }
     }
 
-    
+
 
 
 }
