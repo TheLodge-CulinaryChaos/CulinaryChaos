@@ -150,8 +150,10 @@ public class NPC_AI : MonoBehaviour
         NPCManager npcManager = FindObjectOfType<NPCManager>();
         
         npcManager.AddMoreCustomer(sitPoint);
+        npcManager.IncrementServedCustomers();
 
         Destroy(gameObject);
+
     }
 
     private IEnumerator SitAndReturnToWaypoint()

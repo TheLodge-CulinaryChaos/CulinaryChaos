@@ -29,7 +29,7 @@ public class DiningOrderScript : MonoBehaviour
         }
         if (order == null)
         {
-            Debug.Log("Set order: " + recipe.recipeName);
+            // Debug.Log("Set order: " + recipe.recipeName);
             order = recipe;
         }
     }

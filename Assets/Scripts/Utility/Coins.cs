@@ -8,6 +8,9 @@ public class Coins : MonoBehaviour
     // inits
     public float balance;
     public bool debug = true;
+
+    public static int LEVEL_1_MIN_SCORE = 600;
+
     [SerializeField] TextMeshProUGUI currTMP;
     // Start is called before the first frame update
     void Start()
