@@ -17,7 +17,7 @@ public class RoundOver : MonoBehaviour
 
         CGRoundOver = GetComponent<CanvasGroup>();
         if (CGRoundOver == null) {
-            Debug.LogError("CGRoundOver not in inspector");
+            // Debug.LogError("CGRoundOver not in inspector");
         }
         CGRoundOver.interactable = false;
         CGRoundOver.blocksRaycasts = false;
@@ -25,7 +25,7 @@ public class RoundOver : MonoBehaviour
 
         timerCS = FindObjectOfType<Timer>();
         if (timerCS == null) {
-            Debug.LogError("timerCS not in inspector");
+            // Debug.LogError("timerCS not in inspector");
         }
     }
 

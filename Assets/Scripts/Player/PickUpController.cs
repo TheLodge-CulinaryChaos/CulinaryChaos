@@ -246,7 +246,7 @@ public class PickUpController : MonoBehaviour
             Gizmos.color = Color.red;
             Gizmos.DrawRay(position, transform.forward * hit.distance);
             Gizmos.DrawWireCube(position + transform.forward * hit.distance, transform.lossyScale);
-            Debug.Log(hit.collider.gameObject);
+            // Debug.Log(hit.collider.gameObject);
         }
         else
         {

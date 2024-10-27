@@ -10,7 +10,10 @@ public class Summary : MonoBehaviour
     private CanvasGroup CGSummary;
     private RoundOver RoundOverCS;
     private Coins CoinsCS;
+    [SerializeField] TextMeshProUGUI roundStatusTMP;
+    [SerializeField] TextMeshProUGUI miniumScoreTMP;
     [SerializeField] TextMeshProUGUI coinsTMP;
+    [SerializeField] TextMeshProUGUI customersTMP;
     private float balance;
 
     // Start is called before the first frame update
@@ -18,7 +21,7 @@ public class Summary : MonoBehaviour
         // Grabbing the Summary Canvas
         CGSummary = GetComponent<CanvasGroup>();
         if (CGSummary == null) {
-            Debug.LogError("CGSummary not in inspector");
+            // Debug.LogError("CGSummary not in inspector");
         }
         CGSummary.interactable = false;
         CGSummary.blocksRaycasts = false;
@@ -27,13 +30,13 @@ public class Summary : MonoBehaviour
         // Grabbing RoundOver.cs
         RoundOverCS = FindObjectOfType<RoundOver>();
         if (RoundOverCS == null) {
-            Debug.LogError("RoundOverCS not in inspector");
+            // Debug.LogError("RoundOverCS not in inspector");
         }
 
         // Grabbign Coins.cs
         CoinsCS = FindObjectOfType<Coins>();
         if (CoinsCS == null) {
-            Debug.LogError("CoinsCS not in inspector");
+            // Debug.LogError("CoinsCS not in inspector");
         }
     }
 
@@ -50,8 +53,23 @@ public class Summary : MonoBehaviour
 
         // Coins Segment. Using Getter for Total
         float balance = CoinsCS.getBalance();
-        string formattedBal = string.Format("{0:C}", balance);
-        coinsTMP.text = formattedBal;
+        coinsTMP.text = $"Money Aquired {balance:C}";
+
+        miniumScoreTMP.text = $"Minimum Score {Coins.LEVEL_1_MIN_SCORE:C}";
+
+        NPCManager npcManager = FindObjectOfType<NPCManager>();
+        customersTMP.text = $"Customers Served {npcManager.GetServedCustomers()}";
+
+        // Round Status Segment
+        if (balance >= Coins.LEVEL_1_MIN_SCORE) {
+            roundStatusTMP.text = "You Meet the Minimum Score! Good Job!";
+            // set Text to Green
+            roundStatusTMP.color = new Color(0, 1, 0);
+        } else {
+            roundStatusTMP.text = "You Did Not Meet the Minimum Score. Try Again!";
+            // set Text to Red
+            roundStatusTMP.color = new Color(1, 0, 0);
+        }
 
         // Customers Served Segment
 
