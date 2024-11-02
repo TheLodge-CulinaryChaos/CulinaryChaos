@@ -31,7 +31,6 @@ public class InputManager : MonoBehaviour
     {
         playerLocomotion = GetComponent<PlayerLocomotion>();
         animatorManager = GetComponent<AnimatorManager>();
-
     }
 
     private void OnEnable()
@@ -82,8 +81,8 @@ public class InputManager : MonoBehaviour
         HandleSpringInput();
 
         HandleJumpInput();
-
         HandleCuttingInput();
+
         HandlePickupInput();
     }
 
