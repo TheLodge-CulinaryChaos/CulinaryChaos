@@ -12,10 +12,13 @@ public class PickUpController : MonoBehaviour
 
     private AnimatorManager animatorManager;
 
+    public Vector3 boxCastSize = new Vector3(0.5f, 0.5f, 0.5f);
+    public Vector3 extPos = new Vector3(0, 2, 0);
+
     #region Pick up Object Variables
     public Transform holdPosition;
     private GameObject pickUpObject = null;
-    private bool isHolding = false;
+    public bool isHoldingIngredients = false;
     private Vector3 originalScale;
     #endregion
 
@@ -47,7 +50,7 @@ public class PickUpController : MonoBehaviour
 
         if (hit.collider == null)
         {
-            if (isHolding)
+            if (isHoldingIngredients)
             {
                 DropObject();
             }
@@ -61,6 +64,7 @@ public class PickUpController : MonoBehaviour
     private void HandleBoxCastOnObjects(RaycastHit hit)
     {
         GameObject gameObject = hit.collider.gameObject;
+        Debug.Log("Hit" + gameObject.tag);
 
         switch (gameObject.tag)
         {
@@ -79,6 +83,10 @@ public class PickUpController : MonoBehaviour
                 ServeFood();
                 break;
             case GameTags.INGREDIENT:
+                if (isHoldingIngredients) {
+                    DropObject();
+                    break;
+                }
                 animatorManager.PlayTargetAnimation("Pick Fruit", false);
                 pickUpObject = gameObject;
                 PickUpObject();
@@ -91,8 +99,8 @@ public class PickUpController : MonoBehaviour
 
     private RaycastHit PerformBoxCast()
     {
-        Vector3 position = transform.position + new Vector3(0, 2, 0);
-        Physics.BoxCast(position, transform.lossyScale / 2, transform.forward, out hit,
+        Vector3 position = transform.position + extPos;
+        Physics.BoxCast(position, boxCastSize, transform.forward, out hit,
             transform.rotation, maxDistanceCookingLM, cookingLayerMask);
         return hit;
     }
@@ -103,7 +111,6 @@ public class PickUpController : MonoBehaviour
     void PickUpObject()
     {
         if (pickUpObject == null) return;
-
 
         Rigidbody rb = pickUpObject.GetComponent<Rigidbody>();
 
@@ -117,6 +124,13 @@ public class PickUpController : MonoBehaviour
         rb.isKinematic = true;
         rb.useGravity = false;
 
+        // disbale box collider
+        MeshCollider meshCollider = pickUpObject.GetComponent<MeshCollider>();
+        if (meshCollider != null)
+        {
+            meshCollider.enabled = false;
+        }
+
         pickUpObject.transform.SetParent(holdPosition, true);
         pickUpObject.transform.localPosition = Vector3.zero;
         pickUpObject.transform.localRotation = Quaternion.Euler(Vector3.zero);
@@ -124,7 +138,7 @@ public class PickUpController : MonoBehaviour
         originalScale = pickUpObject.transform.lossyScale;
         pickUpObject.transform.localScale = Vector3.one;
 
-        isHolding = true;
+        isHoldingIngredients = true;
 
     }
 
@@ -138,13 +152,21 @@ public class PickUpController : MonoBehaviour
         {
             rb.isKinematic = false;
             rb.useGravity = true;
+
+            // enable box collider
+            MeshCollider meshCollider = pickUpObject.GetComponent<MeshCollider>();
+            if (meshCollider != null)
+            {
+                meshCollider.enabled = true;
+            }
+
             rb.AddForce(transform.forward * 2f, ForceMode.Impulse); // Add a little force to the object
         }
         pickUpObject.transform.position = transform.position + transform.forward * 1f + transform.up * 1f;
         pickUpObject.transform.localScale = originalScale;
 
         pickUpObject = null;
-        isHolding = false;
+        isHoldingIngredients = false;
     }
     #endregion
 
@@ -196,7 +218,7 @@ public class PickUpController : MonoBehaviour
 
             pickUpObject.transform.SetParent(null);
             Destroy(pickUpObject);
-            isHolding = false;
+            isHoldingIngredients = false;
         }
     }
 
@@ -238,14 +260,14 @@ public class PickUpController : MonoBehaviour
     #region Debug BoxCast
     void OnDrawGizmos()
     {
-        Vector3 position = transform.position + new Vector3(0, 2, 0);
-        bool isHit = Physics.BoxCast(position, transform.lossyScale / 2, transform.forward, out hit,
+        Vector3 position = transform.position + extPos;
+        bool isHit = Physics.BoxCast(position, boxCastSize, transform.forward, out hit,
             transform.rotation, maxDistanceCookingLM, cookingLayerMask);
         if (isHit)
         {
             Gizmos.color = Color.red;
             Gizmos.DrawRay(position, transform.forward * hit.distance);
-            Gizmos.DrawWireCube(position + transform.forward * hit.distance, transform.lossyScale);
+            Gizmos.DrawWireCube(position + transform.forward * hit.distance, boxCastSize);
             // Debug.Log(hit.collider.gameObject);
         }
         else

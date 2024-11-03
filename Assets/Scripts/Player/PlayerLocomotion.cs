@@ -9,6 +9,7 @@ public class PlayerLocomotion : MonoBehaviour
     AnimatorManager animatorManager;
     InputManager inputManager;
     PickUpController pickUpController;
+    HoldingObjectScript holdingObjectScript;
 
     Vector3 moveDirection;
     Transform cameraObject;
@@ -56,6 +57,9 @@ public class PlayerLocomotion : MonoBehaviour
         // get pickupcontroller
         pickUpController = GetComponent<PickUpController>();
 
+        // get holdingobjectscript
+        holdingObjectScript = pickUpController.HoldingObject.GetComponent<HoldingObjectScript>();
+
         // isGrounded = true;
 
     }
@@ -75,7 +79,6 @@ public class PlayerLocomotion : MonoBehaviour
 
     private void HandleMovement()
     {
-
         if (isJumping)
         {
             return;
@@ -85,8 +88,6 @@ public class PlayerLocomotion : MonoBehaviour
         moveDirection += cameraObject.right * inputManager.horizontalInput;
         moveDirection.Normalize();
         moveDirection.y = 0;
-
-
 
         if (isSprinting)
         {
@@ -182,8 +183,13 @@ public class PlayerLocomotion : MonoBehaviour
 
     public void HandleJumping()
     {
+        if (holdingObjectScript.IsHoldingPlate()) {
+            Debug.Log("Cannot jump while holding an object");
+            return;
+        }
         if (isGrounded)
         {
+            Debug.Log("Jumping");
             animatorManager.animator.SetBool("isJumping", true);
             animatorManager.PlayTargetAnimation("Jumping", false);
 
