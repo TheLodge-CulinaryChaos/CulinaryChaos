@@ -11,7 +11,6 @@ public class SceneSwitcher : MonoBehaviour
     void Awake() {
         Scene scene = SceneManager.GetActiveScene();
         Debug.Log(scene.name);
-       // backgroundMusic.playBGTrack(scene.name);
     }
 
     // Start is called before the first frame update
@@ -26,7 +25,7 @@ public class SceneSwitcher : MonoBehaviour
 
     public void switchScenes(string sceneName) {
         SceneManager.LoadScene(sceneName);
-        backgroundMusic.playBGTrack(sceneName);
+        //backgroundMusic.playBGTrack(sceneName);
         Time.timeScale = 1f;
     }
 
