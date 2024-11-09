@@ -5,31 +5,56 @@ using System.Collections.Generic;
 public class Hazard : MonoBehaviour
 {
     public List<GameObject> hazards; // List of hazards to control
-    public float respawnTime = 5f; // Time in seconds before the hazards reappear
+    public float minRespawnTime = 5f; // Time in seconds before the hazards reappear
+    public float maxRespawnTime = 8f; // Time in seconds before the hazards reappear
 
-    private bool isAppear = true;
+    private bool isFiring = false;
 
     private void Start()
     {
         StartCoroutine(ToggleHazards());
     }
 
+    private void PlayTargetAnimation(Animator animator, string targetAnimation)
+    {
+        animator.CrossFade(targetAnimation, 0.2f);
+    }
+
     private IEnumerator ToggleHazards()
     {
         while (true)
         {
-            isAppear = !isAppear; // Toggle the visibility state
 
-            // Set each hazard's active state based on isAppear
+            float randomTime = Random.Range(2f, 4f);
+            float randomRespawnTime = Random.Range(minRespawnTime, maxRespawnTime);
+
             foreach (GameObject hazard in hazards)
             {
-                if (hazard != null)
-                {
-                    hazard.SetActive(isAppear);
+                Animator hazardAnimator = hazard.GetComponent<Animator>();
+                if (hazard != null) {
+                    // enable box collider
+                    PlayTargetAnimation(hazardAnimator, "Start Fire");
+                    isFiring = true;
+                    hazard.GetComponent<BoxCollider>().enabled = isFiring;
+                    hazardAnimator.SetBool("isFiring", isFiring);
                 }
             }
 
-            yield return new WaitForSeconds(respawnTime); // Wait for the respawn time
+            yield return new WaitForSeconds(randomTime); // Wait for at least 2 seconds
+
+            foreach (GameObject hazard in hazards)
+            {
+                Animator hazardAnimator = hazard.GetComponent<Animator>();
+                if (hazard != null)
+                {
+                    // disable box collider
+                    isFiring = false;
+                    hazard.GetComponent<BoxCollider>().enabled = isFiring;
+                    hazardAnimator.SetBool("isFiring", isFiring);
+                }
+            }
+
+            yield return new WaitForSeconds(randomRespawnTime - randomTime); // Wait for the remaining respawn time
         }
     }
 }
