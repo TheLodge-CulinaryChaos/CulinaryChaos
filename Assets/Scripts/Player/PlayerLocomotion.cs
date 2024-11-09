@@ -62,12 +62,13 @@ public class PlayerLocomotion : MonoBehaviour
 
     public void HandleAllMovements()
     {
+        // if player is on hazard, return and do not move
+        if (playerManager.isOnHazard) return;
 
         HandleFallingAndLanding();
 
         // if player is interacting, return and do not move
-        if (playerManager.isInteracting)
-            return;
+        if (playerManager.isInteracting) return;
 
         HandleMovement();
         HandleRotation();

@@ -15720,6 +15720,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isInteracting: 0
+  isOnHazard: 0
 --- !u!114 &1917347420
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -15944,7 +15945,7 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!114 &1917347439
+--- !u!114 &1917347441
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

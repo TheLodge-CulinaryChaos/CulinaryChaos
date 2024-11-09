@@ -1,49 +1,48 @@
 using UnityEngine;
 using System.Collections;
 
-public class hazardCollision : MonoBehaviour
+public class HazardCollision : MonoBehaviour
 {
     private bool isPaused = false;
     private float pauseDuration = 5f;
 
-    Animator animator;
+    AnimatorManager animatorManager;
+    GameObject currentHazard;
 
     private void Awake()
     {
-        animator = GetComponent<Animator>();
+        animatorManager = GetComponent<AnimatorManager>();
     }
 
     private void OnTriggerEnter(Collider collision)
     {
-        if (collision.gameObject.CompareTag("Fire") && !isPaused)
+        if (collision.gameObject.CompareTag("Fire"))
         {
-            StartCoroutine(PausePlayer());
+            animatorManager.animator.SetBool("isOnHazard", true);
+
+            animatorManager.PlayTargetAnimation("OnFire", true);
+            currentHazard = collision.gameObject;
+
+
+            // set capsule collider's Y in the player
+            transform.GetComponent<CapsuleCollider>().center = new Vector3(0, 1f, 0);
         }
     }
 
-    private IEnumerator PausePlayer()
+    private void Update()
     {
-        isPaused = true;
+        if (!animatorManager) return;
 
-        animator.SetBool("isHazard", true);
-
-        var movementScript = GetComponent<PlayerManager>(); 
-        if (movementScript != null)
+        if (currentHazard != null)
         {
-            movementScript.enabled = false;
 
+            // turn off hazard if the currentHazard box collider is disabled
+            if (!currentHazard.GetComponent<BoxCollider>().enabled)
+            {
+                animatorManager.animator.SetBool("isOnHazard", false);
+                currentHazard = null;
+                transform.GetComponent<CapsuleCollider>().center = new Vector3(0, 0.75f, 0);
+            }
         }
-
-        // Wait for the specified pause duration
-        yield return new WaitForSeconds(pauseDuration);
-
-        animator.SetBool("isHazard", false);
-        
-        if (movementScript != null)
-        {
-            movementScript.enabled = true;
-        }
-
-        isPaused = false;
     }
 }
