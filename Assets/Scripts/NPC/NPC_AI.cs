@@ -26,6 +26,7 @@ public class NPC_AI : MonoBehaviour
 
     //timer for frustration sound
     public AudioClip frustrationSound; // Add the frustration sound clip here
+    public AudioClip[] greetingSounds;
     private AudioSource audioSource;
     private bool hasPlayedFrustrationSound = false; // Flag to track if sound has played
 
@@ -40,7 +41,11 @@ public class NPC_AI : MonoBehaviour
         animator = GetComponent<Animator>();
         navMeshAgent.stoppingDistance = 0.5f;
         navMeshAgent.autoBraking = true;
+
         audioSource = GetComponent<AudioSource>();
+
+        PlayGreetSound();
+
         setNextWaypoint(); // Initialize the first waypoint
     }
 
@@ -62,6 +67,8 @@ public class NPC_AI : MonoBehaviour
                 GameObject chairObject = waypoints[currWaypoint].transform.parent.gameObject;
                 transform.position = chairObject.transform.position;
                 AlignToChair(chairObject);
+                //PlayGreetSound();
+                
 
                 if (waitingForOrder == null) {
                     waitingForOrder = StartCoroutine(SitAndWaitForOrder());
@@ -75,13 +82,13 @@ public class NPC_AI : MonoBehaviour
                 setNextWaypoint();
             }
         }
-        if (waitTime > frustrationThreshold * 2 && waitingForOrder != null)
-        {
-            StopCoroutine(waitingForOrder);
-            waitingForOrder = null;
-            StartCoroutine(SitAndReturnToWaypoint());
-            Debug.Log("NPC is frustrated and leaving the seat.");
-        }
+        // if (waitTime > frustrationThreshold * 2 && waitingForOrder != null)
+        // {
+        //     StopCoroutine(waitingForOrder);
+        //     waitingForOrder = null;
+        //     StartCoroutine(SitAndReturnToWaypoint());
+        //     Debug.Log("NPC is frustrated and leaving the seat.");
+        // }
 
         if (animator != null && !isSitting)
         {
@@ -102,6 +109,19 @@ public class NPC_AI : MonoBehaviour
         }
 
     }
+
+    private void PlayGreetSound() {
+        if (audioSource != null && greetingSounds.Length > 0)
+        {
+            int randomIndex = Random.Range(0, greetingSounds.Length); // Get a random index
+            AudioClip selectedClip = greetingSounds[randomIndex];
+            audioSource.clip = selectedClip;
+            audioSource.Play();
+            Debug.Log("NPC is saying hello with a random greeting!");
+        }
+    }
+
+
     private IEnumerator SitAndWaitForOrder()
     {
         // Generate an order for the NPC if not already ordered
@@ -129,6 +149,7 @@ public class NPC_AI : MonoBehaviour
                 audioSource.clip = frustrationSound;
                 audioSource.Play();
                 hasPlayedFrustrationSound = true; // Prevents the sound from playing multiple times
+                Debug.Log("Playing frustration sound due to wait time threshold exceeded.");
             }
 
             yield return null;
@@ -257,6 +278,7 @@ public class NPC_AI : MonoBehaviour
             transform.rotation = Quaternion.Euler(0, 180, 0);
         }
     }
+
 
 
 }
