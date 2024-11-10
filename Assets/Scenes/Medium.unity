@@ -130,6 +130,11 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
+<<<<<<< HEAD
+  - component: {fileID: 93161325}
+  - component: {fileID: 93161324}
+  - component: {fileID: 93161326}
+=======
   - component: {fileID: 8658774}
   - component: {fileID: 8658775}
   m_Layer: 0
@@ -7649,6 +7654,7 @@ GameObject:
   - component: {fileID: 705507995}
   - component: {fileID: 705507994}
   - component: {fileID: 705507996}
+>>>>>>> main
   m_Layer: 0
   m_Name: Directional Light
   m_TagString: Untagged
@@ -7733,13 +7739,21 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
+<<<<<<< HEAD
+--- !u!114 &93161326
+=======
 --- !u!114 &705507996
+>>>>>>> main
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
+<<<<<<< HEAD
+  m_GameObject: {fileID: 93161323}
+=======
   m_GameObject: {fileID: 705507993}
+>>>>>>> main
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 474bcb49853aa07438625e644c072ee6, type: 3}
@@ -7753,6 +7767,9 @@ MonoBehaviour:
   m_ShadowLayerMask: 1
   m_LightCookieSize: {x: 1, y: 1}
   m_LightCookieOffset: {x: 0, y: 0}
+<<<<<<< HEAD
+--- !u!1 &1120107226
+=======
 --- !u!1001 &727982153
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -7827,6 +7844,7 @@ PrefabInstance:
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d3ccb644b5c1741afaa98bdd36b5ec3c, type: 3}
 --- !u!1 &732882847
+>>>>>>> main
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -10222,7 +10240,11 @@ Transform:
   m_Father: {fileID: 592916272}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+<<<<<<< HEAD
+--- !u!1 &1170678320
+=======
 --- !u!1 &1091695720
+>>>>>>> main
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -10230,16 +10252,27 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
+<<<<<<< HEAD
+  - component: {fileID: 1170678323}
+  - component: {fileID: 1170678322}
+  - component: {fileID: 1170678321}
+  m_Layer: 0
+  m_Name: Background Music
+=======
   - component: {fileID: 1091695721}
   - component: {fileID: 1091695723}
   - component: {fileID: 1091695722}
   m_Layer: 5
   m_Name: Round Over Panel
+>>>>>>> main
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+<<<<<<< HEAD
+--- !u!82 &1170678321
+=======
 --- !u!224 &1091695721
 RectTransform:
   m_ObjectHideFlags: 0
@@ -13760,11 +13793,15 @@ Transform:
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!82 &1459191288
+>>>>>>> main
 AudioSource:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
+<<<<<<< HEAD
+  m_GameObject: {fileID: 1170678320}
+=======
   m_GameObject: {fileID: 1459191286}
   m_Enabled: 1
   serializedVersion: 4
@@ -19184,6 +19221,7 @@ AudioSource:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1917347415}
+>>>>>>> main
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
@@ -19273,6 +19311,10 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+<<<<<<< HEAD
+--- !u!114 &1170678322
+MonoBehaviour:
+=======
 --- !u!4 &1927236404 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 400000, guid: fc007040ddf56d841ad2083f918a0924, type: 3}
@@ -19358,10 +19400,26 @@ PrefabInstance:
   m_SourcePrefab: {fileID: 100100000, guid: fc007040ddf56d841ad2083f918a0924, type: 3}
 --- !u!1 &1942515914
 GameObject:
+>>>>>>> main
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
+<<<<<<< HEAD
+  m_GameObject: {fileID: 1170678320}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 30c3904878e0a405e8b25c1dede1c8bc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  track01: {fileID: 8300000, guid: a3ac1c4179fd64586a37dca3467311fb, type: 3}
+  track02: {fileID: 8300000, guid: 836e80c1e9e2949af848188b163fae06, type: 3}
+  track03: {fileID: 8300000, guid: 59aa0a4db441145b18530d32887d8ea6, type: 3}
+  track04: {fileID: 8300000, guid: 0a18485be077a454fa1fd0020073f442, type: 3}
+  track05: {fileID: 8300000, guid: 6d2ce6765c4b3425fbc72a86d73e31bb, type: 3}
+  track06: {fileID: 8300000, guid: 564da7640de654f048a2bad65eff2efc, type: 3}
+--- !u!4 &1170678323
+=======
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1942515918}
@@ -19439,11 +19497,23 @@ MeshFilter:
   m_GameObject: {fileID: 1942515914}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!4 &1942515918
+>>>>>>> main
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
+<<<<<<< HEAD
+  m_GameObject: {fileID: 1170678320}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 5.8058515, y: 8.207446, z: -0.01668219}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+=======
   m_GameObject: {fileID: 1942515914}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 87.8, y: 10.940001, z: -2.44}
@@ -22248,3 +22318,4 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6117b288ae56e4c729f244d1ebb9cd4e, type: 3}
+>>>>>>> main

@@ -6,10 +6,16 @@ using UnityEngine.SceneManagement;
 
 public class SceneSwitcher : MonoBehaviour
 {
+    private BackgroundMusic backgroundMusic;
+
+    void Awake() {
+        Scene scene = SceneManager.GetActiveScene();
+        Debug.Log(scene.name);
+    }
+
     // Start is called before the first frame update
-    void Start()
-    {
-        
+    void Start() {
+        backgroundMusic = FindObjectOfType<BackgroundMusic>(); 
     }
 
     // Update is called once per frame
@@ -19,6 +25,7 @@ public class SceneSwitcher : MonoBehaviour
 
     public void switchScenes(string sceneName) {
         SceneManager.LoadScene(sceneName);
+        //backgroundMusic.playBGTrack(sceneName);
         Time.timeScale = 1f;
     }
 
