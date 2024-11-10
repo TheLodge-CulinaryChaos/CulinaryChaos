@@ -24,6 +24,14 @@ public class NPC_AI : MonoBehaviour
 
     private Coroutine eatingToDestroy;
 
+    //timer for frustration sound
+    public AudioClip frustrationSound; // Add the frustration sound clip here
+    private AudioSource audioSource;
+    private bool hasPlayedFrustrationSound = false; // Flag to track if sound has played
+
+    private float waitTime = 0f;
+    public float frustrationThreshold = 40f; // Time in seconds before NPC gets frustrated
+
 
     void Start()
     {
@@ -32,6 +40,7 @@ public class NPC_AI : MonoBehaviour
         animator = GetComponent<Animator>();
         navMeshAgent.stoppingDistance = 0.5f;
         navMeshAgent.autoBraking = true;
+        audioSource = GetComponent<AudioSource>();
         setNextWaypoint(); // Initialize the first waypoint
     }
 
@@ -54,12 +63,24 @@ public class NPC_AI : MonoBehaviour
                 transform.position = chairObject.transform.position;
                 AlignToChair(chairObject);
 
-                waitingForOrder = StartCoroutine(SitAndReturnToWaypoint());
+                if (waitingForOrder == null) {
+                    waitingForOrder = StartCoroutine(SitAndWaitForOrder());
+                }
+
+                //waitingForOrder = StartCoroutine(SitAndReturnToWaypoint());
+                //waitingForOrder = StartCoroutine(SitAndWaitForOrder());
             }
             else
             {
                 setNextWaypoint();
             }
+        }
+        if (waitTime > frustrationThreshold * 2 && waitingForOrder != null)
+        {
+            StopCoroutine(waitingForOrder);
+            waitingForOrder = null;
+            StartCoroutine(SitAndReturnToWaypoint());
+            Debug.Log("NPC is frustrated and leaving the seat.");
         }
 
         if (animator != null && !isSitting)
@@ -81,6 +102,41 @@ public class NPC_AI : MonoBehaviour
         }
 
     }
+    private IEnumerator SitAndWaitForOrder()
+    {
+        // Generate an order for the NPC if not already ordered
+        if (order == null)
+        {
+            order = GenerateOrder();
+            
+            waitTime = 0f;  // Reset the timer after the order is generated
+            hasPlayedFrustrationSound = false; // Reset frustration sound flag
+            Debug.Log("Order generated, starting wait timer.");
+
+        }
+        hasOrdered = true;
+
+        // Start waiting only after the order is placed
+        while (!IsOrderCompleted)
+        {
+            waitTime += Time.deltaTime;
+            Debug.Log($"Waiting for order... Current waitTime: {waitTime} seconds");
+
+
+            // Play frustration sound if wait time exceeds the threshold and sound hasn't been played
+            if (waitTime >= frustrationThreshold && !hasPlayedFrustrationSound)
+            {
+                audioSource.clip = frustrationSound;
+                audioSource.Play();
+                hasPlayedFrustrationSound = true; // Prevents the sound from playing multiple times
+            }
+
+            yield return null;
+        }
+        waitingForOrder = null;
+        
+    }
+
 
     public void SetSitPoint(GameObject sitPoint)
     {
@@ -108,6 +164,7 @@ public class NPC_AI : MonoBehaviour
         orderScript.SetOrder(order);
         return order;
     }
+
 
     private void setNextWaypoint()
     {
