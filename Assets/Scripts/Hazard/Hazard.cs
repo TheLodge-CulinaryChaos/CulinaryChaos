@@ -5,8 +5,8 @@ using System.Collections.Generic;
 public class Hazard : MonoBehaviour
 {
     public List<GameObject> hazards; // List of hazards to control
-    public float minRespawnTime = 5f; // Time in seconds before the hazards reappear
-    public float maxRespawnTime = 6f; // Time in seconds before the hazards reappear
+    public float minRespawnTime = 7f; // Time in seconds before the hazards reappear
+    public float maxRespawnTime = 10f; // Time in seconds before the hazards reappear
 
     private bool isFiring = false;
 
