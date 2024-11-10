@@ -29,7 +29,9 @@ public class Timer : MonoBehaviour {
     void Update() {
         if (started) {
             // Update the Timer
+            if (!debug) {
             current -= Time.deltaTime;
+            }
 
             if (current <= 0) {
                 // Set Current to 0 and Stop Visual for Countdown

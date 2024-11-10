@@ -84,8 +84,8 @@ public class InputManager : MonoBehaviour
         HandleSprintInput();
 
         HandleJumpInput();
-
         HandleCuttingInput();
+
         HandlePickupInput();
     }
 

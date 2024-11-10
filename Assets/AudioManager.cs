@@ -12,6 +12,7 @@ public class AudioManager : MonoBehaviour
     void Awake()
     {
         audioSource = GetComponent<AudioSource>();
+        audioSource.Play();
     }
 
     public void PlayFootstepSound()
