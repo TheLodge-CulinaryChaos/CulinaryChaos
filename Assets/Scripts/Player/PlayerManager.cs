@@ -9,6 +9,7 @@ public class PlayerManager : MonoBehaviour
     CameraManager cameraManager;
     PlayerLocomotion playerLocomotion;
     public bool isInteracting;
+    public bool isOnHazard;
 
     private void Awake()
     {
@@ -32,6 +33,7 @@ public class PlayerManager : MonoBehaviour
     {
         cameraManager.HandleAllCameraMovement();
         isInteracting = animator.GetBool("isInteracting");
+        isOnHazard = animator.GetBool("isOnHazard");
         playerLocomotion.isJumping = animator.GetBool("isJumping");
         animator.SetBool("isGrounded", playerLocomotion.isGrounded);
     }
