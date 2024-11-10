@@ -16,6 +16,7 @@ TagManager:
   - Plates
   - TheSink
   - OrderObject
+  - Fire
   layers:
   - Default
   - TransparentFX
