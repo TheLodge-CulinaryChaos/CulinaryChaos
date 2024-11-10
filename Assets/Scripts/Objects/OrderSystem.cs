@@ -47,7 +47,7 @@ public class OrderSystem : MonoBehaviour
             Debug.Log("Recipe is null");
             return;
         }
-        
+
         var panel = orderPanels.Find(p => p.GetComponent<OrderUI>().id == recipe.id);
 
         orders.Remove(recipe);

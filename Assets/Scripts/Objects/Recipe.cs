@@ -9,6 +9,7 @@ public class Recipe
     public string recipeName;
     public List<Ingredient> ingredients;
     public int reward;
+    public float time; // how much time recipe should take, in seconds
 
     public Recipe(string name, List<Ingredient> ingr, int rewa)
     {
@@ -16,6 +17,7 @@ public class Recipe
         recipeName = name;
         ingredients = ingr;
         reward = rewa;
+        time = 60.0f; // setting time as fixed for all orders for now
     }
 
     // Constructor
@@ -25,6 +27,7 @@ public class Recipe
         recipeName = "";
         ingredients = new List<Ingredient>();
         reward = 0;
+        time = 0.0f;
     }
 
     public override string ToString()
