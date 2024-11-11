@@ -148,7 +148,7 @@ public class NPC_AI : MonoBehaviour
         orderScript.ClearOrder();
 
         NPCManager npcManager = FindObjectOfType<NPCManager>();
-        
+
         npcManager.AddMoreCustomer(sitPoint);
         npcManager.IncrementServedCustomers();
 
@@ -191,13 +191,23 @@ public class NPC_AI : MonoBehaviour
 
     private void AlignToChair(GameObject chairObject)
     {
-        if (Mathf.Abs(chairObject.transform.rotation.y) < 0.01f)
+        float chairRotationY = chairObject.transform.rotation.eulerAngles.y;
+
+        if (Mathf.Abs(chairRotationY - 0f) < 10f)  // Close to 0 degrees
         {
             transform.rotation = Quaternion.Euler(0, 0, 0);
         }
-        else
+        else if (Mathf.Abs(chairRotationY - 90f) < 10f)  // Close to 90 degrees
+        {
+            transform.rotation = Quaternion.Euler(0, 90, 0);
+        }
+        else if (Mathf.Abs(chairRotationY - 180f) < 10f)  // Close to 180 degrees
         {
             transform.rotation = Quaternion.Euler(0, 180, 0);
+        }
+        else if (Mathf.Abs(chairRotationY - 270f) < 10f)  // Close to 270 degrees
+        {
+            transform.rotation = Quaternion.Euler(0, 270, 0);
         }
     }
 
