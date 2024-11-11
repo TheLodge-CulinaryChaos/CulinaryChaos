@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using CulinaryChaos.Objects;
 using TMPro;
 using System;
 
@@ -9,14 +11,14 @@ public class OrderUI : MonoBehaviour
     public Guid id;
     public TMP_Text tableNumber;
     public TMP_Text orderName;
-    public TMP_Text ingredients;
     public TMP_Text reward;
+    public GameObject ingredientImagePrefab;
+    public Transform ingredientsParent;
 
     void Start()
     {
         tableNumber = GetComponent<TextMeshProUGUI>();
         orderName = GetComponent<TextMeshProUGUI>();
-        ingredients = GetComponent<TextMeshProUGUI>();
         reward = GetComponent<TextMeshProUGUI>();
     }
 
@@ -25,19 +27,33 @@ public class OrderUI : MonoBehaviour
         this.id = recipe.id;
 
         orderName.text = recipe.recipeName;
-
-        string ingredientsStr = "";
-        foreach (Ingredient ing in recipe.ingredients)
-        {
-            ingredientsStr += ing;
-        }
-        ingredients.text = ingredientsStr;
-
         reward.text = recipe.reward.ToString();
-
         tableNumber.text = $"Table {tableNum}";
 
+        setIngredientImage(recipe);
+
         return this.gameObject;
+    }
+
+    void setIngredientImage(Recipe recipe)
+    {
+        foreach (Ingredient ing in recipe.ingredients)
+        {
+            GameObject ingredientImageObj = Instantiate(ingredientImagePrefab, ingredientsParent);
+            Image ingredientImage = ingredientImageObj.GetComponent<Image>();
+            switch (ing.type)
+            {
+                case (IngredientEnum.Mushroom):
+                    ingredientImage.sprite = Resources.Load<Sprite>("Images/mushroom");
+                    break;
+                case (IngredientEnum.Tomato):
+                    ingredientImage.sprite = Resources.Load<Sprite>("Images/tomato");
+                    break;
+                case (IngredientEnum.Pumpkin):
+                    ingredientImage.sprite = Resources.Load<Sprite>("Images/pumpkin");
+                    break;
+            }
+        }
     }
 
 }

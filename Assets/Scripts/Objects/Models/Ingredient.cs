@@ -4,7 +4,7 @@ using CulinaryChaos.Objects;
 
 public class Ingredient
 {
-    public IngredientEnum type; 
+    public IngredientEnum type;
 
     public void Chop()
     {

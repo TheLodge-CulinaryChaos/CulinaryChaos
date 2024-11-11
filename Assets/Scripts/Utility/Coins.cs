@@ -21,7 +21,7 @@ public class Coins : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        string formattedBal = string.Format("{0:C}", balance);
+        string formattedBal = $"{balance}";
         currTMP.text = formattedBal;
         if (debug && Input.GetKeyDown(KeyCode.U))
         {
