@@ -30,6 +30,9 @@ public class NPCManager : MonoBehaviour
 
     private System.Collections.IEnumerator SpawnACustomer(GameObject sitPoint)
     {
+        // random delay before spawning the customer
+        int randomDelay = Random.Range(1, 5);
+        yield return new WaitForSeconds(randomDelay); // Add delay before spawning the customer
 
         GameObject randomCustomer = generateRandomCustomer();
 

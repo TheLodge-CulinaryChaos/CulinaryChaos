@@ -33,11 +33,6 @@ public class OrderUI : MonoBehaviour
                 started = false;
                 OrderSystem orderSystem = FindObjectOfType<OrderSystem>();
                 orderSystem.RemoveOrder(order);
-                NPCManager npcManager = FindObjectOfType<NPCManager>();
-                if (npcManager != null)
-                {
-                    npcManager.RemoveCustomer();
-                }
             }
             timer.text = timerToText(currentTime);
         }

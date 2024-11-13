@@ -54,7 +54,7 @@ public class NPC_AI : MonoBehaviour
                 transform.position = chairObject.transform.position;
                 AlignToChair(chairObject);
 
-                waitingForOrder = StartCoroutine(SitAndReturnToWaypoint());
+                waitingForOrder = StartCoroutine(SitAndWaitToBeRemoved());
             }
             else
             {
@@ -92,7 +92,6 @@ public class NPC_AI : MonoBehaviour
     private Recipe GenerateOrder()
     {
         if (hasOrdered) return null; // Prevent multiple orders
-
 
         // set order in the order object
         SitPointScript sitPointScript = sitPoint.GetComponent<SitPointScript>();
@@ -154,7 +153,7 @@ public class NPC_AI : MonoBehaviour
         Destroy(gameObject);
     }
 
-    private IEnumerator SitAndReturnToWaypoint()
+    private IEnumerator SitAndWaitToBeRemoved()
     {
 
         // Generate an order for the NPC
@@ -164,7 +163,9 @@ public class NPC_AI : MonoBehaviour
         hasOrdered = true;
 
         // Wait for 60 seconds (1 minute)
-        yield return new WaitForSeconds(30f);
+
+        // wait long enough to remove customer
+        yield return new WaitForSeconds(order.time);
 
         // Stand up from sitting
         // isSitting = false; // Allow movement again
@@ -178,7 +179,10 @@ public class NPC_AI : MonoBehaviour
         NPCManager npcManager = FindObjectOfType<NPCManager>();
         if (npcManager != null)
         {
-            npcManager.RemoveCustomer(gameObject);
+            Debug.Log("Removing customer " + gameObject.name);
+            npcManager.AddMoreCustomer(sitPoint);
+
+            Destroy(gameObject);
             // npcManager.GenerateCustomer(); // Call the respawn method in the manager
         }
 
