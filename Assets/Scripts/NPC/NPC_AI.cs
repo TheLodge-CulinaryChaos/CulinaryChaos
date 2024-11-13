@@ -1,7 +1,7 @@
-using UnityEngine;
-using UnityEngine.AI;
 using System.Collections;
 using Unity.VisualScripting;
+using UnityEngine;
+using UnityEngine.AI;
 
 [RequireComponent(typeof(NavMeshAgent))]
 public class NPC_AI : MonoBehaviour
@@ -13,7 +13,6 @@ public class NPC_AI : MonoBehaviour
     private int currWaypoint = -1; // For seating waypoints
     private bool isSitting = false;
 
-    private NPCManager npcManager; // Reference to the NPC Manager
     public OrderSystem orderSystem;
     private bool hasOrdered = false;
 
@@ -21,9 +20,6 @@ public class NPC_AI : MonoBehaviour
 
     private Coroutine waitingForOrder;
     private bool IsOrderCompleted = false;
-
-    private Coroutine eatingToDestroy;
-
 
     void Start()
     {
@@ -37,14 +33,16 @@ public class NPC_AI : MonoBehaviour
 
     void Update()
     {
-
         if (IsOrderCompleted)
         {
             animator.SetBool("isEating", true);
-            eatingToDestroy = StartCoroutine(EatAndDestroy());
+            StartCoroutine(EatAndDestroy());
         }
 
-        if (!navMeshAgent.pathPending && navMeshAgent.remainingDistance <= navMeshAgent.stoppingDistance)
+        if (
+            !navMeshAgent.pathPending
+            && navMeshAgent.remainingDistance <= navMeshAgent.stoppingDistance
+        )
         {
             if (currWaypoint == waypoints.Length - 1)
             {
@@ -79,7 +77,6 @@ public class NPC_AI : MonoBehaviour
             orderSystem.RemoveOrder(order);
             order = null;
         }
-
     }
 
     public void SetSitPoint(GameObject sitPoint)
@@ -91,7 +88,8 @@ public class NPC_AI : MonoBehaviour
 
     private Recipe GenerateOrder()
     {
-        if (hasOrdered) return null; // Prevent multiple orders
+        if (hasOrdered)
+            return null; // Prevent multiple orders
 
         // set order in the order object
         SitPointScript sitPointScript = sitPoint.GetComponent<SitPointScript>();
@@ -147,7 +145,7 @@ public class NPC_AI : MonoBehaviour
         orderScript.ClearOrder();
 
         NPCManager npcManager = FindObjectOfType<NPCManager>();
-        
+
         npcManager.AddMoreCustomer(sitPoint);
 
         Destroy(gameObject);
@@ -155,41 +153,26 @@ public class NPC_AI : MonoBehaviour
 
     private IEnumerator SitAndWaitToBeRemoved()
     {
-
         // Generate an order for the NPC
         if (order == null)
+        {
             order = GenerateOrder();
+        }
 
         hasOrdered = true;
 
         // Wait for 60 seconds (1 minute)
-
-        // wait long enough to remove customer
+        // to remove customer
         yield return new WaitForSeconds(order.time);
-
-        // Stand up from sitting
-        // isSitting = false; // Allow movement again
-        // animator.SetBool("isSitting", false); // Reset sitting animation
-
-        // navMeshAgent.isStopped = true;
-        // navMeshAgent.velocity = Vector3.zero; // Clear any remaining velocity
-        // animator.SetFloat("vely", 0); // Stop walking animation
 
         // Find the NPCManager and trigger GenerateCustomer to respawn a new customer
         NPCManager npcManager = FindObjectOfType<NPCManager>();
         if (npcManager != null)
         {
-            Debug.Log("Removing customer " + gameObject.name);
             npcManager.AddMoreCustomer(sitPoint);
-
             Destroy(gameObject);
-            // npcManager.GenerateCustomer(); // Call the respawn method in the manager
         }
-
-        // gameObject.SetActive(false); // Deactivate the NPC
     }
-
-
 
     private void AlignToChair(GameObject chairObject)
     {
@@ -202,6 +185,4 @@ public class NPC_AI : MonoBehaviour
             transform.rotation = Quaternion.Euler(0, 180, 0);
         }
     }
-
-
 }

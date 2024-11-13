@@ -17,19 +17,19 @@ public class NPCManager : MonoBehaviour
     {
         // Initialize inactive customers only once at the start
         InitializeInactiveCustomers();
-        OpenDoor();
         StartCoroutine(SpawnCustomers());
     }
 
     public void AddMoreCustomer(GameObject sitPoint)
     {
-        OpenDoor();
-        
         StartCoroutine(SpawnACustomer(sitPoint));
     }
 
     private System.Collections.IEnumerator SpawnACustomer(GameObject sitPoint)
     {
+
+        OpenDoor();
+
         // random delay before spawning the customer
         int randomDelay = Random.Range(1, 5);
         yield return new WaitForSeconds(randomDelay); // Add delay before spawning the customer
@@ -96,6 +96,8 @@ public class NPCManager : MonoBehaviour
 
     private System.Collections.IEnumerator SpawnCustomers()
     {
+
+        OpenDoor();
         // Loop to spawn customers until maxCustomers is reached
         for (int i = 0; i < availableSeats.Length; i++)
         {
@@ -121,14 +123,6 @@ public class NPCManager : MonoBehaviour
         }
     }
 
-    // public void GenerateCustomer()
-    // {
-    //     activeCustomers.Clear();
-    //     inactiveCustomers.Clear();
-
-    //     StartCoroutine(SpawnCustomers());
-    // }
-
     internal void OpenDoor()
     {
         GameObject door = doorAnimator.gameObject;
@@ -143,7 +137,7 @@ public class NPCManager : MonoBehaviour
         GameObject door = doorAnimator.gameObject;
         if (door != null)
         {
-            door.GetComponent<Animator>().SetBool("isOpen", true);
+            door.GetComponent<Animator>().Play("DoorClose");
         }
     }
 }

@@ -1,7 +1,5 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
 
 public class Recipe
 {
@@ -17,7 +15,18 @@ public class Recipe
         recipeName = name;
         ingredients = ingr;
         reward = rewa;
-        time = 60.0f; // setting time as fixed for all orders for now
+        time = GenerateOrderTime();
+    }
+
+    private float GenerateOrderTime()
+    {
+        System.Random random = new System.Random();
+        int minTime = 60;
+        int maxTime = 90;
+
+        float randomFloat = (float)(random.NextDouble() * (maxTime - minTime) + minTime);
+
+        return (float)randomFloat;
     }
 
     // Constructor
