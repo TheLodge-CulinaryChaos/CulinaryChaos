@@ -6,27 +6,32 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
+<<<<<<< HEAD
     path: Assets/Scenes/Title Scenes/TItle Screen.unity
+=======
+    path: Assets/Scenes/TItle Screen.unity
+>>>>>>> main
     guid: e014e84f15c3b464bac4e192f4b71e74
-  - enabled: 1
-    path: Assets/Scenes/Title Scenes/Credits.unity
-    guid: 3bbb251c34cfd4efa84098bd89dafcf0
-  - enabled: 1
-    path: Assets/Scenes/Title Scenes/Instructions.unity
-    guid: d7e61be3d261146ce9903e22c0714884
   - enabled: 1
     path: Assets/Scenes/Title Scenes/Level Select.unity
     guid: e88fd22b653b5476a84d1035ef9ea6eb
   - enabled: 1
-    path: Assets/Scenes/Title Scenes/Player Select.unity
-    guid: 07d4504d6213444cb9d7131d1e7bcf94
+    path: Assets/Scenes/Title Scenes/Instructions.unity
+    guid: d7e61be3d261146ce9903e22c0714884
+  - enabled: 1
+    path: Assets/Scenes/Title Scenes/Credits.unity
+    guid: 3bbb251c34cfd4efa84098bd89dafcf0
   - enabled: 1
     path: Assets/Scenes/Easy.unity
     guid: 9fc0d4010bbf28b4594072e72b8655ab
   - enabled: 1
+    path: Assets/Scenes/Medium.unity
+    guid: a52bc23d7c25042308212f4d1db4c512
+  - enabled: 1
     path: Assets/Scenes/Hard.unity
     guid: 569064bf0768e43d59efb8e29478eeb1
   - enabled: 1
-    path: Assets/Scenes/Medium.unity
-    guid: a52bc23d7c25042308212f4d1db4c512
-  m_configObjects: {}
+    path: Assets/Scenes/Title Scenes/Player Select.unity
+    guid: 07d4504d6213444cb9d7131d1e7bcf94
+  m_configObjects:
+    com.unity.input.settings: {fileID: 11400000, guid: 9e7be553448fa2546aea5752021cbcf7, type: 2}

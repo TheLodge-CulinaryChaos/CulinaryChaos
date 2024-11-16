@@ -375,6 +375,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b886ec164d5c44d33af17b3c2560991e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  buttonGroup: {fileID: 0}
+  playerPicker: {fileID: 0}
 --- !u!1 &111089710
 GameObject:
   m_ObjectHideFlags: 0
@@ -1923,7 +1925,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1340896421}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -62.195343, y: 28.641144, z: -2.5885656}
+  m_LocalPosition: {x: -62.195343, y: 28.641144, z: -3}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -1948,6 +1950,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b886ec164d5c44d33af17b3c2560991e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  buttonGroup: {fileID: 0}
+  playerPicker: {fileID: 0}
 --- !u!1 &1412048323
 GameObject:
   m_ObjectHideFlags: 0
@@ -2435,6 +2439,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0cdbaf596705b48f087299ef6c1290ff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  player: {fileID: 0}
+  playerType: 0
+  indicator: {fileID: 0}
 --- !u!114 &1520285734
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2663,6 +2670,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0cdbaf596705b48f087299ef6c1290ff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  player: {fileID: 0}
+  playerType: 0
+  indicator: {fileID: 0}
 --- !u!61 &1645051901
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -3101,7 +3111,7 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1779674376}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: -3}
   m_LocalScale: {x: 3, y: 1.5, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
