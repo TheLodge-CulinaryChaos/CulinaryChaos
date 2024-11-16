@@ -22,12 +22,17 @@ public class BackgroundMusic : MonoBehaviour
         currentScene = SceneManager.GetActiveScene().name;
 
         songList.Add("TItle Screen", track01);
-        songList.Add("Instructions", track02);       
+        songList.Add("Instructions", track02);
+        songList.Add("Credits", track02); 
+        songList.Add("Level Select", track02);    
+        songList.Add("Player Select", track02);                 
         songList.Add("Easy", track03);
         songList.Add("Medium", track04);
         songList.Add("Hard", track05);
+        
         audioSource = GetComponent<AudioSource>();
         playBGTrack(currentScene);
+        Debug.Log("test");
     }
 
     // Start is called before the first frame update
@@ -41,7 +46,6 @@ public class BackgroundMusic : MonoBehaviour
 
     // Plays the Track
     public void playBGTrack(string sceneName) {
-        currentScene = sceneName;
         if (audioSource.isPlaying) {
             audioSource.Stop();
         }
