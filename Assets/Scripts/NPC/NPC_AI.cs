@@ -24,6 +24,15 @@ public class NPC_AI : MonoBehaviour
 
     private Coroutine eatingToDestroy;
 
+    //timer for frustration sound
+    public AudioClip frustrationSound; // Add the frustration sound clip here
+    public AudioClip[] greetingSounds;
+    private AudioSource audioSource;
+    private bool hasPlayedFrustrationSound = false; // Flag to track if sound has played
+
+    private float waitTime = 0f;
+    public float frustrationThreshold = 40f; // Time in seconds before NPC gets frustrated
+
 
     void Start()
     {
@@ -32,6 +41,11 @@ public class NPC_AI : MonoBehaviour
         animator = GetComponent<Animator>();
         navMeshAgent.stoppingDistance = 0.5f;
         navMeshAgent.autoBraking = true;
+
+        audioSource = GetComponent<AudioSource>();
+
+        PlayGreetSound();
+
         setNextWaypoint(); // Initialize the first waypoint
     }
 
@@ -53,14 +67,28 @@ public class NPC_AI : MonoBehaviour
                 GameObject chairObject = waypoints[currWaypoint].transform.parent.gameObject;
                 transform.position = chairObject.transform.position;
                 AlignToChair(chairObject);
+                //PlayGreetSound();
+                
 
-                waitingForOrder = StartCoroutine(SitAndReturnToWaypoint());
+                if (waitingForOrder == null) {
+                    waitingForOrder = StartCoroutine(SitAndWaitForOrder());
+                }
+
+                //waitingForOrder = StartCoroutine(SitAndReturnToWaypoint());
+                //waitingForOrder = StartCoroutine(SitAndWaitForOrder());
             }
             else
             {
                 setNextWaypoint();
             }
         }
+        // if (waitTime > frustrationThreshold * 2 && waitingForOrder != null)
+        // {
+        //     StopCoroutine(waitingForOrder);
+        //     waitingForOrder = null;
+        //     StartCoroutine(SitAndReturnToWaypoint());
+        //     Debug.Log("NPC is frustrated and leaving the seat.");
+        // }
 
         if (animator != null && !isSitting)
         {
@@ -81,6 +109,55 @@ public class NPC_AI : MonoBehaviour
         }
 
     }
+
+    private void PlayGreetSound() {
+        if (audioSource != null && greetingSounds.Length > 0)
+        {
+            int randomIndex = Random.Range(0, greetingSounds.Length); // Get a random index
+            AudioClip selectedClip = greetingSounds[randomIndex];
+            audioSource.clip = selectedClip;
+            audioSource.Play();
+            Debug.Log("NPC is saying hello with a random greeting!");
+        }
+    }
+
+
+    private IEnumerator SitAndWaitForOrder()
+    {
+        // Generate an order for the NPC if not already ordered
+        if (order == null)
+        {
+            order = GenerateOrder();
+            
+            waitTime = 0f;  // Reset the timer after the order is generated
+            hasPlayedFrustrationSound = false; // Reset frustration sound flag
+            Debug.Log("Order generated, starting wait timer.");
+
+        }
+        hasOrdered = true;
+
+        // Start waiting only after the order is placed
+        while (!IsOrderCompleted)
+        {
+            waitTime += Time.deltaTime;
+            Debug.Log($"Waiting for order... Current waitTime: {waitTime} seconds");
+
+
+            // Play frustration sound if wait time exceeds the threshold and sound hasn't been played
+            if (waitTime >= frustrationThreshold && !hasPlayedFrustrationSound)
+            {
+                audioSource.clip = frustrationSound;
+                audioSource.Play();
+                hasPlayedFrustrationSound = true; // Prevents the sound from playing multiple times
+                Debug.Log("Playing frustration sound due to wait time threshold exceeded.");
+            }
+
+            yield return null;
+        }
+        waitingForOrder = null;
+        
+    }
+
 
     public void SetSitPoint(GameObject sitPoint)
     {
@@ -108,6 +185,7 @@ public class NPC_AI : MonoBehaviour
         orderScript.SetOrder(order);
         return order;
     }
+
 
     private void setNextWaypoint()
     {
@@ -148,7 +226,7 @@ public class NPC_AI : MonoBehaviour
         orderScript.ClearOrder();
 
         NPCManager npcManager = FindObjectOfType<NPCManager>();
-        
+
         npcManager.AddMoreCustomer(sitPoint);
         npcManager.IncrementServedCustomers();
 
@@ -191,15 +269,26 @@ public class NPC_AI : MonoBehaviour
 
     private void AlignToChair(GameObject chairObject)
     {
-        if (Mathf.Abs(chairObject.transform.rotation.y) < 0.01f)
+        float chairRotationY = chairObject.transform.rotation.eulerAngles.y;
+
+        if (Mathf.Abs(chairRotationY - 0f) < 10f)  // Close to 0 degrees
         {
             transform.rotation = Quaternion.Euler(0, 0, 0);
         }
-        else
+        else if (Mathf.Abs(chairRotationY - 90f) < 10f)  // Close to 90 degrees
+        {
+            transform.rotation = Quaternion.Euler(0, 90, 0);
+        }
+        else if (Mathf.Abs(chairRotationY - 180f) < 10f)  // Close to 180 degrees
         {
             transform.rotation = Quaternion.Euler(0, 180, 0);
         }
+        else if (Mathf.Abs(chairRotationY - 270f) < 10f)  // Close to 270 degrees
+        {
+            transform.rotation = Quaternion.Euler(0, 270, 0);
+        }
     }
+
 
 
 }
