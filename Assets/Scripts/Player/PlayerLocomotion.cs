@@ -185,12 +185,12 @@ public class PlayerLocomotion : MonoBehaviour
     public void HandleJumping()
     {
         if (holdingObjectScript.IsHoldingPlate()) {
-            Debug.Log("Cannot jump while holding an object");
+            // Debug.Log("Cannot jump while holding an object");
             return;
         }
         if (isGrounded)
         {
-            Debug.Log("Jumping");
+            // Debug.Log("Jumping");
             animatorManager.animator.SetBool("isJumping", true);
             animatorManager.PlayTargetAnimation("Jumping", false);
 
