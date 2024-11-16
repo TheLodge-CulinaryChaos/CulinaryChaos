@@ -4,6 +4,8 @@ namespace CulinaryChaos.Objects
     {
         Tomato,
         Mushroom,
-        Pumpkin
+        Pumpkin,
+        GreenPepper,
+        Potato,
     }
 }
