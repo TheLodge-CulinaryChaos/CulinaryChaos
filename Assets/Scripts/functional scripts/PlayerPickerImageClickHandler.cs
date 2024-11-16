@@ -4,22 +4,22 @@ using UnityEngine;
 
 public class PlayerPickerImageClickHandler : MonoBehaviour
 {
-
-public GameObject player;
+    public GameObject player;
 
     // player rotate around its Y axis
     private float rotateSpeed = 100f;
     public Enums playerType;
     public GameObject indicator;
 
-    void Awake() {
+    void Awake()
+    {
         indicator.SetActive(false);
     }
-    
+
     // Update is called once per frame
     void Update()
     {
-        player.transform.Rotate(Vector3.up * rotateSpeed * Time.deltaTime);
+        // player.transform.Rotate(Vector3.up * rotateSpeed * Time.deltaTime);
     }
 
     void LateUpdate()
@@ -27,16 +27,18 @@ public GameObject player;
         if (PlayerSelector.selectedPlayer == playerType)
         {
             indicator.SetActive(true);
+            player.transform.Rotate(Vector3.up * rotateSpeed * Time.deltaTime);
         }
         else
         {
             indicator.SetActive(false);
+            player.transform.rotation = Quaternion.Euler(0, -180, 0);
         }
     }
 
-    private void OnMouseUp() {
+    public void SetPlayer() {
+        Debug.Log("PlayerPickerImageClickHandler.OnMouseUp");
+
         PlayerSelector.selectedPlayer = playerType;
-        SceneSwitcher sceneSwitcher = FindObjectOfType<SceneSwitcher>();
-        sceneSwitcher.GeneralMenu();
     }
 }
