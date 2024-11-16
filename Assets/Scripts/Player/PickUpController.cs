@@ -124,11 +124,11 @@ public class PickUpController : MonoBehaviour
         rb.isKinematic = true;
         rb.useGravity = false;
 
-        // disbale box collider
-        MeshCollider meshCollider = pickUpObject.GetComponent<MeshCollider>();
-        if (meshCollider != null)
+        // disable all colliders
+        Collider[] colliders = pickUpObject.GetComponentsInChildren<Collider>();
+        foreach (Collider collider in colliders)
         {
-            meshCollider.enabled = false;
+            collider.enabled = false;
         }
 
         pickUpObject.transform.SetParent(holdPosition, true);
@@ -136,7 +136,9 @@ public class PickUpController : MonoBehaviour
         pickUpObject.transform.localRotation = Quaternion.Euler(Vector3.zero);
 
         originalScale = pickUpObject.transform.lossyScale;
-        pickUpObject.transform.localScale = Vector3.one;
+        pickUpObject.transform.localScale *= 0.5f;
+         
+        
 
         isHoldingIngredients = true;
 
@@ -153,11 +155,11 @@ public class PickUpController : MonoBehaviour
             rb.isKinematic = false;
             rb.useGravity = true;
 
-            // enable box collider
-            MeshCollider meshCollider = pickUpObject.GetComponent<MeshCollider>();
-            if (meshCollider != null)
+            // enable all colliders
+            Collider[] colliders = pickUpObject.GetComponentsInChildren<Collider>();
+            foreach (Collider collider in colliders)
             {
-                meshCollider.enabled = true;
+                collider.enabled = true;
             }
 
             rb.AddForce(transform.forward * 2f, ForceMode.Impulse); // Add a little force to the object
