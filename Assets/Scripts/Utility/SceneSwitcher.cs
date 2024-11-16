@@ -6,10 +6,19 @@ using UnityEngine.SceneManagement;
 
 public class SceneSwitcher : MonoBehaviour
 {
+    private BackgroundMusic backgroundMusic;
+    public GameObject buttonGroup;
+    public GameObject playerPicker;
+
+    void Awake() {
+        if (playerPicker) {
+            playerPicker.SetActive(false);
+        }
+    }
+
     // Start is called before the first frame update
-    void Start()
-    {
-        
+    void Start() {
+        backgroundMusic = FindObjectOfType<BackgroundMusic>(); 
     }
 
     // Update is called once per frame
@@ -17,8 +26,19 @@ public class SceneSwitcher : MonoBehaviour
         
     }
 
+    public void SelectPlayerMenu() {
+        buttonGroup.SetActive(false);
+        playerPicker.SetActive(true);
+    }
+
+    public void GeneralMenu() {
+        buttonGroup.SetActive(true);
+        playerPicker.SetActive(false);
+    }
+
     public void switchScenes(string sceneName) {
         SceneManager.LoadScene(sceneName);
+        //backgroundMusic.playBGTrack(sceneName);
         Time.timeScale = 1f;
     }
 

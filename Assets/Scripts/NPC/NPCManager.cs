@@ -13,6 +13,8 @@ public class NPCManager : MonoBehaviour
 
     public Animator doorAnimator;
 
+    private int servedCustomers = 0;
+
     void Start()
     {
         // Initialize inactive customers only once at the start
@@ -23,6 +25,21 @@ public class NPCManager : MonoBehaviour
     public void AddMoreCustomer(GameObject sitPoint)
     {
         StartCoroutine(SpawnACustomer(sitPoint));
+    }
+
+    public void ResetServedCustomers()
+    {
+        servedCustomers = 0;
+    }
+
+    public void IncrementServedCustomers()
+    {
+        servedCustomers++;
+    }
+
+    public int GetServedCustomers()
+    {
+        return servedCustomers;
     }
 
     private System.Collections.IEnumerator SpawnACustomer(GameObject sitPoint)
@@ -39,7 +56,7 @@ public class NPCManager : MonoBehaviour
         NPC_AI npcAI = randomCustomer.GetComponent<NPC_AI>();
         if (npcAI == null)
         {
-            Debug.LogError("NPCAI component not found on customer prefab");
+            // Debug.LogError("NPCAI component not found on customer prefab");
             yield break;
         }
 
@@ -72,13 +89,13 @@ public class NPCManager : MonoBehaviour
 
             if (npcAI == null)
             {
-                Debug.LogError("NPCAI component not found on customer prefab");
+                // Debug.LogError("NPCAI component not found on customer prefab");
                 return;
             }
 
             GameObject chair = availableSeats[i];
 
-            Debug.Log("Chair: " + chair.name);
+            // Debug.Log("Chair: " + chair.name);
 
             npcAI.SetSitPoint(chair);
 

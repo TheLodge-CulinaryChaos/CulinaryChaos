@@ -44,7 +44,7 @@ public class OrderSystem : MonoBehaviour
     {
         if (recipe == null)
         {
-            Debug.Log("Recipe is null");
+            // Debug.Log("Recipe is null");
             return;
         }
 
@@ -60,7 +60,7 @@ public class OrderSystem : MonoBehaviour
         int i = 0;
         while (i < this.orders.Count)
         {
-            Debug.Log(this.orders[i]);
+            // Debug.Log(this.orders[i]);
             i++;
         }
     }

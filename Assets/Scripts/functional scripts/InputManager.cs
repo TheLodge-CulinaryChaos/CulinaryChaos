@@ -6,6 +6,7 @@ public class InputManager : MonoBehaviour
 {
     PlayerControls playerControls;
     PlayerLocomotion playerLocomotion;
+    PlayerManager playerManager;
 
     AnimatorManager animatorManager;
     public CanvasGroup canvasGroup;
@@ -31,6 +32,7 @@ public class InputManager : MonoBehaviour
     {
         playerLocomotion = GetComponent<PlayerLocomotion>();
         animatorManager = GetComponent<AnimatorManager>();
+        playerManager = GetComponent<PlayerManager>();
 
     }
 
@@ -79,27 +81,31 @@ public class InputManager : MonoBehaviour
         }
 
         HandleMovementInput();
-        HandleSpringInput();
+        HandleSprintInput();
 
         HandleJumpInput();
-
         HandleCuttingInput();
+
         HandlePickupInput();
     }
 
     private void HandleMovementInput()
     {
-        verticalInput = movementInput.y;
-        horizontalInput = movementInput.x;
-
         cameraInputX = cameraInput.x;
         cameraInputY = cameraInput.y;
+
+        if (playerManager.isOnHazard)
+        {
+            return;
+        }
+        verticalInput = movementInput.y;
+        horizontalInput = movementInput.x;
 
         moveAmount = Mathf.Clamp01(Mathf.Abs(horizontalInput) + Mathf.Abs(verticalInput));
         animatorManager.UpdateAnimatorValues(0, moveAmount, playerLocomotion.isSprinting);
     }
 
-    private void HandleSpringInput()
+    private void HandleSprintInput()
     {
         if (shift_input && moveAmount > 0.5f)
         {

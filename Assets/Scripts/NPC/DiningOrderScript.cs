@@ -7,12 +7,14 @@ public class DiningOrderScript : MonoBehaviour
 {
     public GameObject holdingObject;
     public GameObject cookedFood;
+    public Coins coins;
 
     // define order here
     private Recipe order;
 
     void Awake()
     {
+        coins = FindObjectOfType<Coins>();
         holdingObject.SetActive(false);
         cookedFood.SetActive(false);
         // remove material from cooked food
@@ -27,7 +29,7 @@ public class DiningOrderScript : MonoBehaviour
         }
         if (order == null)
         {
-            Debug.Log("Set order: " + recipe.recipeName);
+            // Debug.Log("Set order: " + recipe.recipeName);
             order = recipe;
         }
     }
@@ -41,7 +43,16 @@ public class DiningOrderScript : MonoBehaviour
 
     internal bool IsOrderAccepted(IngredientProps ingredientProps)
     {
-        return order.ingredients.Any(ingr => ingr.type.Equals(ingredientProps.ingredientType));
+        if (order.ingredients.Any(ingr => ingr.type.Equals(ingredientProps.ingredientType)))
+        {
+
+            coins.addMoney(order.reward);
+            return true;
+        }
+        else
+        {
+            return false;
+        };
     }
 
     internal void CompleteOrder(IngredientProps ingredientProps)
