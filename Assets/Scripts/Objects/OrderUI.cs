@@ -44,19 +44,19 @@ public class OrderUI : MonoBehaviour
             switch (ing.type)
             {
                 case (IngredientEnum.Mushroom):
-                    ingredientImage.sprite = Resources.Load<Sprite>("Images/mushroom");
+                    ingredientImage.sprite = Resources.Load<Sprite>("Images/ingredients/mushroom");
                     break;
                 case (IngredientEnum.Tomato):
-                    ingredientImage.sprite = Resources.Load<Sprite>("Images/tomato");
+                    ingredientImage.sprite = Resources.Load<Sprite>("Images/ingredients/tomato");
                     break;
                 case (IngredientEnum.Pumpkin):
-                    ingredientImage.sprite = Resources.Load<Sprite>("Images/pumpkin");
+                    ingredientImage.sprite = Resources.Load<Sprite>("Images/ingredients/pumpkin");
                     break;
                 case (IngredientEnum.GreenPepper):
-                    ingredientImage.sprite = Resources.Load<Sprite>("Images/pepper");
+                    ingredientImage.sprite = Resources.Load<Sprite>("Images/ingredients/pepper");
                     break;
                 case (IngredientEnum.Potato):
-                    ingredientImage.sprite = Resources.Load<Sprite>("Images/potato");
+                    ingredientImage.sprite = Resources.Load<Sprite>("Images/ingredients/potato");
                     break;
             }
         }
