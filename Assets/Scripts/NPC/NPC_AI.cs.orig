@@ -13,7 +13,6 @@ public class NPC_AI : MonoBehaviour
     private int currWaypoint = -1; // For seating waypoints
     private bool isSitting = false;
 
-    private NPCManager npcManager; // Reference to the NPC Manager
     public OrderSystem orderSystem;
     private bool hasOrdered = false;
 
@@ -22,6 +21,8 @@ public class NPC_AI : MonoBehaviour
     private Coroutine waitingForOrder;
     private bool IsOrderCompleted = false;
 
+<<<<<<< HEAD
+=======
     private Coroutine eatingToDestroy;
 
     //timer for frustration sound
@@ -34,6 +35,7 @@ public class NPC_AI : MonoBehaviour
     public float frustrationThreshold = 40f; // Time in seconds before NPC gets frustrated
 
 
+>>>>>>> main
     void Start()
     {
         // Grab references to the components
@@ -72,12 +74,16 @@ public class NPC_AI : MonoBehaviour
                 //PlayGreetSound();
                 
 
+<<<<<<< HEAD
+                waitingForOrder = StartCoroutine(SitAndWaitToBeRemoved());
+=======
                 if (waitingForOrder == null) {
                     waitingForOrder = StartCoroutine(SitAndWaitForOrder());
                 }
 
                 //waitingForOrder = StartCoroutine(SitAndReturnToWaypoint());
                 //waitingForOrder = StartCoroutine(SitAndWaitForOrder());
+>>>>>>> main
             }
             else
             {
@@ -279,7 +285,10 @@ public class NPC_AI : MonoBehaviour
             transform.rotation = Quaternion.Euler(0, 270, 0);
         }
     }
+<<<<<<< HEAD
+=======
 
 
 
+>>>>>>> main
 }
