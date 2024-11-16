@@ -13,10 +13,15 @@ public class OrderSystem : MonoBehaviour
     public GameObject orderPanelPrefab;
     public Transform ordersParent;
 
+    public int levelNumber = 1;
+
     // Creating instances of the Recipe class
     public Recipe tomatoRecipe = new Recipe($"Tomato Soup", new List<Ingredient> { new Tomato() }, 100);
     public Recipe cornRecipe = new Recipe("Pumpkin Soup", new List<Ingredient> { new Pumpkin() }, 200);
     public Recipe lettuceRecipe = new Recipe("Mushroom Soup", new List<Ingredient> { new Mushroom() }, 300);
+
+    public Recipe greenPepperRecipe = new Recipe("Green Pepper Soup", new List<Ingredient> { new GreenPepper() }, 400);
+    public Recipe potatoRecipe = new Recipe("Potato Soup", new List<Ingredient> { new Potato() }, 400);
 
     void Awake()
     {
@@ -24,6 +29,17 @@ public class OrderSystem : MonoBehaviour
         recipes = new List<Recipe>{
             tomatoRecipe, cornRecipe, lettuceRecipe
         };
+
+        if (levelNumber >= 2)
+        {
+            recipes.Add(greenPepperRecipe);
+        }
+
+        if (levelNumber >= 3)
+        {
+            recipes.Add(potatoRecipe);
+        }
+
         orders = new List<Recipe>();
     }
 
