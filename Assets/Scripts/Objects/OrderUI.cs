@@ -52,6 +52,12 @@ public class OrderUI : MonoBehaviour
                 case (IngredientEnum.Pumpkin):
                     ingredientImage.sprite = Resources.Load<Sprite>("Images/pumpkin");
                     break;
+                case (IngredientEnum.GreenPepper):
+                    ingredientImage.sprite = Resources.Load<Sprite>("Images/pepper");
+                    break;
+                case (IngredientEnum.Potato):
+                    ingredientImage.sprite = Resources.Load<Sprite>("Images/potato");
+                    break;
             }
         }
     }
