@@ -21,6 +21,7 @@ public class OrderSystem : MonoBehaviour
     public Recipe lettuceRecipe = new Recipe("Mushroom Soup", new List<Ingredient> { new Mushroom() }, 300);
 
     public Recipe greenPepperRecipe = new Recipe("Green Pepper Soup", new List<Ingredient> { new GreenPepper() }, 400);
+    public Recipe potatoRecipe = new Recipe("Potato Soup", new List<Ingredient> { new Potato() }, 400);
 
     void Awake()
     {
@@ -29,11 +30,16 @@ public class OrderSystem : MonoBehaviour
             tomatoRecipe, cornRecipe, lettuceRecipe
         };
 
-        if (levelNumber == 2)
+        if (levelNumber >= 2)
         {
             recipes.Add(greenPepperRecipe);
         }
-        
+
+        if (levelNumber >= 3)
+        {
+            recipes.Add(potatoRecipe);
+        }
+
         orders = new List<Recipe>();
     }
 

@@ -43,7 +43,8 @@ public class CookingComponent : MonoBehaviour
         return ingredientType == IngredientEnum.Tomato ||
                 ingredientType == IngredientEnum.Pumpkin ||
                 ingredientType == IngredientEnum.Mushroom ||
-                ingredientType == IngredientEnum.GreenPepper;
+                ingredientType == IngredientEnum.GreenPepper ||
+                ingredientType == IngredientEnum.Potato;
 
     }
 

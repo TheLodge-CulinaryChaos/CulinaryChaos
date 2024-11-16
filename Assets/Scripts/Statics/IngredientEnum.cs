@@ -6,5 +6,6 @@ namespace CulinaryChaos.Objects
         Mushroom,
         Pumpkin,
         GreenPepper,
+        Potato,
     }
 }
