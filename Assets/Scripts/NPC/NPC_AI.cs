@@ -55,7 +55,7 @@ public class NPC_AI : MonoBehaviour
         if (IsOrderCompleted)
         {
             animator.SetBool("isEating", true);
-            eatingToDestroy = StartCoroutine(EatAndDestroy());
+            StartCoroutine(EatAndDestroy());
         }
 
         if (!navMeshAgent.pathPending && navMeshAgent.remainingDistance <= navMeshAgent.stoppingDistance)
@@ -68,9 +68,10 @@ public class NPC_AI : MonoBehaviour
                 transform.position = chairObject.transform.position;
                 AlignToChair(chairObject);
                 //PlayGreetSound();
-                
 
-                if (waitingForOrder == null) {
+
+                if (waitingForOrder == null)
+                {
                     waitingForOrder = StartCoroutine(SitAndWaitForOrder());
                 }
 
@@ -110,7 +111,8 @@ public class NPC_AI : MonoBehaviour
 
     }
 
-    private void PlayGreetSound() {
+    private void PlayGreetSound()
+    {
         if (audioSource != null && greetingSounds.Length > 0)
         {
             int randomIndex = Random.Range(0, greetingSounds.Length); // Get a random index
@@ -128,7 +130,7 @@ public class NPC_AI : MonoBehaviour
         if (order == null)
         {
             order = GenerateOrder();
-            
+
             waitTime = 0f;  // Reset the timer after the order is generated
             hasPlayedFrustrationSound = false; // Reset frustration sound flag
             // Debug.Log("Order generated, starting wait timer.");
@@ -155,7 +157,7 @@ public class NPC_AI : MonoBehaviour
             yield return null;
         }
         waitingForOrder = null;
-        
+
     }
 
 
@@ -169,7 +171,6 @@ public class NPC_AI : MonoBehaviour
     private Recipe GenerateOrder()
     {
         if (hasOrdered) return null; // Prevent multiple orders
-
 
         // set order in the order object
         SitPointScript sitPointScript = sitPoint.GetComponent<SitPointScript>();
@@ -234,7 +235,7 @@ public class NPC_AI : MonoBehaviour
 
     }
 
-    private IEnumerator SitAndReturnToWaypoint()
+    private IEnumerator SitAndWaitToBeRemoved()
     {
 
         // Generate an order for the NPC
@@ -244,25 +245,16 @@ public class NPC_AI : MonoBehaviour
         hasOrdered = true;
 
         // Wait for 60 seconds (1 minute)
-        yield return new WaitForSeconds(30f);
-
-        // Stand up from sitting
-        // isSitting = false; // Allow movement again
-        // animator.SetBool("isSitting", false); // Reset sitting animation
-
-        // navMeshAgent.isStopped = true;
-        // navMeshAgent.velocity = Vector3.zero; // Clear any remaining velocity
-        // animator.SetFloat("vely", 0); // Stop walking animation
+        // to remove customer
+        yield return new WaitForSeconds(order.time);
 
         // Find the NPCManager and trigger GenerateCustomer to respawn a new customer
         NPCManager npcManager = FindObjectOfType<NPCManager>();
         if (npcManager != null)
         {
-            npcManager.RemoveCustomer(gameObject);
-            // npcManager.GenerateCustomer(); // Call the respawn method in the manager
+            npcManager.AddMoreCustomer(sitPoint);
+            Destroy(gameObject);
         }
-
-        // gameObject.SetActive(false); // Deactivate the NPC
     }
 
 
