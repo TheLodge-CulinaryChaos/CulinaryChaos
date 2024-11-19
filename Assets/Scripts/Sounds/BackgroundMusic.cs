@@ -29,6 +29,9 @@ public class BackgroundMusic : MonoBehaviour
         songList.Add("Easy", track03);
         songList.Add("Medium", track04);
         songList.Add("Hard", track05);
+
+        // add triumphant song i guess
+        songList.Add("End", track02);        
         
         audioSource = GetComponent<AudioSource>();
         playBGTrack(currentScene);

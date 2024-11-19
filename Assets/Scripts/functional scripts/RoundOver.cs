@@ -13,7 +13,9 @@ public class RoundOver : MonoBehaviour
     void Start() {        
         PopUpLength = 3.0f;
         PopUpDone = false;
-        Time.timeScale = 1f;
+
+        // Try removing this
+        //Time.timeScale = 1f;
 
         CGRoundOver = GetComponent<CanvasGroup>();
         if (CGRoundOver == null) {
