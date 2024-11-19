@@ -17,8 +17,17 @@ public class CookingComponent : MonoBehaviour
     // textmeshpro timer
     public TMP_Text timer;
 
+    private Dictionary<IngredientEnum, float> ingredientCookingTimes = new Dictionary<IngredientEnum, float>
+    {
+        { IngredientEnum.Tomato, 5f },
+        { IngredientEnum.Pumpkin, 8f },
+        { IngredientEnum.Mushroom, 10f },
+        { IngredientEnum.GreenPepper, 13f },
+        { IngredientEnum.Potato, 10f }
+    };
 
-    private float countdownTime = 5f;
+
+    private float countdownTime;
     private bool isCooking = false;
     private bool isFoodReady = false;    
 
@@ -40,11 +49,7 @@ public class CookingComponent : MonoBehaviour
 
         var ingredientType = ingredientProps.ingredientType;
 
-        return ingredientType == IngredientEnum.Tomato ||
-                ingredientType == IngredientEnum.Pumpkin ||
-                ingredientType == IngredientEnum.Mushroom ||
-                ingredientType == IngredientEnum.GreenPepper ||
-                ingredientType == IngredientEnum.Potato;
+        return ingredientCookingTimes.ContainsKey(ingredientType);
 
     }
 
@@ -59,18 +64,21 @@ public class CookingComponent : MonoBehaviour
         cookingFood.SetActive(true);
         pot.SetActive(true);
 
+        countdownTime = ingredientCookingTimes[ingredientProps.ingredientType];
+        StartCoroutine(StartCookingTimer());
+
     }
 
     internal void RemoveFoodFromPot() {
         cookingFood.SetActive(false);
         isCooking = false;
         isFoodReady = false;
-        countdownTime = 5f;
+        countdownTime = ingredientCookingTimes[ingredientProps.ingredientType];;
     }
 
     internal void ResetTimer() {
         timer.SetText("");
-        countdownTime = 5f;
+        countdownTime = ingredientCookingTimes[ingredientProps.ingredientType];;
     }
 
     private IngredientProps GetIngredientProperties(GameObject pickUpObject)
