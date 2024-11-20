@@ -18506,8 +18506,6 @@ MonoBehaviour:
   minimumCollisionOffset: 0.2
   cameraCollisionRadius: 2
   cameraFollowSpeed: 0.2
-  cameraLookSpeed: 2
-  cameraPivotSpeed: 2
   camLookSmoothTime: 1
   lookAngle: 0
   pivotAngle: 0
