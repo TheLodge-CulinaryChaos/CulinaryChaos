@@ -177,6 +177,15 @@ public class PickUpController : MonoBehaviour
 
         isHoldingIngredients = false;
     }
+
+    public void DestroyPickUpObject()
+    {
+        if (pickUpObject != null)
+        {
+            Destroy(pickUpObject);
+        }
+    }
+
     #endregion
 
     #region Handle Pick up Bowl and Drop Bowl in sink
@@ -190,7 +199,7 @@ public class PickUpController : MonoBehaviour
         animatorManager.animator.SetBool("isHoldingPlate", true);
     }
 
-    private void DisposeOfBowl()
+    public void DisposeOfBowl()
     {
         if (HoldingObject == null) return;
         HoldingObjectScript holdingObjectScript = HoldingObject.GetComponent<HoldingObjectScript>();
