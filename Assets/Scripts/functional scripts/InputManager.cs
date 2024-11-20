@@ -86,6 +86,10 @@ public class InputManager : MonoBehaviour
         HandleJumpInput();
         HandleCuttingInput();
 
+
+
+        HandleDetection();
+
         HandlePickupInput();
     }
 
@@ -103,6 +107,11 @@ public class InputManager : MonoBehaviour
 
         moveAmount = Mathf.Clamp01(Mathf.Abs(horizontalInput) + Mathf.Abs(verticalInput));
         animatorManager.UpdateAnimatorValues(0, moveAmount, playerLocomotion.isSprinting);
+    }
+
+    private void HandleDetection()
+    {
+        playerLocomotion.HandleDetection();
     }
 
     private void HandleSprintInput()

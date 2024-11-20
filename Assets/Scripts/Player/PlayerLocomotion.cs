@@ -1,5 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
+using System;
 using UnityEngine;
 
 public class PlayerLocomotion : MonoBehaviour
@@ -73,6 +72,8 @@ public class PlayerLocomotion : MonoBehaviour
 
         // if player is interacting, return and do not move
         if (playerManager.isInteracting) return;
+
+
 
         HandleMovement();
         HandleRotation();
@@ -204,5 +205,10 @@ public class PlayerLocomotion : MonoBehaviour
     public void HandlePickup()
     {
         pickUpController.HandleAllStates();
+    }
+
+    internal void HandleDetection()
+    {
+        pickUpController.HandleDetection();
     }
 }
