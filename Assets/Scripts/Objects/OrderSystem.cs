@@ -16,12 +16,12 @@ public class OrderSystem : MonoBehaviour
     public int levelNumber = 1;
 
     // Creating instances of the Recipe class
-    public Recipe tomatoRecipe = new Recipe($"Tomato Soup", new List<Ingredient> { new Tomato() }, 100);
+    public Recipe tomatoRecipe = new Recipe($"Tomato Soup", new List<Ingredient> { new Tomato() }, 150);
     public Recipe cornRecipe = new Recipe("Pumpkin Soup", new List<Ingredient> { new Pumpkin() }, 200);
-    public Recipe lettuceRecipe = new Recipe("Mushroom Soup", new List<Ingredient> { new Mushroom() }, 300);
+    public Recipe lettuceRecipe = new Recipe("Mushroom Soup", new List<Ingredient> { new Mushroom() }, 250);
 
-    public Recipe greenPepperRecipe = new Recipe("Green Pepper Soup", new List<Ingredient> { new GreenPepper() }, 400);
-    public Recipe potatoRecipe = new Recipe("Potato Soup", new List<Ingredient> { new Potato() }, 400);
+    public Recipe greenPepperRecipe = new Recipe("Green Pepper Soup", new List<Ingredient> { new GreenPepper() }, 275);
+    public Recipe potatoRecipe = new Recipe("Potato Soup", new List<Ingredient> { new Potato() }, 225);
 
     void Awake()
     {

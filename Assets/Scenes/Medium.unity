@@ -1562,6 +1562,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: CookingComponents (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 7002665746043229787, guid: cac020211ac6d4945ac656c2389b5fc0, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: cac020211ac6d4945ac656c2389b5fc0, type: 3}
 --- !u!4 &101547869 stripped
@@ -3483,6 +3487,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: CookingComponents (2)
       objectReference: {fileID: 0}
+    - target: {fileID: 7002665746043229787, guid: cac020211ac6d4945ac656c2389b5fc0, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: cac020211ac6d4945ac656c2389b5fc0, type: 3}
 --- !u!4 &283047331 stripped
@@ -4865,6 +4873,10 @@ PrefabInstance:
       propertyPath: m_CastShadows
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7002665746043229787, guid: cac020211ac6d4945ac656c2389b5fc0, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
     - target: {fileID: 7006060505233323903, guid: cac020211ac6d4945ac656c2389b5fc0, type: 3}
       propertyPath: m_LocalScale.z
       value: 1
@@ -26003,6 +26015,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1766193396}
     m_Modifications:
+    - target: {fileID: 1122192601476162893, guid: cac020211ac6d4945ac656c2389b5fc0, type: 3}
+      propertyPath: m_Name
+      value: TimerCube
+      objectReference: {fileID: 0}
     - target: {fileID: 5453959632156524793, guid: cac020211ac6d4945ac656c2389b5fc0, type: 3}
       propertyPath: m_RootOrder
       value: 0
@@ -26051,6 +26067,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: CookingComponents
       objectReference: {fileID: 0}
+    - target: {fileID: 7002665746043229787, guid: cac020211ac6d4945ac656c2389b5fc0, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: cac020211ac6d4945ac656c2389b5fc0, type: 3}
 --- !u!1001 &6930143197938729639
