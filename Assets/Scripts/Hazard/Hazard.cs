@@ -31,7 +31,8 @@ public class Hazard : MonoBehaviour
             foreach (GameObject hazard in hazards)
             {
                 Animator hazardAnimator = hazard.GetComponent<Animator>();
-                if (hazard != null) {
+                if (hazard != null)
+                {
                     // enable box collider
                     PlayTargetAnimation(hazardAnimator, "Start Fire");
                     isFiring = true;
