@@ -12,8 +12,8 @@ public class PickUpController : MonoBehaviour
 
     private AnimatorManager animatorManager;
 
-    public Vector3 boxCastSize = new Vector3(0.5f, 0.5f, 0.5f);
-    public Vector3 extPos = new Vector3(0, 2, 0);
+    private Vector3 boxCastSize = new Vector3(1.5f, 2f, 0.1f);
+    private Vector3 extPos = new Vector3(0, 1.2f, 0);
 
     #region Pick up Object Variables
     public Transform holdPosition;
@@ -33,7 +33,7 @@ public class PickUpController : MonoBehaviour
 
     #region LayerMask of all objects the player can interact with for Cooking Process
     public LayerMask cookingLayerMask;
-    public float maxDistanceCookingLM = 1f;
+    private float maxDistanceCookingLM = 2.5f;
     RaycastHit hit;
     #endregion
 
