@@ -13,6 +13,8 @@ public class PlayerFallHandler : MonoBehaviour
         if (transform.position.y < fallThreshold)
         {
             TeleportToLevel1();  // Teleport the player back to the spawn point
+            RemoveHoldingObject();  // Remove the holding object
+            RemovePickingObject();  // Remove the picking object
         }
     }
 
@@ -20,5 +22,19 @@ public class PlayerFallHandler : MonoBehaviour
     {
         // Move the player to the spawn point's position
         transform.position = level1SpawnPoint.position;
+    }
+
+    void RemoveHoldingObject() {
+        PickUpController pickupController = GetComponent<PickUpController>();
+        if (pickupController != null) {
+            pickupController.DestroyPickUpObject();
+        }
+    }
+
+    void RemovePickingObject() {
+        PickUpController pickupController = GetComponent<PickUpController>();
+        if (pickupController != null) {
+            pickupController.DisposeOfBowl();
+        }
     }
 }
