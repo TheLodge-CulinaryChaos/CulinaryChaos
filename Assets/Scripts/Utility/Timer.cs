@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 
-public class Timer : MonoBehaviour {
+public class Timer : MonoBehaviour
+{
     // inits
     public float startTime = 120;
     float current;
@@ -11,34 +12,42 @@ public class Timer : MonoBehaviour {
     string formattedTime;
     // Debug
     public bool debug;
-    
+
 
     [SerializeField] TextMeshProUGUI currTMP;
 
     // Start is called before the first frame update
-    void Start() {
+    void Start()
+    {
         current = startTime;
 
-        if (debug) {
+        if (debug)
+        {
             current = 5.0f;
         }
         started = true;
     }
 
     // Update is called once per frame
-    void Update() {
-        if (started) {
+    void Update()
+    {
+        if (started)
+        {
             // Update the Timer
-            if (!debug) {
-            current -= Time.deltaTime;
+            if (!debug)
+            {
+                current -= Time.deltaTime;
             }
 
-            if (current <= 0) {
+            if (current <= 0)
+            {
                 // Set Current to 0 and Stop Visual for Countdown
                 current = 0;
                 started = false;
                 formattedTime = "Level Complete";
-            } else {
+            }
+            else
+            {
                 // Format it so it looks good
                 int currMin = Mathf.FloorToInt(current / 60);
                 int currSec = Mathf.FloorToInt(current % 60);
@@ -47,12 +56,18 @@ public class Timer : MonoBehaviour {
 
             // Send to Unity
             currTMP.text = formattedTime;
-        } 
+        }
     }
 
 
     // Getter to see current. Current is the remaining time in the round
-    public float getCurrent() {
+    public float getCurrent()
+    {
         return current;
+    }
+
+    public void setCurrent(float newTime)
+    {
+        current = newTime;
     }
 }
