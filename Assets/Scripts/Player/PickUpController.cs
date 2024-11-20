@@ -112,6 +112,8 @@ public class PickUpController : MonoBehaviour
     {
         if (pickUpObject == null) return;
 
+        IngredientProps ingredientType = pickUpObject.GetComponent<IngredientProps>();
+
         Rigidbody rb = pickUpObject.GetComponent<Rigidbody>();
 
         Collider objectCollider = pickUpObject.GetComponent<Collider>();
@@ -138,7 +140,8 @@ public class PickUpController : MonoBehaviour
         originalScale = pickUpObject.transform.lossyScale;
         pickUpObject.transform.localScale *= 0.5f;
          
-        
+        // set image panel
+        HoldingPanelScript.SetHoldingImage(ingredientType);
 
         isHoldingIngredients = true;
 
@@ -168,6 +171,10 @@ public class PickUpController : MonoBehaviour
         pickUpObject.transform.localScale = originalScale;
 
         pickUpObject = null;
+
+        // hide image panel
+        HoldingPanelScript.HideHoldingPanel();
+
         isHoldingIngredients = false;
     }
     #endregion
