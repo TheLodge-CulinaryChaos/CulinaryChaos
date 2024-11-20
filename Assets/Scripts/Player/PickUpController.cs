@@ -9,11 +9,10 @@ using UnityEngine.Rendering.Universal;
 
 public class PickUpController : MonoBehaviour
 {
-
     private AnimatorManager animatorManager;
 
-    public Vector3 boxCastSize = new Vector3(0.5f, 0.5f, 0.5f);
-    public Vector3 extPos = new Vector3(0, 2, 0);
+    private Vector3 boxCastSize = new Vector3(1.5f, 2f, 0.1f);
+    private Vector3 extPos = new Vector3(0, 1.2f, 0);
 
     #region Pick up Object Variables
     public Transform holdPosition;
@@ -33,15 +32,21 @@ public class PickUpController : MonoBehaviour
 
     #region LayerMask of all objects the player can interact with for Cooking Process
     public LayerMask cookingLayerMask;
-    public float maxDistanceCookingLM = 1f;
+    private float maxDistanceCookingLM = 2.5f;
     RaycastHit hit;
     #endregion
 
-    public TMP_Text indicatorText;
+    #region Suggestion Text
+
+    TMP_Text suggestionText;
+
+    #endregion
 
     private void Awake()
     {
         animatorManager = GetComponent<AnimatorManager>();
+
+        suggestionText = GameObject.Find("SuggestionText").GetComponent<TMP_Text>();
     }
 
     public void HandleAllStates()
@@ -57,7 +62,36 @@ public class PickUpController : MonoBehaviour
             return;
         }
         HandleBoxCastOnObjects(hit);
+    }
 
+    public void HandleDetection()
+    {
+        if (suggestionText == null)
+            return;
+
+        RaycastHit hit = PerformBoxCast();
+
+        if (hit.collider == null)
+        {
+            suggestionText.text = "";
+            return;
+        }
+
+        GameObject gameObject = hit.collider.gameObject;
+        if (
+            gameObject.tag == GameTags.INGREDIENT
+            || gameObject.tag == GameTags.COOKING_COMPONENT
+            || gameObject.tag == GameTags.BOWLS
+            || gameObject.tag == GameTags.THE_SINK
+            || gameObject.tag == GameTags.ORDER_OBJECT
+        )
+        {
+            suggestionText.text = "Q";
+        }
+        else
+        {
+            suggestionText.text = "";
+        }
     }
 
     #region Handle Box Cast on Objects
@@ -83,7 +117,8 @@ public class PickUpController : MonoBehaviour
                 ServeFood();
                 break;
             case GameTags.INGREDIENT:
-                if (isHoldingIngredients) {
+                if (isHoldingIngredients)
+                {
                     DropObject();
                     break;
                 }
@@ -100,8 +135,15 @@ public class PickUpController : MonoBehaviour
     private RaycastHit PerformBoxCast()
     {
         Vector3 position = transform.position + extPos;
-        Physics.BoxCast(position, boxCastSize, transform.forward, out hit,
-            transform.rotation, maxDistanceCookingLM, cookingLayerMask);
+        Physics.BoxCast(
+            position,
+            boxCastSize,
+            transform.forward,
+            out hit,
+            transform.rotation,
+            maxDistanceCookingLM,
+            cookingLayerMask
+        );
         return hit;
     }
 
@@ -110,7 +152,8 @@ public class PickUpController : MonoBehaviour
     #region Handle Pick Up and Drop Ingredient
     void PickUpObject()
     {
-        if (pickUpObject == null) return;
+        if (pickUpObject == null)
+            return;
 
         IngredientProps ingredientType = pickUpObject.GetComponent<IngredientProps>();
 
@@ -139,17 +182,17 @@ public class PickUpController : MonoBehaviour
 
         originalScale = pickUpObject.transform.lossyScale;
         pickUpObject.transform.localScale *= 0.5f;
-         
+
         // set image panel
         HoldingPanelScript.SetHoldingImage(ingredientType);
 
         isHoldingIngredients = true;
-
     }
 
     public GameObject DropObject()
     {
-        if (pickUpObject == null) return null;
+        if (pickUpObject == null)
+            return null;
 
         pickUpObject.transform.SetParent(null);
         Rigidbody rb = pickUpObject.GetComponent<Rigidbody>();
@@ -167,7 +210,8 @@ public class PickUpController : MonoBehaviour
 
             rb.AddForce(transform.forward * 2f, ForceMode.Impulse); // Add a little force to the object
         }
-        pickUpObject.transform.position = transform.position + transform.forward * 1f + transform.up * 1f;
+        pickUpObject.transform.position =
+            transform.position + transform.forward * 1f + transform.up * 1f;
         pickUpObject.transform.localScale = originalScale;
 
         GameObject temp = pickUpObject;
@@ -185,9 +229,11 @@ public class PickUpController : MonoBehaviour
     #region Handle Pick up Bowl and Drop Bowl in sink
     private void GrabABowl()
     {
-        if (HoldingObject == null) return;
+        if (HoldingObject == null)
+            return;
         HoldingObjectScript holdingObjectScript = HoldingObject.GetComponent<HoldingObjectScript>();
-        if (holdingObjectScript == null) return;
+        if (holdingObjectScript == null)
+            return;
 
         holdingObjectScript.GrabABowl();
         animatorManager.animator.SetBool("isHoldingPlate", true);
@@ -195,9 +241,11 @@ public class PickUpController : MonoBehaviour
 
     public void DisposeOfBowl()
     {
-        if (HoldingObject == null) return;
+        if (HoldingObject == null)
+            return;
         HoldingObjectScript holdingObjectScript = HoldingObject.GetComponent<HoldingObjectScript>();
-        if (holdingObjectScript == null) return;
+        if (holdingObjectScript == null)
+            return;
 
         if (holdingObjectScript.IsHoldingPlate())
         {
@@ -220,9 +268,11 @@ public class PickUpController : MonoBehaviour
 
     private void TransferIngredientIntoCookingComponent()
     {
-        if (pickUpObject == null) return;
+        if (pickUpObject == null)
+            return;
 
-        if (cookingComponent == null) return;
+        if (cookingComponent == null)
+            return;
 
         if (cookingComponent.CanAcceptIngredient(pickUpObject))
         {
@@ -236,12 +286,18 @@ public class PickUpController : MonoBehaviour
 
     private void TransferCookedFoodIntoHoldingObject()
     {
-        if (HoldingObject == null) return;
+        if (HoldingObject == null)
+            return;
         HoldingObjectScript holdingObjectScript = HoldingObject.GetComponent<HoldingObjectScript>();
 
-        if (cookingComponent == null) return;
+        if (cookingComponent == null)
+            return;
 
-        if (cookingComponent.isFoodReadyToServe() && !holdingObjectScript.IsFoodInPlate() && holdingObjectScript.IsHoldingPlate())
+        if (
+            cookingComponent.isFoodReadyToServe()
+            && !holdingObjectScript.IsFoodInPlate()
+            && holdingObjectScript.IsHoldingPlate()
+        )
         {
             cookingComponent.RemoveFoodFromPot();
             cookingComponent.ResetTimer();
@@ -251,15 +307,19 @@ public class PickUpController : MonoBehaviour
 
     private void ServeFood()
     {
-
-        if (HoldingObject == null) return;
+        if (HoldingObject == null)
+            return;
 
         HoldingObjectScript holdingObjectScript = HoldingObject.GetComponent<HoldingObjectScript>();
-        if (holdingObjectScript == null) return;
+        if (holdingObjectScript == null)
+            return;
 
-        if (diningOrderScript == null) return;
-        if (holdingObjectScript.IsFoodInPlate()
-        && diningOrderScript.IsOrderAccepted(holdingObjectScript.ingredientProps))
+        if (diningOrderScript == null)
+            return;
+        if (
+            holdingObjectScript.IsFoodInPlate()
+            && diningOrderScript.IsOrderAccepted(holdingObjectScript.ingredientProps)
+        )
         {
             diningOrderScript.CompleteOrder(holdingObjectScript.ingredientProps);
             holdingObjectScript.DisposeOfBowl();
@@ -273,14 +333,21 @@ public class PickUpController : MonoBehaviour
     void OnDrawGizmos()
     {
         Vector3 position = transform.position + extPos;
-        bool isHit = Physics.BoxCast(position, boxCastSize, transform.forward, out hit,
-            transform.rotation, maxDistanceCookingLM, cookingLayerMask);
+        bool isHit = Physics.BoxCast(
+            position,
+            boxCastSize,
+            transform.forward,
+            out hit,
+            transform.rotation,
+            maxDistanceCookingLM,
+            cookingLayerMask
+        );
         if (isHit)
         {
             Gizmos.color = Color.red;
             Gizmos.DrawRay(position, transform.forward * hit.distance);
             Gizmos.DrawWireCube(position + transform.forward * hit.distance, boxCastSize);
-            // Debug.Log(hit.collider.gameObject);
+            Debug.Log(hit.collider.gameObject);
         }
         else
         {
@@ -288,8 +355,6 @@ public class PickUpController : MonoBehaviour
             Gizmos.DrawRay(position, transform.forward * maxDistanceCookingLM);
         }
     }
+
     #endregion
-
 }
-
-
