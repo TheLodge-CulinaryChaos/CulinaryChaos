@@ -6,6 +6,12 @@ public class PlayerFallHandler : MonoBehaviour
 {
     public Transform level1SpawnPoint;  // Reference to the Level 1 spawn point
     public float fallThreshold = -10f;  // Y-coordinate threshold to detect falling
+    private Timer timer;
+
+    void Start()
+    {
+        timer = FindObjectOfType<Timer>();
+    }
 
     void Update()
     {
@@ -15,6 +21,7 @@ public class PlayerFallHandler : MonoBehaviour
             TeleportToLevel1();  // Teleport the player back to the spawn point
             RemoveHoldingObject();  // Remove the holding object
             RemovePickingObject();  // Remove the picking object
+            timer.setCurrent(timer.getCurrent() - 5.0f);
         }
     }
 
