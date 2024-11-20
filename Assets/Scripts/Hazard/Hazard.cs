@@ -35,6 +35,7 @@ public class Hazard : MonoBehaviour
                 {
                     // enable box collider
                     PlayTargetAnimation(hazardAnimator, "Start Fire");
+                    PlayTargetAnimation(hazardAnimator,"BananaOn");
                     isFiring = true;
                     hazard.GetComponent<BoxCollider>().enabled = isFiring;
                     hazard.GetComponent<BoxCollider>().isTrigger = isFiring;
