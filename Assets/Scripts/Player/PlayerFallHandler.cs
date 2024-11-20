@@ -34,7 +34,10 @@ public class PlayerFallHandler : MonoBehaviour
     void RemoveHoldingObject() {
         PickUpController pickupController = GetComponent<PickUpController>();
         if (pickupController != null) {
-            pickupController.DestroyPickUpObject();
+            GameObject toDestroyIngredient = pickupController.DropObject();
+            if (toDestroyIngredient != null) {
+                Destroy(toDestroyIngredient);
+            }
         }
     }
 

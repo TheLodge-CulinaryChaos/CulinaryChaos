@@ -112,6 +112,8 @@ public class PickUpController : MonoBehaviour
     {
         if (pickUpObject == null) return;
 
+        IngredientProps ingredientType = pickUpObject.GetComponent<IngredientProps>();
+
         Rigidbody rb = pickUpObject.GetComponent<Rigidbody>();
 
         Collider objectCollider = pickUpObject.GetComponent<Collider>();
@@ -138,15 +140,16 @@ public class PickUpController : MonoBehaviour
         originalScale = pickUpObject.transform.lossyScale;
         pickUpObject.transform.localScale *= 0.5f;
          
-        
+        // set image panel
+        HoldingPanelScript.SetHoldingImage(ingredientType);
 
         isHoldingIngredients = true;
 
     }
 
-    void DropObject()
+    public GameObject DropObject()
     {
-        if (pickUpObject == null) return;
+        if (pickUpObject == null) return null;
 
         pickUpObject.transform.SetParent(null);
         Rigidbody rb = pickUpObject.GetComponent<Rigidbody>();
@@ -167,16 +170,14 @@ public class PickUpController : MonoBehaviour
         pickUpObject.transform.position = transform.position + transform.forward * 1f + transform.up * 1f;
         pickUpObject.transform.localScale = originalScale;
 
+        GameObject temp = pickUpObject;
         pickUpObject = null;
-        isHoldingIngredients = false;
-    }
 
-    public void DestroyPickUpObject()
-    {
-        if (pickUpObject != null)
-        {
-            Destroy(pickUpObject);
-        }
+        // hide image panel
+        HoldingPanelScript.HideHoldingPanel();
+
+        isHoldingIngredients = false;
+        return temp;
     }
 
     #endregion
