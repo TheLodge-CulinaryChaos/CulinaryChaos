@@ -16,6 +16,7 @@ public class CookingComponent : MonoBehaviour
 
     // textmeshpro timer
     public TMP_Text timer;
+    public GameObject timerCube;
 
     private Dictionary<IngredientEnum, float> ingredientCookingTimes = new Dictionary<IngredientEnum, float>
     {
@@ -35,6 +36,7 @@ public class CookingComponent : MonoBehaviour
     {
         cookingFood.SetActive(false);
         timer.SetText("");
+        timerCube.SetActive(false);
     }
 
     internal bool CanAcceptIngredient(GameObject pickUpObject)
@@ -63,6 +65,7 @@ public class CookingComponent : MonoBehaviour
 
         cookingFood.SetActive(true);
         pot.SetActive(true);
+        timerCube.SetActive(true);
 
         countdownTime = ingredientCookingTimes[ingredientProps.ingredientType];
         StartCoroutine(StartCookingTimer());
@@ -71,6 +74,8 @@ public class CookingComponent : MonoBehaviour
 
     internal void RemoveFoodFromPot() {
         cookingFood.SetActive(false);
+        timerCube.SetActive(false);
+        
         isCooking = false;
         isFoodReady = false;
         countdownTime = ingredientCookingTimes[ingredientProps.ingredientType];;
@@ -98,6 +103,7 @@ public class CookingComponent : MonoBehaviour
             if (displayTime < 1)
             {
                 timer.SetText("Ready");
+                timerCube.SetActive(false);
                 isCooking = false;
                 isFoodReady = true;
             } else {
@@ -118,5 +124,10 @@ public class CookingComponent : MonoBehaviour
     void Update()
     {
         StartCoroutine(StartCookingTimer());
+        if (timerCube.activeSelf)
+        {
+            Vector3 currentRotation = timerCube.transform.rotation.eulerAngles;
+            timerCube.transform.rotation = Quaternion.Euler(currentRotation.x, currentRotation.y + 90 * Time.deltaTime, currentRotation.z);
+        }
     }
 }
