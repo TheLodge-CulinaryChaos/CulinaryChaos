@@ -117,7 +117,7 @@ public class NPC_AI : MonoBehaviour
             AudioClip selectedClip = greetingSounds[randomIndex];
             audioSource.clip = selectedClip;
             audioSource.Play();
-            Debug.Log("NPC is saying hello with a random greeting!");
+            // Debug.Log("NPC is saying hello with a random greeting!");
         }
     }
 
@@ -131,7 +131,7 @@ public class NPC_AI : MonoBehaviour
             
             waitTime = 0f;  // Reset the timer after the order is generated
             hasPlayedFrustrationSound = false; // Reset frustration sound flag
-            Debug.Log("Order generated, starting wait timer.");
+            // Debug.Log("Order generated, starting wait timer.");
 
         }
         hasOrdered = true;
@@ -140,7 +140,7 @@ public class NPC_AI : MonoBehaviour
         while (!IsOrderCompleted)
         {
             waitTime += Time.deltaTime;
-            Debug.Log($"Waiting for order... Current waitTime: {waitTime} seconds");
+            // Debug.Log($"Waiting for order... Current waitTime: {waitTime} seconds");
 
 
             // Play frustration sound if wait time exceeds the threshold and sound hasn't been played
@@ -149,7 +149,7 @@ public class NPC_AI : MonoBehaviour
                 audioSource.clip = frustrationSound;
                 audioSource.Play();
                 hasPlayedFrustrationSound = true; // Prevents the sound from playing multiple times
-                Debug.Log("Playing frustration sound due to wait time threshold exceeded.");
+                // Debug.Log("Playing frustration sound due to wait time threshold exceeded.");
             }
 
             yield return null;
