@@ -66,123 +66,26 @@ List any known bugs or issues that players might encounter.
 
     -   Since the game is using BoxCast which doesn't allow it to detect objects when it's too close. OverlapBox is a better method and will be implemented in the post-alpha to fix this limitation.
 
-## 7. **Manifest**
+## 7. **Showcase**
 
-### **Angela**
+Title
+![title](https://github.com/user-attachments/assets/f10c655b-0f90-4fb4-a95b-5f9b5425627e)
 
-Tasks:
+Running Overview
+![running](https://github.com/user-attachments/assets/73ac4ab6-b3cc-4d64-8810-fb85a6ca50c8)
 
--   Files organization
--   Models and objects collection
--   Audio handler system, main character audio for walking, jumping, cooking, landing, picking up, holding bowl, running
--   Kill plane
--   Environmental design improvement
+Actions
+| **Running** | **Falling** | **Jumping** | **Pickup** |
+|---|---|---|---|
+| <img src="https://github.com/user-attachments/assets/fb986c80-f6c8-4c5a-9bd9-e937a7683af7" width=200>   | <img src="https://github.com/user-attachments/assets/420b9631-16d1-461d-b880-8fc6cd7302dd" width=200>   | <img src="https://github.com/user-attachments/assets/e905d01d-7f6f-4198-8945-29991cd7a020" width=200>   | <img src="https://github.com/user-attachments/assets/0832f709-eb17-4381-87d5-72fad0b43396" width=200>   |
 
-Assets:
+NPCs
+![customers](https://github.com/user-attachments/assets/ad010d5c-e233-424b-bb18-89994aca6a8e)
 
--   All Sound files
--   Furnitures
+## 8. **Credits**
 
-Scripts:
-
--   Player/PlayerFallHandler.cs
--   Player/SoundManager/AudioManager.cs
--   Player/SoundManager/PickUpSound.cs
--   Player/SoundManager/PlayerFootStepSound.cs
--   Player/SoundManager/PlayerLandingSound.cs
-
-### **Doan**
-
-#### Tasks:
-
--   Environmental design improvement
--   Created NPC characters animators
--   Created custom animations for spawning, sitting, eating, leaving animation
--   NPC's functionalities
--   Generate multiple customers and Door animation
-
-#### Assets:
-
--   NPC/Rabbit
--   NPC/Horse
--   Furnitures
-
-#### Scripts:
-
--   NPC/NPC_AI.cs
--   NPC/NPCManager.cs
--   NPC/DiningOrderScript
-
-### **Katelynn**
-
-#### Tasks:
-
--   Order and Ingredient definition
--   Order generation system
--   Order UI Panel
--   Delivery coin increment
-
-#### Assets:
-
--   All UI Panel
-
-#### Scripts:
-
--   Objects/Order.cs
--   Objects/Recipe.cs
--   Objects/OrderUI.cs
--   Objects/OrderSystem.cs
--   Utility/Coins.cs
-
-### **Thuan**
-
-#### Tasks:
-
--   Quality control and finalized the easy mode map
--   The main character's 3rd person controller
--   Main character's animators and custom animations: picking up, holding plates
--   Main player interaction with ingredients, plate, sink, cooking components, and customers.
--   Supported NPC and Order functionalities
--   Supported Order UI Panel and End screen summary
-
-#### Assets:
-
--   Main character player
-
-#### Scripts:
-
--   FoodProcessor/CookingComponent.cs
--   FoodProcessor/Cookware.cs
--   functional scripts/CameraManager.cs
--   functional scripts/InputManager.cs
--   functional scripts/ResetBool.cs
--   functional scripts/ResetIsJumping.cs
--   Objects/IngredientProps.cs
--   Objects/WallScript.cs
--   Player/PickUpController.cs
--   Player/HoldingObjectScript.cs
--   Player/PlayerLocomotion.cs
--   Player/PlayerManager.cs
-
-### **Whitney**
-
-#### Tasks:
-
--   Set up the project
--   Created Title Screen UI and its functionalities
--   Money Counter UI
--   Round Timers
--   End screens
--   Video demos
-
-#### Assets:
-
--   Title Screen and Pause Screen UI
-
-#### Scripts:
-
--   functional scripts/Summary.cs
--   functional scripts/RoundOver.cs
--   Utility/PauseMenuToggle.cs
--   Utility/SceneSwitcher.cs
--   Utility/Timer.cs
+- **Angela**
+- **Doan**
+- **Katelynn**
+- **Thuan**
+- **Whitney**
