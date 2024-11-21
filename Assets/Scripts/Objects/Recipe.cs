@@ -24,6 +24,9 @@ public class Recipe
         int minTime = 60;
         int maxTime = 90;
 
+        // int minTime = 3;
+        // int maxTime = 3;
+
         float randomFloat = (float)(random.NextDouble() * (maxTime - minTime) + minTime);
 
         return (float)randomFloat;
