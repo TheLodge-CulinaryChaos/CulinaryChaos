@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class PlayerFallHandler : MonoBehaviour
 {
-    public Transform level1SpawnPoint;  // Reference to the Level 1 spawn point
+    public Transform PlayerSpawnPoint;  // Reference to the Level 1 spawn point
     public float fallThreshold = -10f;  // Y-coordinate threshold to detect falling
     private Timer timer;
 
@@ -28,7 +28,7 @@ public class PlayerFallHandler : MonoBehaviour
     void TeleportToLevel1()
     {
         // Move the player to the spawn point's position
-        transform.position = level1SpawnPoint.position;
+        transform.position = PlayerSpawnPoint.position;
     }
 
     void RemoveHoldingObject() {

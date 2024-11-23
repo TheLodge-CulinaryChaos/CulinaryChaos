@@ -6478,7 +6478,7 @@ PrefabInstance:
       objectReference: {fileID: 8300000, guid: e6833e1f5b31e420db02deec6c38a418, type: 3}
     - target: {fileID: 2627469339388657181, guid: 6f6bb14c4397544549caeef160af84d5, type: 3}
       propertyPath: frustrationThreshold
-      value: 15
+      value: 50
       objectReference: {fileID: 0}
     - target: {fileID: 2627469339388657181, guid: 6f6bb14c4397544549caeef160af84d5, type: 3}
       propertyPath: greetingSounds.Array.size
@@ -19716,8 +19716,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d6fff19c320be4210b19aa8f1c81e282, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  level1SpawnPoint: {fileID: 1877121682}
-  fallThreshold: 0
+  PlayerSpawnPoint: {fileID: 1877121682}
+  fallThreshold: -5
 --- !u!114 &1374779125
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -28472,8 +28472,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d6fff19c320be4210b19aa8f1c81e282, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  level1SpawnPoint: {fileID: 1877121682}
-  fallThreshold: 0
+  PlayerSpawnPoint: {fileID: 1877121682}
+  fallThreshold: -5
 --- !u!4 &1917347434 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4684403152539725594, guid: c564c8c0d0cdc45429417f315e9f3e41, type: 3}
@@ -33065,7 +33065,7 @@ PrefabInstance:
       objectReference: {fileID: 8300000, guid: e6833e1f5b31e420db02deec6c38a418, type: 3}
     - target: {fileID: 5662483784388613884, guid: 5e5f147d4e322484283a85b1d832881f, type: 3}
       propertyPath: frustrationThreshold
-      value: 10
+      value: 40
       objectReference: {fileID: 0}
     - target: {fileID: 5662483784388613884, guid: 5e5f147d4e322484283a85b1d832881f, type: 3}
       propertyPath: greetingSounds.Array.size
