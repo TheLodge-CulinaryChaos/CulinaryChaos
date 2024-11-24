@@ -2,6 +2,8 @@ using System.Collections;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.UI;
+using TMPro;
 
 [RequireComponent(typeof(NavMeshAgent))]
 public class NPC_AI : MonoBehaviour
@@ -32,6 +34,8 @@ public class NPC_AI : MonoBehaviour
 
     private float waitTime = 0f;
     public float frustrationThreshold = 40f; // Time in seconds before NPC gets frustrated
+
+    public TMP_Text tableNumberText;
 
     void Awake()
     {
@@ -149,6 +153,7 @@ public class NPC_AI : MonoBehaviour
         DiningOrderScript orderScript = orderObject.GetComponent<DiningOrderScript>();
 
         orderScript.SetOrder(order);
+        tableNumberText.text = order.tableNumber.ToString();
         return order;
     }
 
