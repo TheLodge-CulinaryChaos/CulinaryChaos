@@ -6,7 +6,7 @@ public class OrderSystem : MonoBehaviour
 // one recipe contains a list of ingredients
 // and a reward
 {
-    public List<Recipe> orders; // this list will keep track of the current orders
+    public List<Order> orders; // this list will keep track of the current orders
     public List<Recipe> recipes; // this list is the available recipes in the game
     public List<GameObject> orderPanels; // list of each order panel (UI) in the game
 
@@ -40,33 +40,33 @@ public class OrderSystem : MonoBehaviour
             recipes.Add(potatoRecipe);
         }
 
-        orders = new List<Recipe>();
+        orders = new List<Order>();
     }
 
-    public void PlaceOrder(Recipe recipe, int tableNumber)
+    public void PlaceOrder(Order order)
     {
-        orders.Add(recipe);
+        orders.Add(order);
         // PrintOrders();
 
         // Create a new order panel OBJECT
         GameObject orderPanel = Instantiate(orderPanelPrefab, ordersParent);
         OrderUI orderUI = orderPanel.GetComponent<OrderUI>();
-        GameObject orderPanelObj = orderUI.CreateOrderPanel(recipe, tableNumber);
+        GameObject orderPanelObj = orderUI.CreateOrderPanel(order);
 
         orderPanels.Add(orderPanelObj);
     }
 
-    public void RemoveOrder(Recipe recipe)
+    public void RemoveOrder(Order order)
     {
-        if (recipe == null)
+        if (order == null)
         {
             // Debug.Log("Recipe is null");
             return;
         }
-        
-        var panel = orderPanels.Find(p => p.GetComponent<OrderUI>().id == recipe.id);
 
-        orders.Remove(recipe);
+        var panel = orderPanels.Find(p => p.GetComponent<OrderUI>().getOrder().tableNumber == order.tableNumber);
+
+        orders.Remove(order);
         orderPanels.Remove(panel);
         Destroy(panel);
     }
