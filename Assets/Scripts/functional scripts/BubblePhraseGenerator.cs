@@ -1,6 +1,13 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+public enum ReactionType
+{
+    WrongOrder,
+    EmptyBowl,
+    Tasty,
+}
+
 public class BubblePhraseGenerator
 {
     private static List<string> wrongOrderReactions =
@@ -29,13 +36,33 @@ public class BubblePhraseGenerator
             "What is this?! A bowl of disappointment?!",
         };
 
-    public static string GenerateWrongOrderReaction()
-    {
-        return wrongOrderReactions[Random.Range(0, wrongOrderReactions.Count)];
-    }
+    private static List<string> tastyReactions =
+        new()
+        {
+            "Yummy!",
+            "Delish!",
+            "Tasty!",
+            "Scrumptious!",
+            "Mmm, yum!",
+            "Delectable!",
+            "So good!",
+            "Nom nom!",
+            "Delightful!",
+            "Savory!",
+        };
 
-    public static string GenerateEmptyBowlReaction()
-    {
-        return emptyBowlReactions[Random.Range(0, emptyBowlReactions.Count)];
+
+    public static string GenerateReaction(ReactionType reactionType) {
+        switch (reactionType)
+        {
+            case ReactionType.WrongOrder:
+                return wrongOrderReactions[Random.Range(0, wrongOrderReactions.Count)];
+            case ReactionType.EmptyBowl:
+                return emptyBowlReactions[Random.Range(0, emptyBowlReactions.Count)];
+            case ReactionType.Tasty:
+                return tastyReactions[Random.Range(0, tastyReactions.Count)];
+            default:
+                return "";
+        }
     }
 }
