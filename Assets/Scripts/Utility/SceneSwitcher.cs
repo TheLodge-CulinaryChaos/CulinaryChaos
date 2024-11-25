@@ -38,8 +38,7 @@ public class SceneSwitcher : MonoBehaviour
 
     public void switchScenes(string sceneName) {
         SceneManager.LoadScene(sceneName);
-        //backgroundMusic.playBGTrack(sceneName);
-        Time.timeScale = 1f;
+        Time.timeScale = 0f;
     }
 
     public void quitGame() {
