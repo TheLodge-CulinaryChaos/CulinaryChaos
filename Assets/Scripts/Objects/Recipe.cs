@@ -1,7 +1,5 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
 
 public class Recipe
 {
@@ -9,6 +7,7 @@ public class Recipe
     public string recipeName;
     public List<Ingredient> ingredients;
     public int reward;
+    public float time; // how much time recipe should take, in seconds
 
     public Recipe(string name, List<Ingredient> ingr, int rewa)
     {
@@ -16,6 +15,21 @@ public class Recipe
         recipeName = name;
         ingredients = ingr;
         reward = rewa;
+        time = GenerateOrderTime();
+    }
+
+    private float GenerateOrderTime()
+    {
+        System.Random random = new System.Random();
+        int minTime = 60;
+        int maxTime = 90;
+
+        // int minTime = 3;
+        // int maxTime = 3;
+
+        float randomFloat = (float)(random.NextDouble() * (maxTime - minTime) + minTime);
+
+        return (float)randomFloat;
     }
 
     // Constructor
@@ -25,6 +39,7 @@ public class Recipe
         recipeName = "";
         ingredients = new List<Ingredient>();
         reward = 0;
+        time = 0.0f;
     }
 
     public override string ToString()

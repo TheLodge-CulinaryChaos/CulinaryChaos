@@ -1,10 +1,10 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.UI;
 using CulinaryChaos.Objects;
 using TMPro;
-using System;
+using UnityEngine;
+using UnityEngine.UI;
 
 public class OrderUI : MonoBehaviour
 {
@@ -14,12 +14,29 @@ public class OrderUI : MonoBehaviour
     public TMP_Text reward;
     public GameObject ingredientImagePrefab;
     public Transform ingredientsParent;
+    public TMP_Text timer;
 
-    void Start()
+    private float currentTime; // timer tracking
+    private bool started;
+    private Recipe order;
+
+    void Start() { }
+
+    void Update()
     {
-        tableNumber = GetComponent<TextMeshProUGUI>();
-        orderName = GetComponent<TextMeshProUGUI>();
-        reward = GetComponent<TextMeshProUGUI>();
+        // update the timer
+        if (started)
+        {
+            currentTime -= Time.deltaTime;
+            if (currentTime <= 0)
+            {
+                currentTime = 0;
+                started = false;
+                OrderSystem orderSystem = FindObjectOfType<OrderSystem>();
+                orderSystem.RemoveOrder(order);
+            }
+            timer.text = timerToText(currentTime);
+        }
     }
 
     public GameObject CreateOrderPanel(Recipe recipe, int tableNum)
@@ -30,9 +47,21 @@ public class OrderUI : MonoBehaviour
         reward.text = recipe.reward.ToString();
         tableNumber.text = $"Table {tableNum}";
 
+        currentTime = recipe.time;
+        timer.text = timerToText(currentTime); // fixed timer, 60s
+        started = true;
+        order = recipe;
+
         setIngredientImage(recipe);
 
         return this.gameObject;
+    }
+
+    string timerToText(float initialSeconds)
+    {
+        int minutes = Mathf.FloorToInt(initialSeconds / 60);
+        int seconds = Mathf.FloorToInt(initialSeconds % 60);
+        return string.Format("{0:00}:{1:00}", minutes, seconds);
     }
 
     void setIngredientImage(Recipe recipe)
@@ -41,25 +70,31 @@ public class OrderUI : MonoBehaviour
         {
             GameObject ingredientImageObj = Instantiate(ingredientImagePrefab, ingredientsParent);
             Image ingredientImage = ingredientImageObj.GetComponent<Image>();
-            switch (ing.type)
-            {
-                case (IngredientEnum.Mushroom):
-                    ingredientImage.sprite = Resources.Load<Sprite>("Images/ingredients/mushroom");
-                    break;
-                case (IngredientEnum.Tomato):
-                    ingredientImage.sprite = Resources.Load<Sprite>("Images/ingredients/tomato");
-                    break;
-                case (IngredientEnum.Pumpkin):
-                    ingredientImage.sprite = Resources.Load<Sprite>("Images/ingredients/pumpkin");
-                    break;
-                case (IngredientEnum.GreenPepper):
-                    ingredientImage.sprite = Resources.Load<Sprite>("Images/ingredients/pepper");
-                    break;
-                case (IngredientEnum.Potato):
-                    ingredientImage.sprite = Resources.Load<Sprite>("Images/ingredients/potato");
-                    break;
-            }
+            ingredientImage.sprite = GetIngredientSprite(ing.type);
         }
     }
 
+    public static Sprite GetIngredientSprite(IngredientEnum ingredientEnum)
+    {
+        switch (ingredientEnum)
+        {
+            case IngredientEnum.Mushroom:
+                return Resources.Load<Sprite>("Images/ingredients/mushroom");
+
+            case IngredientEnum.Tomato:
+                return Resources.Load<Sprite>("Images/ingredients/tomato");
+
+            case IngredientEnum.Pumpkin:
+                return Resources.Load<Sprite>("Images/ingredients/pumpkin");
+
+            case IngredientEnum.GreenPepper:
+                return Resources.Load<Sprite>("Images/ingredients/pepper");
+
+            case IngredientEnum.Potato:
+                return Resources.Load<Sprite>("Images/ingredients/potato");
+
+            default:
+                return null;
+        }
+    }
 }
