@@ -319,7 +319,10 @@ public class PickUpController : MonoBehaviour
 
         if (diningOrderScript == null)
             return;
-        if (
+        if (!holdingObjectScript.IsFoodInPlate()) {
+            diningOrderScript.setOrderStatus(BubblePhraseGenerator.GenerateEmptyBowlReaction());
+        }
+        else if (
             holdingObjectScript.IsFoodInPlate()
             && diningOrderScript.IsOrderAccepted(holdingObjectScript.ingredientProps)
         )
