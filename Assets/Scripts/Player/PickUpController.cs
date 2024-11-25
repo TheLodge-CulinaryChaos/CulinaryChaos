@@ -251,6 +251,7 @@ public class PickUpController : MonoBehaviour
         {
             holdingObjectScript.DisposeOfBowl();
             animatorManager.animator.SetBool("isHoldingPlate", false);
+            HoldingPanelScript.HideHoldingPanel();
         }
     }
     #endregion
@@ -277,7 +278,7 @@ public class PickUpController : MonoBehaviour
         if (cookingComponent.CanAcceptIngredient(pickUpObject))
         {
             cookingComponent.CookIngredient(pickUpObject);
-
+            HoldingPanelScript.HideHoldingPanel();
             pickUpObject.transform.SetParent(null);
             Destroy(pickUpObject);
             isHoldingIngredients = false;
@@ -302,6 +303,7 @@ public class PickUpController : MonoBehaviour
             cookingComponent.RemoveFoodFromPot();
             cookingComponent.ResetTimer();
             holdingObjectScript.PutFoodInPlate(cookingComponent.ingredientProps);
+            HoldingPanelScript.SetHoldingImage(cookingComponent.ingredientProps);
         }
     }
 
@@ -324,6 +326,7 @@ public class PickUpController : MonoBehaviour
             diningOrderScript.CompleteOrder(holdingObjectScript.ingredientProps);
             holdingObjectScript.DisposeOfBowl();
             animatorManager.animator.SetBool("isHoldingPlate", false);
+            HoldingPanelScript.HideHoldingPanel();
         }
     }
 
