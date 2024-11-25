@@ -280,9 +280,9 @@ public class PickUpController : MonoBehaviour
 
             pickUpObject.transform.SetParent(null);
             Destroy(pickUpObject);
-            
+
             HoldingPanelScript.HideHoldingPanel();
-            
+
             isHoldingIngredients = false;
         }
     }
@@ -327,6 +327,10 @@ public class PickUpController : MonoBehaviour
             diningOrderScript.CompleteOrder(holdingObjectScript.ingredientProps);
             holdingObjectScript.DisposeOfBowl();
             animatorManager.animator.SetBool("isHoldingPlate", false);
+        }
+        else
+        {
+            diningOrderScript.setOrderStatus("Uh-oh, I think there’s been a mix-up!");
         }
     }
 

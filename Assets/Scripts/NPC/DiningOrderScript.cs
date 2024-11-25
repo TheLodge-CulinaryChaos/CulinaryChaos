@@ -12,6 +12,11 @@ public class DiningOrderScript : MonoBehaviour
     // define order here
     private Order order;
 
+    private string orderStatus = "";
+    private float orderStatusClearTime = 2f; // Time in seconds to clear order status
+
+    private Coroutine orderStatusCoroutine;
+
     void Awake()
     {
         coins = FindObjectOfType<Coins>();
@@ -46,14 +51,14 @@ public class DiningOrderScript : MonoBehaviour
         Recipe recipe = order.recipe;
         if (recipe.ingredients.Any(ingr => ingr.type.Equals(ingredientProps.ingredientType)))
         {
-
             coins.addMoney(recipe.reward);
             return true;
         }
         else
         {
             return false;
-        };
+        }
+        ;
     }
 
     internal void CompleteOrder(IngredientProps ingredientProps)
@@ -66,5 +71,35 @@ public class DiningOrderScript : MonoBehaviour
     internal bool IsOrderComplete()
     {
         return holdingObject.activeSelf;
+    }
+
+    internal void setOrderStatus(string status)
+    {
+        orderStatus = status;
+        if (orderStatusCoroutine != null)
+        {
+            StopCoroutine(orderStatusCoroutine);
+        }
+        orderStatusCoroutine = StartCoroutine(ClearOrderStatusAfterDelay());
+    }
+
+    private IEnumerator ClearOrderStatusAfterDelay()
+    {
+        yield return new WaitForSeconds(orderStatusClearTime);
+        clearOrderStatus();
+    }
+
+    internal void clearOrderStatus()
+    {
+        orderStatus = "";
+        if (orderStatusCoroutine != null)
+        {
+            StopCoroutine(orderStatusCoroutine);
+        }
+    }
+
+    internal string getOrderStatus()
+    {
+        return orderStatus;
     }
 }
