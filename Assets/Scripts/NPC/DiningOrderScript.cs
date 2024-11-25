@@ -10,7 +10,7 @@ public class DiningOrderScript : MonoBehaviour
     public Coins coins;
 
     // define order here
-    private Recipe order;
+    private Order order;
 
     void Awake()
     {
@@ -21,16 +21,16 @@ public class DiningOrderScript : MonoBehaviour
         cookedFood.GetComponent<Renderer>().material = null;
     }
 
-    internal void SetOrder(Recipe recipe)
+    internal void SetOrder(Order order)
     {
-        if (recipe == null)
+        if (order == null)
         {
             return;
         }
-        if (order == null)
+        if (this.order == null)
         {
             // Debug.Log("Set order: " + recipe.recipeName);
-            order = recipe;
+            this.order = order;
         }
     }
 
@@ -43,10 +43,11 @@ public class DiningOrderScript : MonoBehaviour
 
     internal bool IsOrderAccepted(IngredientProps ingredientProps)
     {
-        if (order.ingredients.Any(ingr => ingr.type.Equals(ingredientProps.ingredientType)))
+        Recipe recipe = order.recipe;
+        if (recipe.ingredients.Any(ingr => ingr.type.Equals(ingredientProps.ingredientType)))
         {
 
-            coins.addMoney(order.reward);
+            coins.addMoney(recipe.reward);
             return true;
         }
         else

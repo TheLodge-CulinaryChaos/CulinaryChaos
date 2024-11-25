@@ -18,7 +18,7 @@ public class OrderUI : MonoBehaviour
 
     private float currentTime; // timer tracking
     private bool started;
-    private Recipe order;
+    private Order order;
 
     void Start() { }
 
@@ -39,18 +39,19 @@ public class OrderUI : MonoBehaviour
         }
     }
 
-    public GameObject CreateOrderPanel(Recipe recipe, int tableNum)
+    public GameObject CreateOrderPanel(Order order)
     {
+        Recipe recipe = order.recipe;
         this.id = recipe.id;
 
         orderName.text = recipe.recipeName;
         reward.text = recipe.reward.ToString();
-        tableNumber.text = $"Table {tableNum}";
+        tableNumber.text = $"Table {order.tableNumber}";
 
         currentTime = recipe.time;
         timer.text = timerToText(currentTime); // fixed timer, 60s
         started = true;
-        order = recipe;
+        this.order = order;
 
         setIngredientImage(recipe);
 
@@ -72,6 +73,11 @@ public class OrderUI : MonoBehaviour
             Image ingredientImage = ingredientImageObj.GetComponent<Image>();
             ingredientImage.sprite = GetIngredientSprite(ing.type);
         }
+    }
+
+    public Order getOrder()
+    {
+        return order;
     }
 
     public static Sprite GetIngredientSprite(IngredientEnum ingredientEnum)

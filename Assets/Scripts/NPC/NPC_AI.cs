@@ -17,7 +17,7 @@ public class NPC_AI : MonoBehaviour
     public OrderSystem orderSystem;
     private bool hasOrdered = false;
 
-    private Recipe order;
+    private Order order;
 
     private Coroutine waitingForOrder;
     private bool IsOrderCompleted = false;
@@ -132,7 +132,7 @@ public class NPC_AI : MonoBehaviour
         waypoints = new GameObject[] { waypoint };
     }
 
-    private Recipe GenerateOrder()
+    private Order GenerateOrder()
     {
         if (hasOrdered)
             return null; // Prevent multiple orders
@@ -141,8 +141,9 @@ public class NPC_AI : MonoBehaviour
         SitPointScript sitPointScript = sitPoint.GetComponent<SitPointScript>();
 
         // choosing randomly from the available recipes
-        Recipe order = orderSystem.recipes[Random.Range(0, orderSystem.recipes.Count)];
-        orderSystem.PlaceOrder(order, sitPointScript.tableNumber);
+        Recipe recipe = orderSystem.recipes[Random.Range(0, orderSystem.recipes.Count)];
+        Order order = new Order(recipe, sitPointScript.tableNumber);
+        orderSystem.PlaceOrder(order);
 
         GameObject orderObject = sitPointScript.orderObject;
         DiningOrderScript orderScript = orderObject.GetComponent<DiningOrderScript>();
@@ -206,7 +207,7 @@ public class NPC_AI : MonoBehaviour
         hasOrdered = true;
 
         // Wait for order time
-        yield return new WaitForSeconds(order.time);
+        yield return new WaitForSeconds(order.recipe.time);
 
         // Find the NPCManager and trigger GenerateCustomer to respawn a new customer
         NPCManager npcManager = FindObjectOfType<NPCManager>();
