@@ -280,6 +280,9 @@ public class PickUpController : MonoBehaviour
 
             pickUpObject.transform.SetParent(null);
             Destroy(pickUpObject);
+            
+            HoldingPanelScript.HideHoldingPanel();
+            
             isHoldingIngredients = false;
         }
     }
