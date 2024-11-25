@@ -330,7 +330,7 @@ public class PickUpController : MonoBehaviour
         }
         else
         {
-            diningOrderScript.setOrderStatus("Uh-oh, I think there’s been a mix-up!");
+            diningOrderScript.setOrderStatus(BubblePhraseGenerator.GenerateWrongOrderReaction());
         }
     }
 

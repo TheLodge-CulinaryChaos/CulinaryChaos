@@ -13,7 +13,7 @@ public class DiningOrderScript : MonoBehaviour
     private Order order;
 
     private string orderStatus = "";
-    private float orderStatusClearTime = 2f; // Time in seconds to clear order status
+    private float orderStatusClearTime = 3f; // Time in seconds to clear order status
 
     private Coroutine orderStatusCoroutine;
 
