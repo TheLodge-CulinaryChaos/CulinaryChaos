@@ -44,7 +44,7 @@ public class Timer : MonoBehaviour
                 // Set Current to 0 and Stop Visual for Countdown
                 current = 0;
                 started = false;
-                formattedTime = "Level Complete";
+                formattedTime = "Level";
             }
             else
             {
