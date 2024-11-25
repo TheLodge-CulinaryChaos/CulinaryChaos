@@ -1,9 +1,9 @@
 using System.Collections;
+using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.UI;
-using TMPro;
 
 [RequireComponent(typeof(NavMeshAgent))]
 public class NPC_AI : MonoBehaviour
@@ -36,6 +36,8 @@ public class NPC_AI : MonoBehaviour
     public float frustrationThreshold = 40f; // Time in seconds before NPC gets frustrated
 
     public TMP_Text tableNumberText;
+
+    public GameObject bubblePanel;
 
     void Awake()
     {
@@ -94,6 +96,12 @@ public class NPC_AI : MonoBehaviour
         GameObject orderObject = sitPointScript.orderObject;
         DiningOrderScript orderScript = orderObject.GetComponent<DiningOrderScript>();
 
+        // set order status
+        if (orderScript != null)
+        {
+            SetBubbleText(orderScript.getOrderStatus());
+        }
+
         if (orderScript.IsOrderComplete() && !IsOrderCompleted)
         {
             StopCoroutine(waitingForOrder);
@@ -101,6 +109,8 @@ public class NPC_AI : MonoBehaviour
             orderSystem.RemoveOrder(order);
             order = null;
         }
+
+        // order bubble status
 
         CheckAndPlayFrustrationSound();
     }
@@ -226,6 +236,22 @@ public class NPC_AI : MonoBehaviour
     private void LeaveRestaurant()
     {
         Destroy(gameObject);
+    }
+
+    internal void SetBubbleText(string text)
+    {
+        bool showPanel;
+        if (bubblePanel == null || text.CompareTo("") == 0)
+        {
+            showPanel = false;
+        }
+        else
+        {
+            showPanel = true;
+        }
+
+        bubblePanel.SetActive(showPanel);
+        bubblePanel.GetComponentInChildren<TMP_Text>().text = text;
     }
 
     private void AlignToChair(GameObject chairObject)

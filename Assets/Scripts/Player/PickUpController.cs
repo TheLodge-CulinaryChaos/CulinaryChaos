@@ -280,9 +280,9 @@ public class PickUpController : MonoBehaviour
 
             pickUpObject.transform.SetParent(null);
             Destroy(pickUpObject);
-            
+
             HoldingPanelScript.HideHoldingPanel();
-            
+
             isHoldingIngredients = false;
         }
     }
@@ -319,14 +319,33 @@ public class PickUpController : MonoBehaviour
 
         if (diningOrderScript == null)
             return;
-        if (
+
+        // EMPTY BOWL REACTION
+        if (!holdingObjectScript.IsFoodInPlate())
+        {
+            diningOrderScript.setOrderStatus(
+                BubblePhraseGenerator.GenerateReaction(ReactionType.EmptyBowl)
+            );
+        }
+        else if (
             holdingObjectScript.IsFoodInPlate()
             && diningOrderScript.IsOrderAccepted(holdingObjectScript.ingredientProps)
         )
         {
+            // TASTY REACTION
+            diningOrderScript.setOrderStatus(
+                BubblePhraseGenerator.GenerateReaction(ReactionType.Tasty)
+            );
             diningOrderScript.CompleteOrder(holdingObjectScript.ingredientProps);
             holdingObjectScript.DisposeOfBowl();
             animatorManager.animator.SetBool("isHoldingPlate", false);
+        }
+        else
+        {
+            // WRONG ORDER REACTION
+            diningOrderScript.setOrderStatus(
+                BubblePhraseGenerator.GenerateReaction(ReactionType.WrongOrder)
+            );
         }
     }
 
