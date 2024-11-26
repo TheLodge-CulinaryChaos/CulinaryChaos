@@ -20468,6 +20468,10 @@ PrefabInstance:
       propertyPath: m_Alpha
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3738756588853739289, guid: 0353c68a146554b1f83f2ac631624320, type: 3}
+      propertyPath: level
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 3738756588864777596, guid: 0353c68a146554b1f83f2ac631624320, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_StringArgument
       value: Hard
@@ -20616,6 +20620,10 @@ PrefabInstance:
       propertyPath: m_Sprite
       value: 
       objectReference: {fileID: 21300000, guid: b8fd7a9db0f2547c3afc6c14b9e618a6, type: 3}
+    - target: {fileID: 5868324607505576443, guid: 0353c68a146554b1f83f2ac631624320, type: 3}
+      propertyPath: level
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 8836502547862670433, guid: 0353c68a146554b1f83f2ac631624320, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5

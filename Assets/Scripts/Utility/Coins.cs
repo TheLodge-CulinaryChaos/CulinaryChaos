@@ -9,7 +9,13 @@ public class Coins : MonoBehaviour
     public float balance;
     public bool debug = true;
 
-    public static int LEVEL_1_MIN_SCORE = 600;
+    // level : minimum coins
+    public static Dictionary<int, int> levelsToCoins = new Dictionary<int, int>
+    {
+        { 1, 600 },
+        { 2, 700 },
+        { 3, 800 },
+    };
 
     [SerializeField] TextMeshProUGUI currTMP;
     // Start is called before the first frame update

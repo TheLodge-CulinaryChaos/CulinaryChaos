@@ -7,6 +7,7 @@ public class Summary : MonoBehaviour
 {
     public bool debug = true;
     public CanvasGroup CGGameplay;
+    public int level;
     private CanvasGroup CGSummary;
     private RoundOver RoundOverCS;
     private Coins CoinsCS;
@@ -62,13 +63,13 @@ public class Summary : MonoBehaviour
         float balance = CoinsCS.getBalance();
         coinsTMP.text = $"Money Acquired: {balance}";
 
-        miniumScoreTMP.text = $"Minimum Score: {Coins.LEVEL_1_MIN_SCORE}";
+        miniumScoreTMP.text = $"Minimum Score: {Coins.levelsToCoins[level - 1]}";
 
         NPCManager npcManager = FindObjectOfType<NPCManager>();
         customersTMP.text = $"Customers Served: {npcManager.GetServedCustomers()}";
 
         // Round Status Segment
-        if (balance >= Coins.LEVEL_1_MIN_SCORE)
+        if (balance >= Coins.levelsToCoins[level - 1])
         {
             roundStatusTMP.text = "You Meet the Minimum Score! Good Job!";
             // set Text to Green
