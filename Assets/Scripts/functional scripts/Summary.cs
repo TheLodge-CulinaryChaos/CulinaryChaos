@@ -63,13 +63,13 @@ public class Summary : MonoBehaviour
         float balance = CoinsCS.getBalance();
         coinsTMP.text = $"Money Acquired: {balance}";
 
-        miniumScoreTMP.text = $"Minimum Score: {Coins.levelsToCoins[level - 1]}";
+        miniumScoreTMP.text = $"Minimum Score: {Coins.levelsToCoins[level]}";
 
         NPCManager npcManager = FindObjectOfType<NPCManager>();
         customersTMP.text = $"Customers Served: {npcManager.GetServedCustomers()}";
 
         // Round Status Segment
-        if (balance >= Coins.levelsToCoins[level - 1])
+        if (balance >= Coins.levelsToCoins[level])
         {
             roundStatusTMP.text = "You Meet the Minimum Score! Good Job!";
             // set Text to Green
