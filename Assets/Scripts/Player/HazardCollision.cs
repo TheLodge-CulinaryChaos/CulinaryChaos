@@ -9,9 +9,16 @@ public class HazardCollision : MonoBehaviour
     AnimatorManager animatorManager;
     GameObject currentHazard;
 
+    HoldingObjectScript holdingObjectScript;
+    PickUpController pickUpController;
+
     private void Awake()
     {
         animatorManager = GetComponent<AnimatorManager>();
+        
+        pickUpController = GetComponent<PickUpController>();
+
+        holdingObjectScript = pickUpController.HoldingObject.GetComponent<HoldingObjectScript>();
     }
 
     private void OnTriggerEnter(Collider collision)
@@ -23,10 +30,25 @@ public class HazardCollision : MonoBehaviour
             animatorManager.PlayTargetAnimation("OnFire", true);
             currentHazard = collision.gameObject;
 
-
             // set capsule collider's Y in the player
             transform.GetComponent<CapsuleCollider>().center = new Vector3(0, 1f, 0);
+
+            DropOrDispose();
         }
+    }
+
+    private void DropOrDispose() {
+        if (holdingObjectScript && holdingObjectScript.IsHoldingPlate())
+        {
+            holdingObjectScript.DisposeOfBowl();
+            animatorManager.animator.SetBool("isHoldingPlate", false);
+            HoldingPanelScript.HideHoldingPanel();
+        }
+        
+        if (pickUpController && pickUpController.isHoldingIngredients)
+            {
+                pickUpController.DropObject();
+            }
     }
 
     private void Update()
