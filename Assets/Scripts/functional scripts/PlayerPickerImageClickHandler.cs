@@ -7,7 +7,7 @@ public class PlayerPickerImageClickHandler : MonoBehaviour
     public GameObject player;
 
     // player rotate around its Y axis
-    private float rotateSpeed = 100f;
+    private float rotateSpeed = 50f;
     public Enums playerType;
     public GameObject indicator;
 
