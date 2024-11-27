@@ -7,19 +7,13 @@ public class PlayerPickerImageClickHandler : MonoBehaviour
     public GameObject player;
 
     // player rotate around its Y axis
-    private float rotateSpeed = 100f;
+    private float rotateSpeed = 80f;
     public Enums playerType;
     public GameObject indicator;
 
     void Awake()
     {
         indicator.SetActive(false);
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        // player.transform.Rotate(Vector3.up * rotateSpeed * Time.deltaTime);
     }
 
     void LateUpdate()
@@ -37,8 +31,6 @@ public class PlayerPickerImageClickHandler : MonoBehaviour
     }
 
     public void SetPlayer() {
-        Debug.Log("PlayerPickerImageClickHandler.OnMouseUp");
-
         PlayerSelector.selectedPlayer = playerType;
     }
 }

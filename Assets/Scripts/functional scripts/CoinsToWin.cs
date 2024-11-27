@@ -37,5 +37,6 @@ public class CoinsToWin : MonoBehaviour
         yield return new WaitForSecondsRealtime(PopUpLength);
         coinsToWinPanel.SetActive(false);
         Time.timeScale = 1f;
+        MouseScript.HideMouse();
     }
 }

@@ -41,6 +41,7 @@ public class RoundOver : MonoBehaviour
     }
 
     void HandleTimerOver() {
+        MouseScript.ShowMouse();
         // If The Pop Up Timer Reaches Zero, it disappears and makes
         // the PopUpDone bool true. Summary.cs checks that thru getPopUpDone
         // to see if that panel pops up

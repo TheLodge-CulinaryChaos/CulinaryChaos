@@ -14,6 +14,7 @@ public class SceneSwitcher : MonoBehaviour
         if (playerPicker) {
             playerPicker.SetActive(false);
         }
+        MouseScript.ShowMouse();
     }
 
     // Start is called before the first frame update
