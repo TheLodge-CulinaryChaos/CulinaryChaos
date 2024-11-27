@@ -5,8 +5,8 @@ using System.Collections.Generic;
 public class Hazard : MonoBehaviour
 {
     public List<GameObject> hazards; // List of hazards to control
-    public float minRespawnTime = 7f; // Time in seconds before the hazards reappear
-    public float maxRespawnTime = 10f; // Time in seconds before the hazards reappear
+    public float minRespawnTime = 14f; // Time in seconds before the hazards reappear
+    public float maxRespawnTime = 20f; // Time in seconds before the hazards reappear
 
     private bool isFiring = false;
 
@@ -25,7 +25,7 @@ public class Hazard : MonoBehaviour
         while (true)
         {
 
-            float randomTime = Random.Range(4f, 5f);
+            float randomTime = Random.Range(2f, 3f);
             float randomRespawnTime = Random.Range(minRespawnTime, maxRespawnTime);
 
             foreach (GameObject hazard in hazards)
@@ -35,7 +35,7 @@ public class Hazard : MonoBehaviour
                 {
                     // enable box collider
                     PlayTargetAnimation(hazardAnimator, "Start Fire");
-                    PlayTargetAnimation(hazardAnimator,"BananaOn");
+                    PlayTargetAnimation(hazardAnimator, "BananaOn");
                     isFiring = true;
                     hazard.GetComponent<BoxCollider>().enabled = isFiring;
                     hazard.GetComponent<BoxCollider>().isTrigger = isFiring;
