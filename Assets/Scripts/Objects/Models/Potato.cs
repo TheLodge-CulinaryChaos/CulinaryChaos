@@ -5,6 +5,6 @@ public class Potato : Ingredient
 {
     public Potato()
     {
-        type = IngredientEnum.GreenPepper;
+        type = IngredientEnum.Potato;
     }
 }
