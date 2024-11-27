@@ -164,6 +164,7 @@ public class InputManager : MonoBehaviour
                 canvasGroup.blocksRaycasts = false;
                 canvasGroup.alpha = 0f;
                 Time.timeScale = 1f;
+                MouseScript.HideMouse();
             }
             else
             {
@@ -171,6 +172,7 @@ public class InputManager : MonoBehaviour
                 canvasGroup.blocksRaycasts = true;
                 canvasGroup.alpha = 1f;
                 Time.timeScale = 0f;
+                MouseScript.ShowMouse();
             }
             pause_input = false;
         }

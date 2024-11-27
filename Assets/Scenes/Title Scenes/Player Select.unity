@@ -1250,7 +1250,7 @@ Camera:
     height: 1
   near clip plane: 0.3
   far clip plane: 1000
-  field of view: 60.000004
+  field of view: 70
   orthographic: 0
   orthographic size: 5
   m_Depth: -1
@@ -1939,7 +1939,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1883491013}
   - component: {fileID: 1883491014}
-  - component: {fileID: 1883491015}
   m_Layer: 0
   m_Name: Buttons
   m_TagString: Untagged
@@ -1978,18 +1977,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   buttonGroup: {fileID: 0}
   playerPicker: {fileID: 0}
---- !u!114 &1883491015
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1883491012}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b3ba6b00f5622459aaaa4780814b76e3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1888284829
 GameObject:
   m_ObjectHideFlags: 0

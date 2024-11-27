@@ -19,7 +19,7 @@ public class PlayerPickerImageClickHandler : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        // player.transform.Rotate(Vector3.up * rotateSpeed * Time.deltaTime);
+        player.transform.Rotate(Vector3.up * rotateSpeed * Time.deltaTime);
     }
 
     void LateUpdate()

@@ -57,6 +57,7 @@ public class Summary : MonoBehaviour
 
     void HandleSummary()
     {
+        MouseScript.ShowMouse();
         // Static Top Text Segment
 
         // Coins Segment. Using Getter for Total
