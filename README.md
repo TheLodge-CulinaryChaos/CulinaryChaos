@@ -353,3 +353,23 @@ Audio clips from freesound.org:
 -   368386__madamvicious__small-village-hobbit elf-girl-rpg-greeting goodbye ct-sounds.wav by MadamVicious
 -   698768__ienba__game-pickup.wav by ienba
 -   166290__fantozzi__mco_walk_b02.wav by fantozzi
+
+### Showcase
+
+Title
+
+![title](https://github.com/user-attachments/assets/f10c655b-0f90-4fb4-a95b-5f9b5425627e)
+
+Running Overview
+
+![running](https://github.com/user-attachments/assets/73ac4ab6-b3cc-4d64-8810-fb85a6ca50c8)
+
+Actions
+
+| **Running** | **Falling** | **Jumping** | **Pickup** |
+|---|---|---|---|
+| <img src="https://github.com/user-attachments/assets/fb986c80-f6c8-4c5a-9bd9-e937a7683af7" width=200>   | <img src="https://github.com/user-attachments/assets/420b9631-16d1-461d-b880-8fc6cd7302dd" width=200>   | <img src="https://github.com/user-attachments/assets/e905d01d-7f6f-4198-8945-29991cd7a020" width=200>   | <img src="https://github.com/user-attachments/assets/0832f709-eb17-4381-87d5-72fad0b43396" width=200>   |
+
+NPCs
+
+![customers](https://github.com/user-attachments/assets/ad010d5c-e233-424b-bb18-89994aca6a8e)
