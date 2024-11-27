@@ -31,8 +31,6 @@ public class PlayerPickerImageClickHandler : MonoBehaviour
     }
 
     public void SetPlayer() {
-        Debug.Log("PlayerPickerImageClickHandler.OnMouseUp");
-
         PlayerSelector.selectedPlayer = playerType;
     }
 }
